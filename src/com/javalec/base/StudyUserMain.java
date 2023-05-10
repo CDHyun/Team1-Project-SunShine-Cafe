@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-/* 기본 키오스크에서 로그인 하는 페이지 */
-public class LoginMain extends JFrame {
+/* 스터디룸 키오스크에서 남은 시간을 보여줄 유저 메인 페이지 */
+public class StudyUserMain extends JFrame {
 
 	private JPanel contentPane;
 
@@ -19,7 +18,7 @@ public class LoginMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginMain frame = new LoginMain();
+					StudyUserMain frame = new StudyUserMain();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +30,7 @@ public class LoginMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginMain() {
+	public StudyUserMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

@@ -6,9 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
-/* 기본 키오스크에서 로그인 하는 페이지 */
-public class LoginMain extends JFrame {
+/* 기본 키오스크에서 회원가입하는 페이지 */
+public class RegisterMain extends JFrame {
 
 	private JPanel contentPane;
 
@@ -19,7 +18,7 @@ public class LoginMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginMain frame = new LoginMain();
+					RegisterMain frame = new RegisterMain();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +30,7 @@ public class LoginMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public LoginMain() {
+	public RegisterMain() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
