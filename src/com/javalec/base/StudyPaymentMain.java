@@ -17,18 +17,18 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel lblNewLabel_1_1;
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_2_1;
-	private JLabel lblNewLabel_3;
+	private JLabel lblcard;
 	private JLabel lblNewLabel_1_1_1;
 	private JLabel lblNewLabel_2_2;
-	private JLabel lblNewLabel_3_1;
+	private JLabel lblkakao;
 	private JLabel lblNewLabel_2_2_1;
-	private JLabel lblNewLabel_3_1_1;
+	private JLabel lblpayco;
 	private JLabel lblNewLabel_2_2_2;
-	private JLabel lblNewLabel_3_1_2;
+	private JLabel lblnaver;
 	private JLabel lblNewLabel_2_2_3;
-	private JLabel lblNewLabel_3_1_3;
+	private JLabel lblzero;
 	private JLabel lblNewLabel_2_2_4;
-	private JLabel lblNewLabel_3_1_4;
+	private JLabel lblpaybooc;
 	private JLabel lblNewLabel_1;
 
 	/**
@@ -63,18 +63,18 @@ public class StudyPaymentMain extends JFrame {
 		contentPane.add(getLblNewLabel_1_1());
 		contentPane.add(getLblNewLabel_2());
 		contentPane.add(getLblNewLabel_2_1());
-		contentPane.add(getLblNewLabel_3());
+		contentPane.add(getLblcard());
 		contentPane.add(getLblNewLabel_1_1_1());
 		contentPane.add(getLblNewLabel_2_2());
-		contentPane.add(getLblNewLabel_3_1());
+		contentPane.add(getLblkakao());
 		contentPane.add(getLblNewLabel_2_2_1());
-		contentPane.add(getLblNewLabel_3_1_1());
+		contentPane.add(getLblpayco());
 		contentPane.add(getLblNewLabel_2_2_2());
-		contentPane.add(getLblNewLabel_3_1_2());
+		contentPane.add(getLblnaver());
 		contentPane.add(getLblNewLabel_2_2_3());
-		contentPane.add(getLblNewLabel_3_1_3());
+		contentPane.add(getLblzero());
 		contentPane.add(getLblNewLabel_2_2_4());
-		contentPane.add(getLblNewLabel_3_1_4());
+		contentPane.add(getLblpaybooc());
 		contentPane.add(getLblNewLabel_1());
 	}
 
@@ -110,12 +110,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_1;
 	}
-	private JLabel getLblNewLabel_3() {
-		if (lblNewLabel_3 == null) {
-			lblNewLabel_3 = new JLabel("이미지");
-			lblNewLabel_3.setBounds(87, 157, 126, 69);
+	private JLabel getLblcard() {
+		if (lblcard == null) {
+			lblcard = new JLabel("");
+			lblcard.setBounds(87, 157, 126, 69);
 		}
-		return lblNewLabel_3;
+		return lblcard;
 	}
 	private JLabel getLblNewLabel_1_1_1() {
 		if (lblNewLabel_1_1_1 == null) {
@@ -134,12 +134,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_2;
 	}
-	private JLabel getLblNewLabel_3_1() {
-		if (lblNewLabel_3_1 == null) {
-			lblNewLabel_3_1 = new JLabel("이미지");
-			lblNewLabel_3_1.setBounds(87, 392, 126, 69);
+	private JLabel getLblkakao() {
+		if (lblkakao == null) {
+			lblkakao = new JLabel("");
+			lblkakao.setBounds(87, 392, 126, 69);
 		}
-		return lblNewLabel_3_1;
+		return lblkakao;
 	}
 	private JLabel getLblNewLabel_2_2_1() {
 		if (lblNewLabel_2_2_1 == null) {
@@ -150,12 +150,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_2_1;
 	}
-	private JLabel getLblNewLabel_3_1_1() {
-		if (lblNewLabel_3_1_1 == null) {
-			lblNewLabel_3_1_1 = new JLabel("이미지");
-			lblNewLabel_3_1_1.setBounds(320, 392, 126, 69);
+	private JLabel getLblpayco() {
+		if (lblpayco == null) {
+			lblpayco = new JLabel("");
+			lblpayco.setBounds(320, 392, 126, 69);
 		}
-		return lblNewLabel_3_1_1;
+		return lblpayco;
 	}
 	private JLabel getLblNewLabel_2_2_2() {
 		if (lblNewLabel_2_2_2 == null) {
@@ -166,12 +166,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_2_2;
 	}
-	private JLabel getLblNewLabel_3_1_2() {
-		if (lblNewLabel_3_1_2 == null) {
-			lblNewLabel_3_1_2 = new JLabel("이미지");
-			lblNewLabel_3_1_2.setBounds(573, 392, 126, 69);
+	private JLabel getLblnaver() {
+		if (lblnaver == null) {
+			lblnaver = new JLabel("");
+			lblnaver.setBounds(573, 392, 126, 69);
 		}
-		return lblNewLabel_3_1_2;
+		return lblnaver;
 	}
 	private JLabel getLblNewLabel_2_2_3() {
 		if (lblNewLabel_2_2_3 == null) {
@@ -182,12 +182,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_2_3;
 	}
-	private JLabel getLblNewLabel_3_1_3() {
-		if (lblNewLabel_3_1_3 == null) {
-			lblNewLabel_3_1_3 = new JLabel("이미지");
-			lblNewLabel_3_1_3.setBounds(87, 560, 126, 69);
+	private JLabel getLblzero() {
+		if (lblzero == null) {
+			lblzero = new JLabel("");
+			lblzero.setBounds(87, 560, 126, 69);
 		}
-		return lblNewLabel_3_1_3;
+		return lblzero;
 	}
 	private JLabel getLblNewLabel_2_2_4() {
 		if (lblNewLabel_2_2_4 == null) {
@@ -198,12 +198,12 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_2_2_4;
 	}
-	private JLabel getLblNewLabel_3_1_4() {
-		if (lblNewLabel_3_1_4 == null) {
-			lblNewLabel_3_1_4 = new JLabel("이미지");
-			lblNewLabel_3_1_4.setBounds(320, 560, 126, 69);
+	private JLabel getLblpaybooc() {
+		if (lblpaybooc == null) {
+			lblpaybooc = new JLabel("");
+			lblpaybooc.setBounds(320, 560, 126, 69);
 		}
-		return lblNewLabel_3_1_4;
+		return lblpaybooc;
 	}
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {

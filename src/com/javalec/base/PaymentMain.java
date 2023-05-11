@@ -65,7 +65,7 @@ public class PaymentMain extends JFrame {
 	public PaymentMain() {
 		setTitle("결제 수단 선택");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 750, 1200);
+		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(224, 224, 224));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -101,7 +101,7 @@ public class PaymentMain extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Sunshine Cafe");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			lblNewLabel.setBounds(232, 6, 282, 69);
+			lblNewLabel.setBounds(176, 6, 282, 69);
 		}
 		return lblNewLabel;
 	}
@@ -117,7 +117,7 @@ public class PaymentMain extends JFrame {
 			
 			lblback.setIcon(backArrow);
 			lblback.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblback.setBounds(39, 6, 75, 69);
+			lblback.setBounds(18, 6, 75, 69);
 		}
 		return lblback;
 	}
@@ -125,7 +125,7 @@ public class PaymentMain extends JFrame {
 		if (lblNewLabel_1_1 == null) {
 			lblNewLabel_1_1 = new JLabel("카드결제");
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1_1.setBounds(56, 127, 119, 48);
+			lblNewLabel_1_1.setBounds(18, 125, 119, 48);
 		}
 		return lblNewLabel_1_1;
 	}
@@ -133,7 +133,7 @@ public class PaymentMain extends JFrame {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("카드결제");
 			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2.setBounds(56, 298, 75, 25);
+			lblNewLabel_2.setBounds(27, 299, 75, 25);
 		}
 		return lblNewLabel_2;
 	}
@@ -141,7 +141,7 @@ public class PaymentMain extends JFrame {
 		if (lblNewLabel_2_1 == null) {
 			lblNewLabel_2_1 = new JLabel("삼성페이/LG페이");
 			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-			lblNewLabel_2_1.setBounds(132, 301, 88, 25);
+			lblNewLabel_2_1.setBounds(103, 302, 88, 25);
 		}
 		return lblNewLabel_2_1;
 	}
@@ -158,7 +158,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblcard.setIcon(backArrow);
-			lblcard.setBounds(56, 196, 155, 90);
+			lblcard.setBounds(27, 197, 155, 90);
 		}
 		return lblcard;
 	}
@@ -166,7 +166,7 @@ public class PaymentMain extends JFrame {
 		if (lblNewLabel_1_1_1 == null) {
 			lblNewLabel_1_1_1 = new JLabel("간편결제");
 			lblNewLabel_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1_1_1.setBounds(56, 363, 119, 48);
+			lblNewLabel_1_1_1.setBounds(18, 361, 119, 48);
 		}
 		return lblNewLabel_1_1_1;
 	}
@@ -175,7 +175,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2 = new JLabel("카카오페이");
 			lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2.setBounds(84, 549, 103, 25);
+			lblNewLabel_2_2.setBounds(55, 549, 103, 25);
 		}
 		return lblNewLabel_2_2;
 	}
@@ -190,7 +190,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblkakao.setIcon(backArrow);
-			lblkakao.setBounds(36, 426, 202, 128);
+			lblkakao.setBounds(7, 426, 202, 128);
 		}
 		return lblkakao;
 	}
@@ -199,7 +199,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2_1 = new JLabel("페이코");
 			lblNewLabel_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_1.setBounds(303, 549, 103, 25);
+			lblNewLabel_2_2_1.setBounds(264, 547, 103, 25);
 		}
 		return lblNewLabel_2_2_1;
 	}
@@ -216,7 +216,7 @@ public class PaymentMain extends JFrame {
 			
 			lblpayco.setIcon(backArrow);
 			
-			lblpayco.setBounds(278, 456, 155, 69);
+			lblpayco.setBounds(239, 454, 155, 69);
 		}
 		return lblpayco;
 	}
@@ -225,7 +225,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2_2 = new JLabel("네이버페이");
 			lblNewLabel_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_2.setBounds(537, 547, 103, 25);
+			lblNewLabel_2_2_2.setBounds(477, 547, 103, 25);
 		}
 		return lblNewLabel_2_2_2;
 	}
@@ -244,7 +244,7 @@ public class PaymentMain extends JFrame {
 			
 			
 			lblnaver.setHorizontalAlignment(SwingConstants.CENTER);
-			lblnaver.setBounds(522, 456, 126, 69);
+			lblnaver.setBounds(462, 456, 126, 69);
 		}
 		return lblnaver;
 	}
@@ -253,7 +253,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2_3 = new JLabel("제로페이");
 			lblNewLabel_2_2_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_3.setBounds(84, 724, 103, 25);
+			lblNewLabel_2_2_3.setBounds(55, 724, 103, 25);
 		}
 		return lblNewLabel_2_2_3;
 	}
@@ -272,7 +272,7 @@ public class PaymentMain extends JFrame {
 			
 			
 			lblzero.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblzero.setBounds(61, 643, 126, 69);
+			lblzero.setBounds(32, 643, 126, 69);
 		}
 		return lblzero;
 	}
@@ -281,7 +281,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2_4 = new JLabel("BC페이북");
 			lblNewLabel_2_2_4.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_4.setBounds(303, 724, 103, 25);
+			lblNewLabel_2_2_4.setBounds(264, 722, 103, 25);
 		}
 		return lblNewLabel_2_2_4;
 	}
@@ -298,7 +298,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblpaybooc.setIcon(backArrow);
-			lblpaybooc.setBounds(294, 643, 126, 69);
+			lblpaybooc.setBounds(255, 641, 126, 69);
 		}
 		return lblpaybooc;
 	}
@@ -316,7 +316,7 @@ public class PaymentMain extends JFrame {
 			lblWhite1.setIcon(backArrow);
 			
 			
-			lblWhite1.setBounds(18, 178, 260, 189);
+			lblWhite1.setBounds(-11, 179, 260, 189);
 		}
 		return lblWhite1;
 	}
@@ -332,7 +332,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblWhite2.setIcon(backArrow);
-			lblWhite2.setBounds(18, 426, 260, 189);
+			lblWhite2.setBounds(-11, 426, 260, 189);
 		}
 		return lblWhite2;
 	}
@@ -348,7 +348,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblWhite3.setIcon(backArrow);
-			lblWhite3.setBounds(240, 428, 260, 189);
+			lblWhite3.setBounds(201, 426, 260, 189);
 		}
 		return lblWhite3;
 	}
@@ -365,7 +365,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblWhite4.setIcon(backArrow);
-			lblWhite4.setBounds(466, 426, 260, 189);
+			lblWhite4.setBounds(406, 426, 260, 189);
 		}
 		return lblWhite4;
 	}
@@ -381,7 +381,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblWhite5.setIcon(backArrow);
-			lblWhite5.setBounds(18, 613, 260, 189);
+			lblWhite5.setBounds(-11, 613, 260, 189);
 		}
 		return lblWhite5;
 	}
@@ -397,8 +397,19 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblWhite6.setIcon(backArrow);
-			lblWhite6.setBounds(240, 613, 260, 189);
+			lblWhite6.setBounds(201, 611, 260, 189);
 		}
 		return lblWhite6;
 	}
-}
+	
+	
+	// ===========function============
+	
+	
+	
+	
+	
+	
+	
+	
+}//end
