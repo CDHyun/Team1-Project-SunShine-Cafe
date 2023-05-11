@@ -281,7 +281,7 @@ public class PaymentMain extends JFrame {
 			lblNewLabel_2_2_4 = new JLabel("BC페이북");
 			lblNewLabel_2_2_4.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_4.setBounds(340, 714, 103, 25);
+			lblNewLabel_2_2_4.setBounds(303, 724, 103, 25);
 		}
 		return lblNewLabel_2_2_4;
 	}
@@ -298,7 +298,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblpaybooc.setIcon(backArrow);
-			lblpaybooc.setBounds(331, 633, 126, 69);
+			lblpaybooc.setBounds(294, 643, 126, 69);
 		}
 		return lblpaybooc;
 	}
