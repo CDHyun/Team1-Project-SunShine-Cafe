@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JPasswordField;
 
 
 /* 기본 키오스크에서 로그인 하는 페이지 */
@@ -20,10 +21,10 @@ public class LoginMain extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JTextField tfId;
 	private JLabel lblNewLabel_2_1;
-	private JTextField tfPassword;
 	private JButton btnSingIn;
 	private JLabel lblNewLabel_3;
 	private JButton btnSingUp;
+	private JPasswordField pfPassWord;
 
 	/**
 	 * Launch the application.
@@ -58,10 +59,10 @@ public class LoginMain extends JFrame {
 		contentPane.add(getLblNewLabel_2());
 		contentPane.add(getTfId());
 		contentPane.add(getLblNewLabel_2_1());
-		contentPane.add(getTfPassword());
 		contentPane.add(getBtnSingIn());
 		contentPane.add(getLblNewLabel_3());
 		contentPane.add(getBtnSingUp());
+		contentPane.add(getPfPassWord());
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -102,14 +103,6 @@ public class LoginMain extends JFrame {
 		}
 		return lblNewLabel_2_1;
 	}
-	private JTextField getTfPassword() {
-		if (tfPassword == null) {
-			tfPassword = new JTextField();
-			tfPassword.setColumns(10);
-			tfPassword.setBounds(221, 516, 205, 37);
-		}
-		return tfPassword;
-	}
 	private JButton getBtnSingIn() {
 		if (btnSingIn == null) {
 			btnSingIn = new JButton("LogIn");
@@ -132,5 +125,12 @@ public class LoginMain extends JFrame {
 			btnSingUp.setBounds(257, 672, 117, 54);
 		}
 		return btnSingUp;
+	}
+	private JPasswordField getPfPassWord() {
+		if (pfPassWord == null) {
+			pfPassWord = new JPasswordField();
+			pfPassWord.setBounds(221, 522, 205, 31);
+		}
+		return pfPassWord;
 	}
 }
