@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.SwingConstants;
 
 public class UserSingUp extends JFrame {
 
@@ -108,6 +109,7 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfId() {
 		if (tfId == null) {
 			tfId = new JTextField();
+			tfId.setHorizontalAlignment(SwingConstants.CENTER);
 			tfId.setBounds(258, 313, 222, 37);
 			tfId.setColumns(10);
 		}
@@ -132,6 +134,7 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfPassWord() {
 		if (tfPassWord == null) {
 			tfPassWord = new JTextField();
+			tfPassWord.setHorizontalAlignment(SwingConstants.CENTER);
 			tfPassWord.setColumns(10);
 			tfPassWord.setBounds(258, 402, 222, 39);
 		}
@@ -148,6 +151,7 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfPassWordPass() {
 		if (tfPassWordPass == null) {
 			tfPassWordPass = new JTextField();
+			tfPassWordPass.setHorizontalAlignment(SwingConstants.CENTER);
 			tfPassWordPass.setColumns(10);
 			tfPassWordPass.setBounds(258, 486, 222, 37);
 		}
@@ -164,6 +168,7 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfTel() {
 		if (tfTel == null) {
 			tfTel = new JTextField();
+			tfTel.setHorizontalAlignment(SwingConstants.CENTER);
 			tfTel.setColumns(10);
 			tfTel.setBounds(263, 571, 217, 37);
 		}

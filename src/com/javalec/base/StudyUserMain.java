@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
 
 /* 스터디룸 키오스크에서 남은 시간을 보여줄 유저 메인 페이지 */
 public class StudyUserMain extends JFrame {
@@ -90,6 +91,7 @@ public class StudyUserMain extends JFrame {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.setHorizontalAlignment(SwingConstants.RIGHT);
 			textField.setBounds(513, 241, 194, 37);
 			textField.setColumns(10);
 		}
@@ -129,6 +131,7 @@ public class StudyUserMain extends JFrame {
 	private JPasswordField getPfPassWord1() {
 		if (pfPassWord1 == null) {
 			pfPassWord1 = new JPasswordField();
+			pfPassWord1.setHorizontalAlignment(SwingConstants.RIGHT);
 			pfPassWord1.setBounds(513, 324, 194, 37);
 		}
 		return pfPassWord1;

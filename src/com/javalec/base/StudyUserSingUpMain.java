@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class StudyUserSingUpMain extends JFrame {
 
@@ -16,13 +17,13 @@ public class StudyUserSingUpMain extends JFrame {
 	private JLabel lblLogo;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
-	private JTextField tfId1;
+	private JTextField tfId;
 	private JLabel lblNewLabel_1_1;
-	private JTextField tfPassWord1;
+	private JTextField tfPassWord;
 	private JLabel lblNewLabel_1_2;
-	private JTextField tfPassWordPass;
+	private JTextField tfPassWord1;
 	private JLabel lblNewLabel_1_3;
-	private JTextField tfTel1;
+	private JTextField tfPhon;
 	private JButton btnJoin1;
 	private JLabel lblNewLabel_1_4;
 	private JLabel lblNewLabel_1_1_1;
@@ -59,13 +60,13 @@ public class StudyUserSingUpMain extends JFrame {
 		contentPane.add(getLblLogo());
 		contentPane.add(getLblNewLabel());
 		contentPane.add(getLblNewLabel_1());
-		contentPane.add(getTfId1());
+		contentPane.add(getTfId());
 		contentPane.add(getLblNewLabel_1_1());
-		contentPane.add(getTfPassWord1());
+		contentPane.add(getTfPassWord());
 		contentPane.add(getLblNewLabel_1_2());
-		contentPane.add(getTfPassWordPass());
+		contentPane.add(getTfPassWord1());
 		contentPane.add(getLblNewLabel_1_3());
-		contentPane.add(getTfTel1());
+		contentPane.add(getTfPhon());
 		contentPane.add(getBtnJoin1());
 		contentPane.add(getLblNewLabel_1_4());
 		contentPane.add(getLblNewLabel_1_1_1());
@@ -101,13 +102,14 @@ public class StudyUserSingUpMain extends JFrame {
 		}
 		return lblNewLabel_1;
 	}
-	private JTextField getTfId1() {
-		if (tfId1 == null) {
-			tfId1 = new JTextField();
-			tfId1.setBounds(380, 244, 214, 33);
-			tfId1.setColumns(10);
+	private JTextField getTfId() {
+		if (tfId == null) {
+			tfId = new JTextField();
+			tfId.setHorizontalAlignment(SwingConstants.CENTER);
+			tfId.setBounds(380, 244, 214, 33);
+			tfId.setColumns(10);
 		}
-		return tfId1;
+		return tfId;
 	}
 	private JLabel getLblNewLabel_1_1() {
 		if (lblNewLabel_1_1 == null) {
@@ -117,13 +119,14 @@ public class StudyUserSingUpMain extends JFrame {
 		}
 		return lblNewLabel_1_1;
 	}
-	private JTextField getTfPassWord1() {
-		if (tfPassWord1 == null) {
-			tfPassWord1 = new JTextField();
-			tfPassWord1.setColumns(10);
-			tfPassWord1.setBounds(380, 312, 214, 33);
+	private JTextField getTfPassWord() {
+		if (tfPassWord == null) {
+			tfPassWord = new JTextField();
+			tfPassWord.setHorizontalAlignment(SwingConstants.CENTER);
+			tfPassWord.setColumns(10);
+			tfPassWord.setBounds(380, 312, 214, 33);
 		}
-		return tfPassWord1;
+		return tfPassWord;
 	}
 	private JLabel getLblNewLabel_1_2() {
 		if (lblNewLabel_1_2 == null) {
@@ -133,13 +136,14 @@ public class StudyUserSingUpMain extends JFrame {
 		}
 		return lblNewLabel_1_2;
 	}
-	private JTextField getTfPassWordPass() {
-		if (tfPassWordPass == null) {
-			tfPassWordPass = new JTextField();
-			tfPassWordPass.setColumns(10);
-			tfPassWordPass.setBounds(380, 381, 214, 33);
+	private JTextField getTfPassWord1() {
+		if (tfPassWord1 == null) {
+			tfPassWord1 = new JTextField();
+			tfPassWord1.setHorizontalAlignment(SwingConstants.CENTER);
+			tfPassWord1.setColumns(10);
+			tfPassWord1.setBounds(380, 381, 214, 33);
 		}
-		return tfPassWordPass;
+		return tfPassWord1;
 	}
 	private JLabel getLblNewLabel_1_3() {
 		if (lblNewLabel_1_3 == null) {
@@ -149,13 +153,14 @@ public class StudyUserSingUpMain extends JFrame {
 		}
 		return lblNewLabel_1_3;
 	}
-	private JTextField getTfTel1() {
-		if (tfTel1 == null) {
-			tfTel1 = new JTextField();
-			tfTel1.setColumns(10);
-			tfTel1.setBounds(380, 443, 214, 33);
+	private JTextField getTfPhon() {
+		if (tfPhon == null) {
+			tfPhon = new JTextField();
+			tfPhon.setHorizontalAlignment(SwingConstants.CENTER);
+			tfPhon.setColumns(10);
+			tfPhon.setBounds(380, 443, 214, 33);
 		}
-		return tfTel1;
+		return tfPhon;
 	}
 	private JButton getBtnJoin1() {
 		if (btnJoin1 == null) {
