@@ -13,15 +13,22 @@ import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
 
 import java.awt.Color;
+import java.awt.Container;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.util.ArrayList;
 
+
+
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
@@ -57,7 +64,6 @@ public class ProductMain extends JFrame {
 	private JLabel lblQty;
 	private JLabel lblCart;
 	private JScrollPane scrollPane;
-	private JTable innerTable;
 	private JLabel lblPriviousBtn;
 	private JLabel lblNextBtn;
 	private JLabel lblProductImage1;
@@ -74,9 +80,67 @@ public class ProductMain extends JFrame {
 	private int currentPage = 0;
 	private int categoryNo = 0;
 	private int total = 0;
+	private int wkTotal = 0;
+	private int wkPrice = 0;
+	private int wkItemNo = 0;
+	private String wkItemName;
+	private JPanel panel;
+	private String userid = "donghyun";
 	
-	/* JLabel 배열 생성 */
 	
+	/* ProductOptionMain과 데이터를 주고 받을 getter & setter */
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getWktotal() {
+		return wkTotal;
+	}
+
+	public void setWktotal(int wktotal) {
+		this.wkTotal = wktotal;
+	}
+
+	public int getWkPrice() {
+		return wkPrice;
+	}
+
+	public void setWkPrice(int wkPrice) {
+		this.wkPrice = wkPrice;
+	}
+
+	public int getWkItemNo() {
+		return wkItemNo;
+	}
+
+	public void setWkItemNo(int wkItemNo) {
+		this.wkItemNo = wkItemNo;
+	}
+
+	public int getWkTotal() {
+		return wkTotal;
+	}
+
+	public void setWkTotal(int wkTotal) {
+		this.wkTotal = wkTotal;
+	}
+
+	public String getWkItemName() {
+		return wkItemName;
+	}
+
+	public void setWkItemName(String wkItemName) {
+		this.wkItemName = wkItemName;
+	}
+
+
+
+
+
 	/* Table */
 	private final DefaultTableModel outerTable = new DefaultTableModel();
 
@@ -90,6 +154,7 @@ public class ProductMain extends JFrame {
 			public void run() {
 				try {
 					ProductMain frame = new ProductMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -115,6 +180,9 @@ public class ProductMain extends JFrame {
 				lblPriviousBtn.setVisible(false);
 				inIt();
 				queryDrinkAction();
+				if(wkItemName != null) {
+					createPurchaseItemList();
+				}
 			}
 		});
 		setTitle("상품 페이지");
@@ -540,17 +608,8 @@ public class ProductMain extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(6, 673, 394, 210);
-			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
-	}
-
-	private JTable getInnerTable() {
-		if (innerTable == null) {
-			innerTable = new JTable();
-			innerTable.setModel(outerTable);
-		}
-		return innerTable;
 	}
 	
 	private JLabel getLblAll() {
@@ -1002,18 +1061,19 @@ public class ProductMain extends JFrame {
 		updateLabelVisibility();
 	}
 	
+	/* 08. 선택한 상품의 번호 가져오기 */
 	private int getItemNo(int index) {
 	    int startIndex = currentPage * 6; // startIndex 계산
 	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
 	        ProductDto selectedProduct = beanList.get(startIndex + index);
 
-	        // 선택한 상품의 번호 가져오기
 	        return selectedProduct.getDrinkNo();
 	    }
 
 	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
 	}
 	
+	/* 09. 선택한 상품의 정보를 넘겨주기 */
 	private void itemClick(int index) {
 	    int itemNo = getItemNo(index);
 	    if (itemNo != -1) {
@@ -1026,9 +1086,33 @@ public class ProductMain extends JFrame {
 	        productOptionMain.setItemNo(itemNo);
 	        productOptionMain.setVisible(true);
 	    }
-	    
-	    
 	}
+
+	// 전역 변수
+	private ArrayList<ProductDto> cart = new ArrayList<ProductDto>();
+	private ArrayList<JLabel> purchaseItems = new ArrayList<JLabel>();
+
+	/* 10. 선택한 상품을 담기 */
+	private void createPurchaseItemList() {
+	    // 받은 데이터
+	    int itemNo = wkItemNo;
+	    String itemName = wkItemName;
+	    int itemPrice = wkPrice;
+	    ProductDto productDto = new ProductDto(itemNo, itemName, itemPrice);
+	    cart.add(productDto);
+	    // JLabel 생성
+	    JLabel label = new JLabel();
+	    
+	    // 데이터 설정
+	    label.setText("상품 번호: " + cart.get(0).getDrinkNo() + ", 상품 이름: " + cart.get(0).getDrinkName() + ", 가격: " + cart.get(0).getDrinkPrice());
+	    
+	    // JLabel을 전역 변수 ArrayList에 추가
+	    purchaseItems.add(label);
+	}
+		
+		
+	
+	
 	
 
 }	// End Class

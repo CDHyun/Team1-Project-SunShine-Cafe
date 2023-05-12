@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.javalec.dao.CartDao;
 import com.javalec.dao.ProductDao;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
@@ -66,6 +67,8 @@ public class ProductOptionMain extends JFrame {
 	private int shotCount = 0;
 	private int syrupCount = 0;
 	private int sugarCount = 0;
+	private String userid = "donghyun";
+	private String wkItemName = "";
 
 	
 
@@ -117,6 +120,15 @@ public class ProductOptionMain extends JFrame {
 		this.itemImageName = itemImageName;
 	}
 
+	public String getWkItemName() {
+		return wkItemName;
+	}
+
+	public void setWkItemName(String wkItemName) {
+		this.wkItemName = wkItemName;
+	}
+
+	
 	
 	
 	/**
@@ -127,6 +139,7 @@ public class ProductOptionMain extends JFrame {
 			public void run() {
 				try {
 					ProductOptionMain frame = new ProductOptionMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -310,10 +323,7 @@ public class ProductOptionMain extends JFrame {
 			lblCartBtn.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					
-					
-					
-					
+					createPurchaseList();
 				}
 			});
 			ImageIcon icon = new ImageIcon(ProductOptionMain.class.getResource("/com/javalec/image/cartBtn.png"));
@@ -472,7 +482,8 @@ public class ProductOptionMain extends JFrame {
 		for(int i=0; i<beanList.size(); i++) {
 			total = beanList.get(i).getDrinkPrice();
 			wktotal = beanList.get(i).getDrinkPrice();
-			lblProductName.setText(beanList.get(i).getDrinkName());
+			wkItemName = beanList.get(i).getDrinkName();
+			lblProductName.setText(wkItemName);
 			lblPrice.setText(Integer.toString(wktotal));
 			ImageIcon icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
 			int x = 150;
@@ -527,6 +538,23 @@ public class ProductOptionMain extends JFrame {
 		lblAddSugar3.setText("");
 	}
 
-
+	/* 04. 주문 담기 버튼을 눌렀을 때 실행되는 메소드 */
+	private void createPurchaseList() {
+		
+		CartDao cartDao = new CartDao(itemNo, userid);
+		boolean result = cartDao.drinkAddToCart();
+		if(result == false) {
+			cartErrorDialog cartErrorDialog = new cartErrorDialog();
+			cartErrorDialog.setLocationRelativeTo(null);
+			cartErrorDialog.setVisible(true);
+		} else {
+			ProductMain productMain = new ProductMain();
+			productMain.setWkItemNo(itemNo);
+			productMain.setWkItemName(wkItemName);
+			productMain.setWkPrice(wktotal);
+			productMain.setVisible(true);
+			dispose();
+		}
+	}
 
 }	// End Class

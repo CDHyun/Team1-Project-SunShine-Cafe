@@ -152,6 +152,7 @@ public class ProductDao {
 		return beanList;
 	}
 	
+	/* 04. 선택한 상품의 정보를 보여주는 메소드 */
 	public ArrayList<ProductDto> itemDetail(int categoryNo, int itemNo){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		String query = "";
@@ -183,7 +184,5 @@ public class ProductDao {
 		return beanList;
 		
 	}
-	
-	
 	
 }	// End Class
