@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `sunshine`.`drink` (
   `drinkInsertDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `drinkImageName` VARCHAR(45) NULL,
   `drinkImage` LONGBLOB NULL,
-  `drinkStatus` TINYINT NULL DEFAULT 0,
+  `drinkStatus` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`drinkNo`, `categoryNo`),
   INDEX `fk_drink_category1_idx` (`categoryNo` ASC) VISIBLE,
   CONSTRAINT `fk_drink_category1`
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `sunshine`.`dessert` (
   `dessertInsertDate` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `dessertImageName` VARCHAR(45) NULL,
   `dessertImage` LONGBLOB NULL,
-  `dessertStatus` TINYINT NULL DEFAULT 0,
+  `dessertStatus` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`dessertNo`, `categoryNo`),
   UNIQUE INDEX `dessertNo_UNIQUE` (`dessertNo` ASC) VISIBLE,
   INDEX `fk_dessert_category_idx` (`categoryNo` ASC) VISIBLE,
@@ -137,7 +137,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sunshine`.`studyroom` (
   `tableNo` INT NOT NULL,
-  `tableStatus` TINYINT NULL DEFAULT 0,
+  `tableStatus` TINYINT NULL DEFAULT 1,
   `itemName` VARCHAR(45) NULL,
   `itemPrice` INT NULL,
   `itemImage` LONGBLOB NULL,
