@@ -17,6 +17,7 @@ public class ProductDto {
 	String dessertInsertDate;
 	String dessertImageName;
 	boolean dessertStatus;
+	String dessertContent;
 	
 	/* drink */
 	int drinkNo;
@@ -25,6 +26,7 @@ public class ProductDto {
 	String drinkInsertDate;
 	String drinkImageName;
 	boolean drinkStatus;
+	String drinkContent;
 	
 	/* user */
 	String userid;
@@ -36,7 +38,6 @@ public class ProductDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* 음료 리스트를 띄우기 위한 생성자 */
 	public ProductDto(int drinkNo, String drinkName, int drinkPrice, String drinkImageName) {
 		super();
 		this.drinkNo = drinkNo;
@@ -44,15 +45,26 @@ public class ProductDto {
 		this.drinkPrice = drinkPrice;
 		this.drinkImageName = drinkImageName;
 	}
+	
+	/* 음료(디저트) 리스트를 띄우기 위한 생성자 */
+	public ProductDto(int categoryNo, int drinkNo, String drinkName, int drinkPrice, String drinkImageName) {
+		super();
+		this.categoryNo = categoryNo;
+		this.drinkNo = drinkNo;
+		this.drinkName = drinkName;
+		this.drinkPrice = drinkPrice;
+		this.drinkImageName = drinkImageName;
+	}
 
-
-
-
-
-
-
-
-
+	/* 음료(디저트) 상세 페이지를 띄우기 위한 생성자 */
+	public ProductDto(String drinkName, int drinkPrice, String drinkImageName,
+			String drinkContent) {
+		super();
+		this.drinkName = drinkName;
+		this.drinkPrice = drinkPrice;
+		this.drinkImageName = drinkImageName;
+		this.drinkContent = drinkContent;
+	}
 
 	/*** getter&setter ***/
 	public int getCategoryNo() {
@@ -222,6 +234,22 @@ public class ProductDto {
 
 	public void setUserSecessionStatus(boolean userSecessionStatus) {
 		this.userSecessionStatus = userSecessionStatus;
+	}
+
+	public String getDessertContent() {
+		return dessertContent;
+	}
+
+	public void setDessertContent(String dessertContent) {
+		this.dessertContent = dessertContent;
+	}
+
+	public String getDrinkContent() {
+		return drinkContent;
+	}
+
+	public void setDrinkContent(String drinkContent) {
+		this.drinkContent = drinkContent;
 	}
 	
 	

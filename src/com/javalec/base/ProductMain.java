@@ -73,6 +73,7 @@ public class ProductMain extends JFrame {
 	private ImageIcon productIcon;
 	private int currentPage = 0;
 	private int categoryNo = 0;
+	private int total = 0;
 	
 	/* JLabel 배열 생성 */
 	
@@ -872,6 +873,19 @@ public class ProductMain extends JFrame {
 		lblItemStotList.add(lblItemSlot4);
 		lblItemStotList.add(lblItemSlot5);
 		lblItemStotList.add(lblItemSlot6);
+		
+		for (int i = 0; i < lblProductImageList.size(); i++) {
+	        JLabel lblProductImage = lblProductImageList.get(i);
+	        int index = i; // 인덱스 변수를 final 혹은 effectively final로 만들기 위해 별도로 선언
+
+	        lblProductImage.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                itemClick(index); // 해당 라벨을 클릭했을 때 처리할 메소드 호출
+	            }
+	        });
+	    }
+		
 	}
 	
 	/* 02. 첫 화면에 전체 메뉴 띄우기 (Drink 한정) */
@@ -903,45 +917,46 @@ public class ProductMain extends JFrame {
 
 	/* 04. 메뉴 페이지 앞으로 가기 버튼  */
 	private void nextPage() {
-		int maxPage = (int) Math.ceil(beanList.size() / 6.0);
-		if (currentPage < maxPage - 1) {
-			currentPage++;
-			updateLabelVisibility();
-		}
+	    int maxPage = (int) Math.ceil(beanList.size() / 6.0);
+	    if (currentPage < maxPage - 1) {
+	        currentPage++;
+	    }
+	    updateLabelVisibility();
 	}
 	
 	/* 05. 요청에 따라 라벨 정리하기 */
 	private void updateLabelVisibility() {
 	    int startIndex = currentPage * 6;
 	    int endIndex = Math.min(startIndex + 6, beanList.size());
-	    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+	    System.out.println(beanList.size());
+	    DecimalFormat decimalFormat = new DecimalFormat("#,###");	
+	    for (int i = startIndex; i < endIndex; i++) {
+	        int labelIndex = i - startIndex; // 라벨의 인덱스를 계산
+	        ProductDto product = beanList.get(i); // 해당 인덱스의 상품 가져오기
 
+	        lblProductImageList.get(labelIndex).setVisible(true);
+	        lblProductNameList.get(labelIndex).setVisible(true);
+	        lblProductPriceList.get(labelIndex).setVisible(true);
+	        lblItemStotList.get(labelIndex).setVisible(true);
 
-	    for (int i = 0; i < 6; i++) {
-	        if (i < endIndex - startIndex) {
-	            lblProductImageList.get(i).setVisible(true);
-	            lblProductNameList.get(i).setVisible(true);
-	            lblProductPriceList.get(i).setVisible(true);
-	            lblItemStotList.get(i).setVisible(true);
-	            icon = new ImageIcon("./" + beanList.get(startIndex + i).getDrinkImageName());
-	            int x = 100;
-	            int y = 120;
-	            ImageResize resize = new ImageResize(icon, x, y);
-	            ImageIcon productIcon = resize.imageResizing();
-	            lblProductImageList.get(i).setIcon(productIcon);  // 해당 라벨에 이미지 설정
-	            lblProductNameList.get(i).setText(beanList.get(startIndex + i).getDrinkName());
-	            lblProductPriceList.get(i).setText(decimalFormat.format(beanList.get(startIndex + i).getDrinkPrice()) + "원");
-	            lblPriviousBtn.setVisible(false);
-	            lblNextBtn.setVisible(true);
-	        } else {
-	        	lblNextBtn.setVisible(false);
-	        	lblPriviousBtn.setVisible(true);
-	            lblProductImageList.get(i).setVisible(false);
-	            lblProductNameList.get(i).setVisible(false);
-	            lblProductPriceList.get(i).setVisible(false);
-	            lblItemStotList.get(i).setVisible(false);
-	        }
+	        icon = new ImageIcon("./" + product.getDrinkImageName());
+	        int x = 100;
+	        int y = 120;
+	        ImageResize resize = new ImageResize(icon, x, y);
+	        ImageIcon productIcon = resize.imageResizing();
+	        lblProductImageList.get(labelIndex).setIcon(productIcon);
+	        lblProductNameList.get(labelIndex).setText(product.getDrinkName());
+	        lblProductPriceList.get(labelIndex).setText(decimalFormat.format(product.getDrinkPrice()) + "원");
 	    }
+
+	    // 나머지 라벨은 비활성화
+	    for (int i = endIndex - startIndex; i < 6; i++) {
+	        lblProductImageList.get(i).setVisible(false);
+	        lblProductNameList.get(i).setVisible(false);
+	        lblProductPriceList.get(i).setVisible(false);
+	        lblItemStotList.get(i).setVisible(false);
+	    }
+
 	    lblPriviousBtn.setVisible(currentPage > 0);
 	    lblNextBtn.setVisible(endIndex < beanList.size());
 	}
@@ -987,12 +1002,33 @@ public class ProductMain extends JFrame {
 		updateLabelVisibility();
 	}
 	
-	/* 08. 상품을 클릭했을 때 */
-	private void itemClick() {
-		
+	private int getItemNo(int index) {
+	    int startIndex = currentPage * 6; // startIndex 계산
+	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
+	        ProductDto selectedProduct = beanList.get(startIndex + index);
+
+	        // 선택한 상품의 번호 가져오기
+	        return selectedProduct.getDrinkNo();
+	    }
+
+	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
 	}
 	
-	
+	private void itemClick(int index) {
+	    int itemNo = getItemNo(index);
+	    if (itemNo != -1) {
+	        // 선택한 상품 데이터 활용
+	        String itemName = beanList.get(currentPage * 6 + index).getDrinkName();
+	        int itemPrice = beanList.get(currentPage * 6 + index).getDrinkPrice();
+	        ProductOptionMain productOptionMain = new ProductOptionMain();
+	        productOptionMain.setCategoryNo(categoryNo);
+	        System.out.println(categoryNo);
+	        productOptionMain.setItemNo(itemNo);
+	        productOptionMain.setVisible(true);
+	    }
+	    
+	    
+	}
 	
 
 }	// End Class

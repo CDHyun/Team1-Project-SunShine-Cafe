@@ -46,8 +46,8 @@ values ('1', '자바 칩 프라푸치노', '6300', 'JavaChipFrappuccino.png');
 
 -- DESSERT INSERT ------------------
 select * from dessert;
-insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
-values ('5', '크루아상', 2000, 'croissant.png');
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName, drinkContent)
+values ('5', '크루아상', 2000, 'croissant.png', '블렌드 원두로 추출한 에스프레소에 물을 더해, 풍부한 바디감을 느낄 수 있는 스탠다드 커피');
 
 insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
 values ('5', '초코 스무어 쿠키', 20, 3000, 'chocoSmoreCookie.png');
