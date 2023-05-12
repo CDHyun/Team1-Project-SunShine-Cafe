@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+
+/* 관리자가 메뉴와 관련된 작업(메뉴 추가, 수정, 품절처리) 하는 페이지 */
 public class AdminMenuMain extends JFrame {
 
 	private JPanel contentPane;
