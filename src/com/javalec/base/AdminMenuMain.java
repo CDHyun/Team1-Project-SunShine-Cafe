@@ -37,6 +37,8 @@ import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+
+/* 관리자가 메뉴와 관련된 작업(메뉴 추가, 수정, 품절처리) 하는 페이지 */
 public class AdminMenuMain extends JFrame {
 
 	private JPanel contentPane;
