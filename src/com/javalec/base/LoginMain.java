@@ -173,7 +173,7 @@ public class LoginMain extends JFrame {
 		if(result) {
 			int i_chk = insertFieldCheck();
 			if(i_chk != 0) {
-				JOptionPane.showMessageDialog(this, "로그인 오류", "확인해 주세요", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류",JOptionPane.INFORMATION_MESSAGE);
 			}else {
 				loginCheck();   // DB에서 유저 id, password가 있는지 확인 
 			}
@@ -241,7 +241,7 @@ public class LoginMain extends JFrame {
 			dispose();
 		}else {
 			if(tfUserId.getText().length() != 0) {
-				JOptionPane.showMessageDialog(this, "로그인 실패", "아이디 혹은 비밀번호를 확인해 주세요", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패" , JOptionPane.INFORMATION_MESSAGE);
 				tfUserId.requestFocus();
 			}
 		}
