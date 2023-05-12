@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -71,6 +72,7 @@ public class ProductMain extends JFrame {
 	private ImageIcon icon;
 	private ImageIcon productIcon;
 	private int currentPage = 0;
+	private int categoryNo = 0;
 	
 	/* JLabel 배열 생성 */
 	
@@ -88,6 +90,7 @@ public class ProductMain extends JFrame {
 				try {
 					ProductMain frame = new ProductMain();
 					frame.setVisible(true);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -583,6 +586,7 @@ public class ProductMain extends JFrame {
 			lblIce.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					categoryNo = 1;
 					lblAll.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.BLACK);
 					lblJuice.setForeground(Color.BLACK);
@@ -595,6 +599,8 @@ public class ProductMain extends JFrame {
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
 					lblIce.setForeground(Color.WHITE);
+					conditionDrinkQueryAciton();
+					updateLabelVisibility();
 				}
 			});
 			lblIce.setHorizontalAlignment(SwingConstants.CENTER);
@@ -609,6 +615,7 @@ public class ProductMain extends JFrame {
 			lblJuice.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					categoryNo = 3;
 					lblAll.setForeground(Color.BLACK);
 					lblIce.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.BLACK);
@@ -621,6 +628,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(true);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
+					conditionDrinkQueryAciton();
 				}
 			});
 			lblJuice.setHorizontalAlignment(SwingConstants.CENTER);
@@ -635,6 +643,7 @@ public class ProductMain extends JFrame {
 			lblTea.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					categoryNo = 4;
 					lblAll.setForeground(Color.BLACK);
 					lblIce.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.BLACK);
@@ -647,6 +656,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(true);
 					lblBackGround6.setVisible(false);
+					conditionDrinkQueryAciton();
 				}
 			});
 			lblTea.setHorizontalAlignment(SwingConstants.CENTER);
@@ -661,6 +671,7 @@ public class ProductMain extends JFrame {
 			lblDessert.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					categoryNo = 5;
 					lblAll.setForeground(Color.BLACK);
 					lblIce.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.BLACK);
@@ -673,6 +684,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(true);
+					conditionDessertQueryAciton();
 				}
 			});
 			lblDessert.setHorizontalAlignment(SwingConstants.CENTER);
@@ -687,6 +699,7 @@ public class ProductMain extends JFrame {
 			lblHot.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+					categoryNo = 2;
 					lblAll.setForeground(Color.BLACK);
 					lblIce.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.WHITE);
@@ -699,6 +712,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
+					conditionDrinkQueryAciton();
 				}
 			});
 			lblHot.setHorizontalAlignment(SwingConstants.CENTER);
@@ -865,7 +879,6 @@ public class ProductMain extends JFrame {
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.selectDrinkList();
-	    lblProductPrice1.setText("Test");
 		
 		for(int i=0; i<6; i++) {
 			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
@@ -876,31 +889,33 @@ public class ProductMain extends JFrame {
 			lblProductImageList.get(i).setIcon(productIcon);
 			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
 			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
-			
 		}
+		updateLabelVisibility();
 	}
-	
+
 	/* 03. 메뉴 페이지 뒤로 가기 버튼  */
 	private void priviousPage() {
-	    if (currentPage > 0) {
-	        currentPage--;
-	        updateLabelVisibility();
-	    }
+		if (currentPage > 0) {
+			currentPage--;
+			updateLabelVisibility();
+		}
 	}
-	
+
 	/* 04. 메뉴 페이지 앞으로 가기 버튼  */
 	private void nextPage() {
-		   int maxPage = (int) Math.ceil(beanList.size() / 6.0);
-		    if (currentPage < maxPage - 1) {
-		        currentPage++;
-		        updateLabelVisibility();
-		    }
+		int maxPage = (int) Math.ceil(beanList.size() / 6.0);
+		if (currentPage < maxPage - 1) {
+			currentPage++;
+			updateLabelVisibility();
+		}
 	}
 	
 	/* 05. 요청에 따라 라벨 정리하기 */
 	private void updateLabelVisibility() {
 	    int startIndex = currentPage * 6;
 	    int endIndex = Math.min(startIndex + 6, beanList.size());
+	    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+
 
 	    for (int i = 0; i < 6; i++) {
 	        if (i < endIndex - startIndex) {
@@ -915,7 +930,7 @@ public class ProductMain extends JFrame {
 	            ImageIcon productIcon = resize.imageResizing();
 	            lblProductImageList.get(i).setIcon(productIcon);  // 해당 라벨에 이미지 설정
 	            lblProductNameList.get(i).setText(beanList.get(startIndex + i).getDrinkName());
-	            lblProductPriceList.get(i).setText(Integer.toString(beanList.get(startIndex + i).getDrinkPrice()));
+	            lblProductPriceList.get(i).setText(decimalFormat.format(beanList.get(startIndex + i).getDrinkPrice()) + "원");
 	            lblPriviousBtn.setVisible(false);
 	            lblNextBtn.setVisible(true);
 	        } else {
@@ -927,13 +942,55 @@ public class ProductMain extends JFrame {
 	            lblItemStotList.get(i).setVisible(false);
 	        }
 	    }
+	    lblPriviousBtn.setVisible(currentPage > 0);
+	    lblNextBtn.setVisible(endIndex < beanList.size());
 	}
 	
-	/* 06. 카테고리 ICE 검색 */
-	private void conditionQueryIce() {
+	/* 06. 카테고리 검색 (Drink) */
+	private void conditionDrinkQueryAciton() {
+		currentPage = 0;
+		beanList = new ArrayList<ProductDto>();
+		ProductDao productDao = new ProductDao();
+		beanList = productDao.conditionDrinkQuery(categoryNo);
+
+		for (int i = 0; i < beanList.size(); i++) {
+			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
+			int x = 100;
+			int y = 120;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon productIcon = resize.imageResizing();
+			lblProductImageList.get(i).setIcon(productIcon);
+			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
+			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
+		}
+		updateLabelVisibility();
+	}
+	
+	/* 07. 카테고리 검색 (Dessert) */
+	private void conditionDessertQueryAciton() {
+		currentPage = 0;
+		lblPriviousBtn.setVisible(false);
+		beanList = new ArrayList<ProductDto>();
+		ProductDao productDao = new ProductDao();
+		beanList = productDao.conditionDessertQuery(categoryNo);
+
+		for (int i = 0; i < beanList.size(); i++) {
+			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
+			int x = 100;
+			int y = 120;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon productIcon = resize.imageResizing();
+			lblProductImageList.get(i).setIcon(productIcon);
+			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
+			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
+		}
+		updateLabelVisibility();
+	}
+	
+	/* 08. 상품을 클릭했을 때 */
+	private void itemClick() {
 		
 	}
-	
 	
 	
 	

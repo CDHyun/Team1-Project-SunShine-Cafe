@@ -39,7 +39,22 @@ values ('4', '아이스 제주 유기 녹차', '40
 insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName)
 values ('2', '에스프레소', '500', 'Espresso.png');
 
---
-
 insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName)
 values ('1', '자바 칩 프라푸치노', '6300', 'JavaChipFrappuccino.png');
+
+--
+
+-- DESSERT INSERT ------------------
+select * from dessert;
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
+values ('5', '크루아상', 2000, 'croissant.png');
+
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
+values ('5', '초코 스무어 쿠키', 20, 3000, 'chocoSmoreCookie.png');
+
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
+values ('5', '크로크무슈', 20, 4000, 'CroqueMonsieur.png');
+
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
+values ('5', '한컵 망고놀라', 20, 5000, 'OneCupMango.png');
+
