@@ -552,6 +552,7 @@ public class ProductOptionMain extends JFrame {
 			productMain.setWkItemNo(itemNo);
 			productMain.setWkItemName(wkItemName);
 			productMain.setWkPrice(wktotal);
+			productMain.setLocationRelativeTo(null);
 			productMain.setVisible(true);
 			dispose();
 		}

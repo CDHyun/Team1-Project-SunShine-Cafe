@@ -7,9 +7,14 @@ public class CartDto {
 	int categoryNo;
 	String categoryName;
 	
+	/* cart */
+	int cartNo;
+	int cartQty;
+	
+	
 	/* dessert */
 	int dessertNo;
-	String dessertNane;
+	String dessertName;
 	int dessertStock;
 	int dessertPrice;
 	String dessertInsertDate;
@@ -30,20 +35,34 @@ public class CartDto {
 	String userid;
 	boolean userSecessionStatus;
 	
-	
 	/* Constructor */
 	public CartDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	
+	/* 카트 리스트에 정보를 가져올 생성자 */
+	public CartDto(int cartNo, int cartQty, int dessertNo, String dessertName, int dessertPrice, int drinkNo,
+			String drinkName, int drinkPrice) {
+		super();
+		this.cartNo = cartNo;
+		this.cartQty = cartQty;
+		this.dessertNo = dessertNo;
+		this.dessertName = dessertName;
+		this.dessertPrice = dessertPrice;
+		this.drinkNo = drinkNo;
+		this.drinkName = drinkName;
+		this.drinkPrice = drinkPrice;
+	}
+	
+	
+	
 	
 	
 	/* getter & setter */
 	public int getCategoryNo() {
 		return categoryNo;
 	}
-
 
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
@@ -69,21 +88,19 @@ public class CartDto {
 		this.dessertNo = dessertNo;
 	}
 
-
-	public String getDessertNane() {
-		return dessertNane;
+	public String getDessertName() {
+		return dessertName;
 	}
 
 
-	public void setDessertNane(String dessertNane) {
-		this.dessertNane = dessertNane;
+	public void setDessertName(String dessertName) {
+		this.dessertName = dessertName;
 	}
 
 
 	public int getDessertStock() {
 		return dessertStock;
 	}
-
 
 	public void setDessertStock(int dessertStock) {
 		this.dessertStock = dessertStock;
@@ -228,6 +245,29 @@ public class CartDto {
 	public void setUserSecessionStatus(boolean userSecessionStatus) {
 		this.userSecessionStatus = userSecessionStatus;
 	}
+
+
+	public int getCartNo() {
+		return cartNo;
+	}
+
+
+	public void setCartNo(int cartNo) {
+		this.cartNo = cartNo;
+	}
+
+
+	public int getCartQty() {
+		return cartQty;
+	}
+
+
+	public void setCartQty(int cartQty) {
+		this.cartQty = cartQty;
+	}
+
+
+
 	
 
 	

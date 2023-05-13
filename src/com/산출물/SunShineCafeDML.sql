@@ -1,5 +1,9 @@
 use sunshine;
 
+ALTER TABLE category AUTO_INCREMENT = 1;
+ALTER TABLE drink AUTO_INCREMENT = 1;
+ALTER TABLE dessert AUTO_INCREMENT = 1;
+
 -- CATEGORY INSERT ----------------------
 -- 1 : 커피(ICE), 2 : 커피(HOT), 3 : 에이드&주스, 4 : 티(Tea), 5 : 디저트
 select * from category;
@@ -15,8 +19,8 @@ insert into category(categoryName) values('디저트');
 
 -- DRINK INSERT -------------------------
 select * from drink;
-insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName)
-values ('1', '아이스 아메리카노', '2000', 'IceAmericano.png');
+insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName, drinkContent)
+values ('1', '아이스 아메리카노', '2000', 'IceAmericano.png', '블렌드 원두로 추출한 에스프레소에 물을 더해, 풍부한 바디감을 느낄 수 있는 스탠다드 커피');
 
 insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName)
 values ('1', '아이스 카페라떼', '3500', 'IceCafeLatte.png');
@@ -46,8 +50,8 @@ values ('1', '자바 칩 프라푸치노', '6300', 'JavaChipFrappuccino.png');
 
 -- DESSERT INSERT ------------------
 select * from dessert;
-insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName, drinkContent)
-values ('5', '크루아상', 2000, 'croissant.png', '블렌드 원두로 추출한 에스프레소에 물을 더해, 풍부한 바디감을 느낄 수 있는 스탠다드 커피');
+insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
+values ('5', '크루아상', 2000, 20, 'croissant.png');
 
 insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName)
 values ('5', '초코 스무어 쿠키', 20, 3000, 'chocoSmoreCookie.png');

@@ -7,8 +7,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
+import com.javalec.dao.CartDao;
 import com.javalec.dao.ProductDao;
+import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
 
@@ -16,6 +19,7 @@ import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -34,6 +38,7 @@ import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ListSelectionModel;
 
 /* 기본 키오스크에서 상품 메뉴들을 보여주는 페이지 */
 public class ProductMain extends JFrame {
@@ -62,7 +67,6 @@ public class ProductMain extends JFrame {
 	private JLabel lblTitle_1;
 	private JLabel lblTitle_1_1;
 	private JLabel lblQty;
-	private JLabel lblCart;
 	private JScrollPane scrollPane;
 	private JLabel lblPriviousBtn;
 	private JLabel lblNextBtn;
@@ -86,6 +90,9 @@ public class ProductMain extends JFrame {
 	private String wkItemName;
 	private JPanel panel;
 	private String userid = "donghyun";
+	
+	/* Table 	*/
+	private final DefaultTableModel outerTable = new DefaultTableModel();
 	
 	
 	/* ProductOptionMain과 데이터를 주고 받을 getter & setter */
@@ -141,9 +148,6 @@ public class ProductMain extends JFrame {
 
 
 
-	/* Table */
-	private final DefaultTableModel outerTable = new DefaultTableModel();
-
 	
 	
 	/**
@@ -180,9 +184,7 @@ public class ProductMain extends JFrame {
 				lblPriviousBtn.setVisible(false);
 				inIt();
 				queryDrinkAction();
-				if(wkItemName != null) {
-					createPurchaseItemList();
-				}
+				showCartList();
 			}
 		});
 		setTitle("상품 페이지");
@@ -224,7 +226,6 @@ public class ProductMain extends JFrame {
 		contentPane.add(getLblTitle_1());
 		contentPane.add(getLblTitle_1_1());
 		contentPane.add(getLblQty());
-		contentPane.add(getLblCart());
 		contentPane.add(getScrollPane());
 		contentPane.add(getLblPriviousBtn());
 		contentPane.add(getLblNextBtn());
@@ -239,6 +240,8 @@ public class ProductMain extends JFrame {
 		contentPane.add(getLblBackGround4());
 		contentPane.add(getLblBackGround5());
 		contentPane.add(getLblBackGround6());
+		contentPane.add(getLblPulsBtn());
+		contentPane.add(getLblMinusBtn());
 	}
 	
 
@@ -491,21 +494,6 @@ public class ProductMain extends JFrame {
 		}
 		return lblQty;
 	}
-	private JLabel getLblCart() {
-		if (lblCart == null) {
-			lblCart = new JLabel("");
-			lblCart.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblCart.setVerticalAlignment(SwingConstants.BOTTOM);
-			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/nemo.png"));
-			int x = 420;
-			int y = 200;
-			ImageResize resize = new ImageResize(icon, x, y);
-			ImageIcon cart = resize.imageResizing();
-			lblCart.setIcon(cart);
-			lblCart.setBounds(0, 648, 403, 224);
-		}
-		return lblCart;
-	}
 	
 	/* 상품 메뉴 페이지 뒤로 가기 버튼 */
 	private JLabel getLblPriviousBtn() {
@@ -608,6 +596,7 @@ public class ProductMain extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(6, 673, 394, 210);
+			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
 	}
@@ -879,8 +868,33 @@ public class ProductMain extends JFrame {
 		return lblBackGround6;
 	}
 	
+	private JTable getInnerTable() {
+		if (innerTable == null) {
+			innerTable = new JTable();
+			innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			innerTable.setModel(outerTable);
+			innerTable.setAutoResizeMode(innerTable.AUTO_RESIZE_OFF);
+			innerTable.setRowHeight(150);
+		}
+		return innerTable;
+	}
 	
-	
+	private JLabel getLblPulsBtn() {
+		if (lblPulsBtn == null) {
+			lblPulsBtn = new JLabel("");
+			lblPulsBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/plusBtn.png")));
+			lblPulsBtn.setBounds(24, 605, 61, 36);
+		}
+		return lblPulsBtn;
+	}
+	private JLabel getLblMinusBtn() {
+		if (lblMinusBtn == null) {
+			lblMinusBtn = new JLabel("");
+			lblMinusBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/minusBtn.png")));
+			lblMinusBtn.setBounds(117, 599, 61, 36);
+		}
+		return lblMinusBtn;
+	}
 	
 	
 	
@@ -901,6 +915,9 @@ public class ProductMain extends JFrame {
 	private JLabel lblBackGround4;
 	private JLabel lblBackGround5;
 	private JLabel lblBackGround6;
+	private JTable innerTable;
+	private JLabel lblPulsBtn;
+	private JLabel lblMinusBtn;
 
 //	lblProductImages = {lblProductImage1, lblProductImage2, lblProductImage3, lblProductImage4, lblProductImage5, lblProductImage6};
 //	private JLabel[] lblProductNames = {lblProductName1, lblProductName2, lblProductName3, lblProductName4, lblProductName5, lblProductName6};
@@ -946,6 +963,54 @@ public class ProductMain extends JFrame {
 	    }
 		
 	}
+	
+	/* */
+	private void tableInit() {
+		outerTable.addColumn("No");
+		outerTable.addColumn("상품명");
+		outerTable.addColumn("+");
+		outerTable.addColumn("수량");
+		outerTable.addColumn("-");
+		outerTable.addColumn("가격");
+		outerTable.setColumnCount(6);
+		
+		int i = outerTable.getRowCount();
+		for(int j=0; j<i; j++) {
+			outerTable.removeRow(0);
+		}
+		
+		/* 카트 번호 */
+		int vColIndex = 0;
+		TableColumn col = innerTable.getColumnModel().getColumn(vColIndex);
+		int width = 20;
+		col.setPreferredWidth(width);
+		/* 상품명 */
+		vColIndex = 1;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 250;
+		col.setPreferredWidth(width);
+		/* + 버튼 */
+		vColIndex = 2;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 50;
+		col.setPreferredWidth(width);
+		/* 수량 */
+		vColIndex = 3;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 50;
+		col.setPreferredWidth(width);
+		/* - 버튼 */
+		vColIndex = 4;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 50;
+		col.setPreferredWidth(width);
+		/* 가격 */
+		vColIndex = 5;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 100;
+		col.setPreferredWidth(width);
+	}
+	
 	
 	/* 02. 첫 화면에 전체 메뉴 띄우기 (Drink 한정) */
 	private void queryDrinkAction() {
@@ -1082,37 +1147,35 @@ public class ProductMain extends JFrame {
 	        int itemPrice = beanList.get(currentPage * 6 + index).getDrinkPrice();
 	        ProductOptionMain productOptionMain = new ProductOptionMain();
 	        productOptionMain.setCategoryNo(categoryNo);
-	        System.out.println(categoryNo);
 	        productOptionMain.setItemNo(itemNo);
+	        productOptionMain.setLocationRelativeTo(null);
 	        productOptionMain.setVisible(true);
+	        dispose();
 	    }
 	}
+	
 
-	// 전역 변수
-	private ArrayList<ProductDto> cart = new ArrayList<ProductDto>();
-	private ArrayList<JLabel> purchaseItems = new ArrayList<JLabel>();
 
-	/* 10. 선택한 상품을 담기 */
-	private void createPurchaseItemList() {
-	    // 받은 데이터
-	    int itemNo = wkItemNo;
-	    String itemName = wkItemName;
-	    int itemPrice = wkPrice;
-	    ProductDto productDto = new ProductDto(itemNo, itemName, itemPrice);
-	    cart.add(productDto);
-	    // JLabel 생성
-	    JLabel label = new JLabel();
-	    
-	    // 데이터 설정
-	    label.setText("상품 번호: " + cart.get(0).getDrinkNo() + ", 상품 이름: " + cart.get(0).getDrinkName() + ", 가격: " + cart.get(0).getDrinkPrice());
-	    
-	    // JLabel을 전역 변수 ArrayList에 추가
-	    purchaseItems.add(label);
+	/* 10. 선택한 상품을 보여주기 */
+	private void showCartList() {
+		ArrayList<CartDto> beanList = new ArrayList<CartDto>();
+		CartDao cartDao = new CartDao();
+		beanList = cartDao.cartList(userid);
+		int cartCount = 0;
+
+		System.out.println("Cart List : " + beanList.size());
+		
+		
+	    // 테이블 데이터 설정
+	    for (int i = 0; i < beanList.size(); i++) {
+	        cartCount++;
+	        if(beanList.get(i).getDrinkName().equals("")) {
+	        	Object[] data = {cartCount, beanList.get(i).getDessertName(), lblPulsBtn, beanList.get(i).getCartQty(), lblMinusBtn, wkTotal};
+	        	outerTable.addRow(data);
+	        } else {
+	        	Object[] data = {cartCount, beanList.get(i).getDrinkName(), lblPulsBtn, beanList.get(i).getCartQty(), lblMinusBtn, wkTotal};
+	        	outerTable.addRow(data);
+	        }
+	    }
 	}
-		
-		
-	
-	
-	
-
 }	// End Class
