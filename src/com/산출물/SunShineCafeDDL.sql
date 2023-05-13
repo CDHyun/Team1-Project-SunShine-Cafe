@@ -209,3 +209,37 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+ALTER TABLE `sunshine`.`drink` 
+ADD COLUMN `drinkContent` VARCHAR(45) NULL AFTER `drinkStatus`;
+
+ALTER TABLE `sunshine`.`dessert` 
+ADD COLUMN `dessertContent` VARCHAR(45) NULL AFTER `dessertStatus`;
+
+CREATE TABLE IF NOT EXISTS `sunshine`.`cart` (
+  `cartNo` INT NOT NULL AUTO_INCREMENT,
+  `categoryNo` INT NOT NULL,
+  `dessertNo` INT NOT NULL,
+  `drinkNo` INT NOT NULL,
+  `user_userid` VARCHAR(20) NOT NULL,
+  `cartQty` INT NULL,
+  PRIMARY KEY (`cartNo`, `categoryNo`, `dessertNo`, `drinkNo`, `user_userid`),
+  INDEX `fk_cart_dessert1_idx` (`dessertNo` ASC, `categoryNo` ASC) VISIBLE,
+  INDEX `fk_cart_drink1_idx` (`drinkNo` ASC) VISIBLE,
+  INDEX `fk_cart_user1_idx` (`user_userid` ASC) VISIBLE,
+  CONSTRAINT `fk_cart_dessert1`
+    FOREIGN KEY (`dessertNo` , `categoryNo`)
+    REFERENCES `sunshine`.`dessert` (`dessertNo` , `categoryNo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cart_drink1`
+    FOREIGN KEY (`drinkNo`)
+    REFERENCES `sunshine`.`drink` (`drinkNo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cart_user1`
+    FOREIGN KEY (`user_userid`)
+    REFERENCES `sunshine`.`user` (`userid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB

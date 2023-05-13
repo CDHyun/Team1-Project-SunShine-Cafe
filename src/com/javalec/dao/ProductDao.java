@@ -48,7 +48,7 @@ public class ProductDao {
 	public ArrayList<ProductDto> selectDrinkList(){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		
-		String query = "select drinkNo, drinkName, drinkPrice, drinkImageName, drinkImage from drink";
+		String query = "select drinkNo, drinkName, drinkPrice, drinkImageName, drinkImage, categoryNo from drink";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -66,11 +66,12 @@ public class ProductDao {
 				FileOutputStream output = new FileOutputStream(file);
 				InputStream input = rs.getBinaryStream(5);
 				byte[] buffer = new byte[1024];
+				int categoryNo = rs.getInt(6);
 				
 				while(input.read(buffer) > 0) {
 					output.write(buffer);
 				}
-				ProductDto productDto = new ProductDto(wkNo, wkName, wkPrice, wkImageName);
+				ProductDto productDto = new ProductDto(categoryNo, wkNo, wkName, wkPrice, wkImageName);
 				beanList.add(productDto);
 			}
 			con.close();
@@ -144,6 +145,38 @@ public class ProductDao {
 				ProductDto productDto = new ProductDto(wkNo, wkName, wkPrice, wkImageName);
 				beanList.add(productDto);
 			}
+			con.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return beanList;
+	}
+	
+	/* 04. 선택한 상품의 정보를 보여주는 메소드 */
+	public ArrayList<ProductDto> itemDetail(int categoryNo, int itemNo){
+		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
+		String query = "";
+		if(categoryNo == 5) {
+			query = "select dessertName, dessertPrice, dessertImageName, dessertContent from dessert where dessertNo = ";
+		} else {
+			query = "select drinkName, drinkPrice, drinkImageName, drinkContent from drink where drinkNo = ";
+		}
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query + itemNo);
+			
+			while(rs.next()) {
+				String wkName = rs.getString(1);
+				int wkPrice = rs.getInt(2);
+				String wkImageName = rs.getString(3);
+				String wkContent = rs.getString(4);
+				ProductDto productDto = new ProductDto(wkName, wkPrice, wkImageName, wkContent);
+				beanList.add(productDto);
+				}
+			
 			con.close();
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -13,15 +13,22 @@ import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
 
 import java.awt.Color;
+import java.awt.Container;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
 import java.util.ArrayList;
 
+
+
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
@@ -57,7 +64,6 @@ public class ProductMain extends JFrame {
 	private JLabel lblQty;
 	private JLabel lblCart;
 	private JScrollPane scrollPane;
-	private JTable innerTable;
 	private JLabel lblPriviousBtn;
 	private JLabel lblNextBtn;
 	private JLabel lblProductImage1;
@@ -73,9 +79,68 @@ public class ProductMain extends JFrame {
 	private ImageIcon productIcon;
 	private int currentPage = 0;
 	private int categoryNo = 0;
+	private int total = 0;
+	private int wkTotal = 0;
+	private int wkPrice = 0;
+	private int wkItemNo = 0;
+	private String wkItemName;
+	private JPanel panel;
+	private String userid = "donghyun";
 	
-	/* JLabel 배열 생성 */
 	
+	/* ProductOptionMain과 데이터를 주고 받을 getter & setter */
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getWktotal() {
+		return wkTotal;
+	}
+
+	public void setWktotal(int wktotal) {
+		this.wkTotal = wktotal;
+	}
+
+	public int getWkPrice() {
+		return wkPrice;
+	}
+
+	public void setWkPrice(int wkPrice) {
+		this.wkPrice = wkPrice;
+	}
+
+	public int getWkItemNo() {
+		return wkItemNo;
+	}
+
+	public void setWkItemNo(int wkItemNo) {
+		this.wkItemNo = wkItemNo;
+	}
+
+	public int getWkTotal() {
+		return wkTotal;
+	}
+
+	public void setWkTotal(int wkTotal) {
+		this.wkTotal = wkTotal;
+	}
+
+	public String getWkItemName() {
+		return wkItemName;
+	}
+
+	public void setWkItemName(String wkItemName) {
+		this.wkItemName = wkItemName;
+	}
+
+
+
+
+
 	/* Table */
 	private final DefaultTableModel outerTable = new DefaultTableModel();
 
@@ -89,6 +154,7 @@ public class ProductMain extends JFrame {
 			public void run() {
 				try {
 					ProductMain frame = new ProductMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -114,6 +180,9 @@ public class ProductMain extends JFrame {
 				lblPriviousBtn.setVisible(false);
 				inIt();
 				queryDrinkAction();
+				if(wkItemName != null) {
+					createPurchaseItemList();
+				}
 			}
 		});
 		setTitle("상품 페이지");
@@ -539,17 +608,8 @@ public class ProductMain extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setBounds(6, 673, 394, 210);
-			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
-	}
-
-	private JTable getInnerTable() {
-		if (innerTable == null) {
-			innerTable = new JTable();
-			innerTable.setModel(outerTable);
-		}
-		return innerTable;
 	}
 	
 	private JLabel getLblAll() {
@@ -872,6 +932,19 @@ public class ProductMain extends JFrame {
 		lblItemStotList.add(lblItemSlot4);
 		lblItemStotList.add(lblItemSlot5);
 		lblItemStotList.add(lblItemSlot6);
+		
+		for (int i = 0; i < lblProductImageList.size(); i++) {
+	        JLabel lblProductImage = lblProductImageList.get(i);
+	        int index = i; // 인덱스 변수를 final 혹은 effectively final로 만들기 위해 별도로 선언
+
+	        lblProductImage.addMouseListener(new MouseAdapter() {
+	            @Override
+	            public void mouseClicked(MouseEvent e) {
+	                itemClick(index); // 해당 라벨을 클릭했을 때 처리할 메소드 호출
+	            }
+	        });
+	    }
+		
 	}
 	
 	/* 02. 첫 화면에 전체 메뉴 띄우기 (Drink 한정) */
@@ -903,45 +976,46 @@ public class ProductMain extends JFrame {
 
 	/* 04. 메뉴 페이지 앞으로 가기 버튼  */
 	private void nextPage() {
-		int maxPage = (int) Math.ceil(beanList.size() / 6.0);
-		if (currentPage < maxPage - 1) {
-			currentPage++;
-			updateLabelVisibility();
-		}
+	    int maxPage = (int) Math.ceil(beanList.size() / 6.0);
+	    if (currentPage < maxPage - 1) {
+	        currentPage++;
+	    }
+	    updateLabelVisibility();
 	}
 	
 	/* 05. 요청에 따라 라벨 정리하기 */
 	private void updateLabelVisibility() {
 	    int startIndex = currentPage * 6;
 	    int endIndex = Math.min(startIndex + 6, beanList.size());
-	    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+	    System.out.println(beanList.size());
+	    DecimalFormat decimalFormat = new DecimalFormat("#,###");	
+	    for (int i = startIndex; i < endIndex; i++) {
+	        int labelIndex = i - startIndex; // 라벨의 인덱스를 계산
+	        ProductDto product = beanList.get(i); // 해당 인덱스의 상품 가져오기
 
+	        lblProductImageList.get(labelIndex).setVisible(true);
+	        lblProductNameList.get(labelIndex).setVisible(true);
+	        lblProductPriceList.get(labelIndex).setVisible(true);
+	        lblItemStotList.get(labelIndex).setVisible(true);
 
-	    for (int i = 0; i < 6; i++) {
-	        if (i < endIndex - startIndex) {
-	            lblProductImageList.get(i).setVisible(true);
-	            lblProductNameList.get(i).setVisible(true);
-	            lblProductPriceList.get(i).setVisible(true);
-	            lblItemStotList.get(i).setVisible(true);
-	            icon = new ImageIcon("./" + beanList.get(startIndex + i).getDrinkImageName());
-	            int x = 100;
-	            int y = 120;
-	            ImageResize resize = new ImageResize(icon, x, y);
-	            ImageIcon productIcon = resize.imageResizing();
-	            lblProductImageList.get(i).setIcon(productIcon);  // 해당 라벨에 이미지 설정
-	            lblProductNameList.get(i).setText(beanList.get(startIndex + i).getDrinkName());
-	            lblProductPriceList.get(i).setText(decimalFormat.format(beanList.get(startIndex + i).getDrinkPrice()) + "원");
-	            lblPriviousBtn.setVisible(false);
-	            lblNextBtn.setVisible(true);
-	        } else {
-	        	lblNextBtn.setVisible(false);
-	        	lblPriviousBtn.setVisible(true);
-	            lblProductImageList.get(i).setVisible(false);
-	            lblProductNameList.get(i).setVisible(false);
-	            lblProductPriceList.get(i).setVisible(false);
-	            lblItemStotList.get(i).setVisible(false);
-	        }
+	        icon = new ImageIcon("./" + product.getDrinkImageName());
+	        int x = 100;
+	        int y = 120;
+	        ImageResize resize = new ImageResize(icon, x, y);
+	        ImageIcon productIcon = resize.imageResizing();
+	        lblProductImageList.get(labelIndex).setIcon(productIcon);
+	        lblProductNameList.get(labelIndex).setText(product.getDrinkName());
+	        lblProductPriceList.get(labelIndex).setText(decimalFormat.format(product.getDrinkPrice()) + "원");
 	    }
+
+	    // 나머지 라벨은 비활성화
+	    for (int i = endIndex - startIndex; i < 6; i++) {
+	        lblProductImageList.get(i).setVisible(false);
+	        lblProductNameList.get(i).setVisible(false);
+	        lblProductPriceList.get(i).setVisible(false);
+	        lblItemStotList.get(i).setVisible(false);
+	    }
+
 	    lblPriviousBtn.setVisible(currentPage > 0);
 	    lblNextBtn.setVisible(endIndex < beanList.size());
 	}
@@ -987,10 +1061,56 @@ public class ProductMain extends JFrame {
 		updateLabelVisibility();
 	}
 	
-	/* 08. 상품을 클릭했을 때 */
-	private void itemClick() {
-		
+	/* 08. 선택한 상품의 번호 가져오기 */
+	private int getItemNo(int index) {
+	    int startIndex = currentPage * 6; // startIndex 계산
+	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
+	        ProductDto selectedProduct = beanList.get(startIndex + index);
+
+	        return selectedProduct.getDrinkNo();
+	    }
+
+	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
 	}
+	
+	/* 09. 선택한 상품의 정보를 넘겨주기 */
+	private void itemClick(int index) {
+	    int itemNo = getItemNo(index);
+	    if (itemNo != -1) {
+	        // 선택한 상품 데이터 활용
+	        String itemName = beanList.get(currentPage * 6 + index).getDrinkName();
+	        int itemPrice = beanList.get(currentPage * 6 + index).getDrinkPrice();
+	        ProductOptionMain productOptionMain = new ProductOptionMain();
+	        productOptionMain.setCategoryNo(categoryNo);
+	        System.out.println(categoryNo);
+	        productOptionMain.setItemNo(itemNo);
+	        productOptionMain.setVisible(true);
+	    }
+	}
+
+	// 전역 변수
+	private ArrayList<ProductDto> cart = new ArrayList<ProductDto>();
+	private ArrayList<JLabel> purchaseItems = new ArrayList<JLabel>();
+
+	/* 10. 선택한 상품을 담기 */
+	private void createPurchaseItemList() {
+	    // 받은 데이터
+	    int itemNo = wkItemNo;
+	    String itemName = wkItemName;
+	    int itemPrice = wkPrice;
+	    ProductDto productDto = new ProductDto(itemNo, itemName, itemPrice);
+	    cart.add(productDto);
+	    // JLabel 생성
+	    JLabel label = new JLabel();
+	    
+	    // 데이터 설정
+	    label.setText("상품 번호: " + cart.get(0).getDrinkNo() + ", 상품 이름: " + cart.get(0).getDrinkName() + ", 가격: " + cart.get(0).getDrinkPrice());
+	    
+	    // JLabel을 전역 변수 ArrayList에 추가
+	    purchaseItems.add(label);
+	}
+		
+		
 	
 	
 	
