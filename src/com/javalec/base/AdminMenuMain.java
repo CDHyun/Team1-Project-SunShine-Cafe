@@ -36,6 +36,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ButtonGroup;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 /* 관리자가 메뉴와 관련된 작업(메뉴 추가, 수정, 품절처리) 하는 페이지 */
@@ -113,7 +115,8 @@ public class AdminMenuMain extends JFrame {
 			public void windowOpened(WindowEvent e) {
 				tableInit();	// table 정리
 				searchAction();	// table 데이터
-				tfCategory.setText((String)cbCategory.getSelectedItem());
+				screenPartition();
+				
 						
 			}
 		});
@@ -175,6 +178,7 @@ public class AdminMenuMain extends JFrame {
 			rbInsert = new JRadioButton("입력");
 			rbInsert.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					cbSearch.setSelectedIndex(0);
 					screenPartition();
 				}
 			});
@@ -189,6 +193,7 @@ public class AdminMenuMain extends JFrame {
 			rbUpdate = new JRadioButton("수정");
 			rbUpdate.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					cbSearch.setSelectedIndex(0);
 					screenPartition();
 				}
 			});
@@ -204,6 +209,7 @@ public class AdminMenuMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 						tableInit();	
 						searchAction();
+						screenPartition();
 				}
 			});
 			cbSearch.setModel(new DefaultComboBoxModel(new String[] {"음료", "디저트", "카테고리"}));
@@ -237,6 +243,12 @@ public class AdminMenuMain extends JFrame {
 	private JTable getInnerTable() {
 		if (innerTable == null) {
 			innerTable = new JTable();
+			innerTable.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+						tableClick();						
+				}
+			});
 			innerTable.setEnabled(false);
 			innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
 			innerTable.setModel(outerTable);		// table 셋팅
@@ -351,17 +363,7 @@ public class AdminMenuMain extends JFrame {
 			btnInsrut = new JButton("입력");
 			btnInsrut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(cbSearch.getSelectedIndex() == 0) {
-						drinkInsert();						
-					}else if(cbSearch.getSelectedIndex() == 1) {
-						dessertInsert();
-					}else {
-						categoryInsert();
-					}
-					
-					tableInit();
-					searchAction();
-					clearColumn();
+						actionPartition(); 
 				}
 			});
 			btnInsrut.setBounds(482, 805, 117, 29);
@@ -423,9 +425,7 @@ public class AdminMenuMain extends JFrame {
 			width = 80;
 			col.setPreferredWidth(width);
 			
-			tfCategory.setEnabled(false);
-			cbCategory.setEnabled(true);
-			tfQty.setEditable(false);
+
 		// 디저트
 		}else if(cbSearch.getSelectedIndex() == 1) {
 				outerTable.setRowCount(0);
@@ -477,10 +477,7 @@ public class AdminMenuMain extends JFrame {
 				col = innerTable.getColumnModel().getColumn(vColIndex);
 				width = 80;
 				col.setPreferredWidth(width);
-				
-				tfQty.setEditable(true);
-				cbCategory.setEnabled(false);
-				cbCategory.setSelectedIndex(4);
+
 			// 카테고리
 			}else {
 				outerTable.setRowCount(0);
@@ -504,15 +501,7 @@ public class AdminMenuMain extends JFrame {
 				width = 285;
 				col.setPreferredWidth(width);
 				
-				
-				tfCategory.setEnabled(true);
-				tfName.setEditable(false);
-				tfPrice.setEditable(false);
-				cbWhether.setEnabled(false);
-				btnimage.setEnabled(false);	
-				tfImageName.setEditable(false);
-				cbCategory.setEnabled(false);
-				tfCategory.setText("");
+			
 			}
 		
 		
@@ -522,12 +511,18 @@ public class AdminMenuMain extends JFrame {
 	private void searchAction() {
 		ArrayList<AdminMenuDto> menuList = new ArrayList<AdminMenuDto>();
 		AdminMenuDao dao = new AdminMenuDao();
-		
+		ArrayList<AdminMenuDto> nameList = new ArrayList<AdminMenuDto>();
+		nameList = dao.cetagoryNameList();
+		int namecount = nameList.size();
 		int num = 0;
 		int count = 0;
-		
+		for(int c = 0; c < namecount ; c++ ) {
+			String categoryName = nameList.get(c).getCategoryName();
+			cbCategory.addItem(categoryName);
+		}
 		// 음료가 선택 되어있을때
 		if(cbSearch.getSelectedIndex() == 0) {
+			
 			menuList = dao.drinkList();
 			count = menuList.size();
 			tfNumber.setText(Integer.toString(count + 1));
@@ -561,6 +556,8 @@ public class AdminMenuMain extends JFrame {
 			}
 		// 카테고리가 선택 되어 있을때
 		}else {
+
+		
 			menuList = dao.cetagoryList();
 			count =menuList.size();
 			tfNumber.setText(Integer.toString(count + 1));
@@ -659,34 +656,118 @@ public class AdminMenuMain extends JFrame {
 			tableInit();
 			searchAction();
 			
-			tfCategory.setEnabled(false);
-			tfQty.setEditable(false);
-			tfName.setEditable(true);
-			tfPrice.setEditable(true);
-			cbWhether.setEnabled(true);
-			btnInsrut.setEnabled(true);
-			btnimage.setEnabled(true);
-			innerTable.setEnabled(false);
-			cbCategory.setEnabled(true);
+			// 음료 입력
+			if(cbSearch.getSelectedIndex() == 0) {
+				tfName.setEnabled(true);
+				tfPrice.setEnabled(true);
+				tfCategory.setEnabled(false);
+				tfQty.setEnabled(false);
+				tfImageName.setEnabled(true);
+				cbWhether.setEnabled(true);
+				btnInsrut.setEnabled(true);
+				btnimage.setEnabled(true);
+				innerTable.setEnabled(false);
+				cbCategory.setEnabled(true);
+				lblimage.setIcon(null);
+				tfCategory.setText((String)cbCategory.getSelectedItem());
+				cbCategory.setSelectedIndex(0);
+			// 디저트 입력	
+			}else if(cbSearch.getSelectedIndex() == 1) {
+				tfName.setEnabled(true);
+				tfPrice.setEnabled(true);
+				tfCategory.setEnabled(false);
+				tfQty.setEnabled(true);
+				tfImageName.setEnabled(true);
+				cbWhether.setEnabled(true);
+				btnInsrut.setEnabled(true);
+				btnimage.setEnabled(true);
+				innerTable.setEnabled(false);
+				cbCategory.setEnabled(true);
+				lblimage.setIcon(null);
+				tfCategory.setText((String)cbCategory.getSelectedItem());
+				cbCategory.setSelectedIndex(4);
+			// 카테고리 입력
+			}else {
+				tfName.setEnabled(false);
+				tfPrice.setEnabled(false);
+				tfCategory.setEnabled(true);
+				tfImageName.setEnabled(false);
+				tfQty.setEnabled(false);
+				cbWhether.setEnabled(false);
+				btnInsrut.setEnabled(false);
+				btnimage.setEnabled(false);	
+				innerTable.setEnabled(false);
+				cbCategory.setEnabled(false);
+				lblimage.setIcon(null);
+				cbCategory.setSelectedIndex(0);
+				tfCategory.setText("");
+			}
+			
 		}
 		// 수정
 		if(rbUpdate.isSelected()){
 			clearColumn();
-			tfName.setEditable(false);
-			tfPrice.setEditable(false);
+			
+			tfName.setEnabled(false);
+			tfPrice.setEnabled(false);
 			tfCategory.setEnabled(false);
+			tfImageName.setEnabled(false);
+			tfQty.setEnabled(false);
 			cbWhether.setEnabled(false);
 			btnInsrut.setEnabled(false);
 			btnimage.setEnabled(false);	
 			innerTable.setEnabled(true);
-			tfImageName.setEditable(false);
 			cbCategory.setEnabled(false);
+			lblimage.setIcon(null);
 		}
-		
-		
 			
 	}
 	
+	private void screenPartitionClick() {
+		if(cbSearch.getSelectedIndex() == 0) {
+			tfName.setEnabled(true);
+			tfPrice.setEnabled(true);
+			tfCategory.setEnabled(false);
+			tfQty.setEnabled(false);
+			tfImageName.setEnabled(true);
+			cbWhether.setEnabled(true);
+			btnInsrut.setEnabled(true);
+			btnimage.setEnabled(true);
+			innerTable.setEnabled(true);
+			cbCategory.setEnabled(true);
+
+		// 디저트 입력	
+		}else if(cbSearch.getSelectedIndex() == 1) {
+			tfName.setEnabled(true);
+			tfPrice.setEnabled(true);
+			tfCategory.setEnabled(false);
+			tfQty.setEnabled(true);
+			tfImageName.setEnabled(true);
+			cbWhether.setEnabled(true);
+			btnInsrut.setEnabled(true);
+			btnimage.setEnabled(true);
+			innerTable.setEnabled(true);
+			cbCategory.setEnabled(true);
+
+		// 카테고리 입력
+		}else {
+			tfName.setEnabled(false);
+			tfPrice.setEnabled(false);
+			tfCategory.setEnabled(true);
+			tfImageName.setEnabled(false);
+			tfQty.setEnabled(false);
+			cbWhether.setEnabled(false);
+			btnInsrut.setEnabled(false);
+			btnimage.setEnabled(false);	
+			innerTable.setEnabled(true);
+			cbCategory.setEnabled(false);
+		
+			
+		}
+		
+	}
+		
+
 	// 화면에 데이터 지우기
 	private void clearColumn() {
 		tfNumber.setText("");
@@ -694,54 +775,203 @@ public class AdminMenuMain extends JFrame {
 		tfPrice.setText("");
 		tfCategory.setText("");
 		cbWhether.setSelectedIndex(0);
-		lblimage.setText("");
+		lblimage.setIcon(null);
 	}
 	
 	
 	// 입력할때 빠진 데이터가 없는지 확인
 	private int insertFieldChack() {
 		int i =0;
-		if(tfNumber.getText().length() == 0) {
-			i++;
-			message = "제품번호";
-			tfNumber.requestFocus();
+		if(cbSearch.getSelectedIndex() == 0) {
+			if(tfName.getText().length() == 0) {
+				i++;
+				message = "제품 이름";
+				tfName.requestFocus();
+			}		
+			if(tfPrice.getText().length() == 0) {
+				i++;
+				message = "가격";
+				tfPrice.requestFocus();
+			}
+			if(tfImageName.getText().length() == 0) {
+				i++;
+				message = "이미지 이름";
+				tfNumber.requestFocus();
+			}
+			if(tfimage.getText().length() == 0) {
+				i++;
+				message = "이미지";
+				tfimage.requestFocus();
+			}
+					
+		}else if(cbSearch.getSelectedIndex() == 1) {
+			if(tfName.getText().length() == 0) {
+				i++;
+				message = "제품 이름";
+				tfName.requestFocus();
+			}		
+			if(tfPrice.getText().length() == 0) {
+				i++;
+				message = "가격";
+				tfPrice.requestFocus();
+			}
+			if(tfQty.getText().length() == 0) {
+				i++;
+				message = "수량";
+				tfQty.requestFocus();
+			}
+			
+			if(tfImageName.getText().length() == 0) {
+				i++;
+				message = "이미지 이름";
+				tfImageName.requestFocus();
+			}
+			if(tfimage.getText().length() == 0) {
+				i++;
+				message = "이미지";
+				tfimage.requestFocus();
+			}
+		}else {
+			if(tfCategory.getText().length() == 0) {
+				i++;
+				message = "카테고리";
+				tfCategory.requestFocus();
+			}
 		}
-		if(tfName.getText().length() == 0) {
-			i++;
-			message = "상품";
-			tfName.requestFocus();
-		}		
-		if(tfPrice.getText().length() == 0) {
-			i++;
-			message = "가격";
-			tfPrice.requestFocus();
-		}
-		if(tfimage.getText().length() == 0) {
-			i++;
-			message = "이미지";
-			tfimage.requestFocus();
-		}
-		return i;
 
+		return i;	
 	}
 	
-	
+	// 입력 빈칸 체크
 	private void actionPartition() {
-		// 제품 입력
+		// 상품 입력
 		if(rbInsert.isSelected()) {
 			int i_chk = insertFieldChack();
 			if(i_chk == 0) {
-				//
-				
+				if(cbSearch.getSelectedIndex() == 0) {
+					drinkInsert();						
+				}else if(cbSearch.getSelectedIndex() == 1) {
+					dessertInsert();
+				}else {
+					categoryInsert();
+				}
+				tableInit();
+				searchAction();
+				clearColumn();
 			}else {
-				JOptionPane.showMessageDialog(this, message + " 입력 정보를 확인하세요!", "제품등록", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, message + " 입력정보를 확인하세요!", "제품등록", JOptionPane.INFORMATION_MESSAGE );
 			}
+		}
+		if(rbUpdate.isSelected()) {
+			int i_chk = insertFieldChack();
+			if(i_chk == 0) {
+				if(cbSearch.getSelectedIndex() == 0) {
+					updateClick();						
+				}else if(cbSearch.getSelectedIndex() == 1) {
+					
+				}else {
+					
+				}
+				tableInit();
+				searchAction();
+				clearColumn();
+			}else {
+				JOptionPane.showMessageDialog(this, message + " 입력정보를 확인하세요!", "제품등록", JOptionPane.INFORMATION_MESSAGE );
+			}
+		}
 			
 		}
 		
-		// 제품 수정
+	
+	
+	// 수정 테이블 클릭 했을때
+	private void tableClick() {
+		int i = innerTable.getSelectedRow();
+		String wkSequence = String.valueOf(innerTable.getValueAt(i, 0));
+		AdminMenuDao dao = new AdminMenuDao();
+		AdminMenuDto dto = null;
+		int wkSeqno = Integer.parseInt(wkSequence);
+		
+		if(cbSearch.getSelectedIndex() == 0) {
+			dto = dao.drinkClick(wkSeqno);
+			
+			tfNumber.setText(Integer.toString(dto.getDrinkNo()));
+			tfName.setText(dto.getDrinkName());
+			tfPrice.setText(Integer.toString(dto.getDrinkPrice()));
+			tfCategory.setText(dto.getCategoryName());
+			cbCategory.setSelectedItem(dto.getCategoryName());
+			tfImageName.setText(dto.getDrinkImageName());
+			cbWhether.setSelectedItem(dto.getDrinkStatus());
+			
+			
+			ImageIcon icon = new ImageIcon("./" + dto.getDrinkImageName());
+			int x = 320;
+			int y = 200;
+			ImageResize resize = new ImageResize(icon,x,y);
+			ImageIcon productIcon = resize.imageResizing();
+			
+			lblimage.setIcon(productIcon);
+			lblimage.setHorizontalAlignment(SwingConstants.CENTER);
+			
+		}else if(cbSearch.getSelectedIndex() ==1) {
+			dto = dao.dessertClick(wkSeqno);
+			
+			tfNumber.setText(Integer.toString(dto.getDessertNo()));
+			tfName.setText(dto.getDessertName());
+			tfQty.setText(Integer.toString(dto.getDessertStock()));
+			tfPrice.setText(Integer.toString(dto.getDessertPrice()));
+			tfCategory.setText(dto.getCategoryName());
+			cbCategory.setSelectedItem(dto.getCategoryName());
+			tfImageName.setText(dto.getDessertImageName());
+			cbWhether.setSelectedItem(dto.getDessertStatus());
+			
+			ImageIcon icon = new ImageIcon("./" + dto.getDessertImageName());
+			int x = 320;
+			int y = 200;
+			ImageResize resize = new ImageResize(icon,x,y);
+			ImageIcon productIcon = resize.imageResizing();
+			
+			lblimage.setIcon(productIcon);
+			lblimage.setHorizontalAlignment(SwingConstants.CENTER);
+			
+		}else {
+			dto = dao.categoryClick(wkSeqno);
+			
+			tfNumber.setText(Integer.toString(dto.getCategoryNo()));
+			tfCategory.setText(dto.getCategoryName());
+			
+		}
+	
+			screenPartitionClick();
+	}
+	
+	// 데이터 수정
+	private void updateClick() {
+		String categoryName = tfCategory.getText().trim();
+		String drinkName = tfName.getText().trim();
+		int drinkPrice = Integer.parseInt(tfPrice.getText().trim());
+		String drinkImage = tfImageName.getText().trim();
+		int drinkStatus =  cbWhether.getSelectedIndex();
+		
+		FileInputStream input = null;
+		File file = new File(tfimage.getText());
+		try {
+			input = new FileInputStream(file);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus);
+		boolean result = dao.updateDrink();
+		if(result) {
+			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(this, "제품 입력에 오류가 발생했습니다. \n관리자에게 문의하세요.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+		}
 		
 	}
+
+
 	
 	
 	// 이미지 로드
@@ -864,7 +1094,7 @@ public class AdminMenuMain extends JFrame {
 					tfCategory.setText((String)cbCategory.getSelectedItem());
 				}
 			});
-			cbCategory.setModel(new DefaultComboBoxModel(new String[] {"커피(ICE)", "커피(HOT)", "에이드&주스", "티(Tea)", "디저트"}));
+		
 			cbCategory.setBounds(499, 690, 100, 27);
 		}
 		return cbCategory;

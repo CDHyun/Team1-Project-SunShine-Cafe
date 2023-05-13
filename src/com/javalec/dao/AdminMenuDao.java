@@ -2,7 +2,10 @@ package com.javalec.dao;
 
 
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -30,7 +33,7 @@ public class AdminMenuDao {
 	String drinkImageName;
 	FileInputStream drinkImage;
 	int drinkStatus;
-	
+	int drinkNo;
 	// dessert
 	String dessertName;
 	int dessertStock;
@@ -60,6 +63,17 @@ public class AdminMenuDao {
 		this.drinkName = drinkName;
 		this.drinkPrice = drinkPrice;
 		this.drinkImageName = drinkImageName;
+		this.drinkImage = drinkImage;
+		this.drinkStatus = drinkStatus;
+	}
+
+	// drink 수정을 위한 생성자
+	public AdminMenuDao(String categoryName, String drinkName, int drinkPrice, FileInputStream drinkImage,
+			int drinkStatus) {
+		super();
+		this.categoryName = categoryName;
+		this.drinkName = drinkName;
+		this.drinkPrice = drinkPrice;
 		this.drinkImage = drinkImage;
 		this.drinkStatus = drinkStatus;
 	}
@@ -174,6 +188,33 @@ public class AdminMenuDao {
 		
 	}
 	
+	public ArrayList<AdminMenuDto> cetagoryNameList(){
+		ArrayList<AdminMenuDto> dtoList = new ArrayList<AdminMenuDto>();
+		
+		String query = "select categoryName from category ";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();
+			
+			ResultSet rs = stmt_mysql.executeQuery(query);
+			
+			while(rs.next()) {
+				
+				String wkCategoryName = rs.getString(1);
+				
+				AdminMenuDto dto = new AdminMenuDto(wkCategoryName);
+				dtoList.add(dto);
+			}
+			conn_mysql.close();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		return dtoList;
+		
+	}
+	
 	// 음료 등록
 	public boolean drinkAction() {
 		PreparedStatement ps = null;
@@ -250,7 +291,7 @@ public class AdminMenuDao {
 		return true;
 	}
 	
-	
+	// 카테고리 데이터 등록
 	public boolean categoryAction() {
 		PreparedStatement ps = null;
 		try {
@@ -271,10 +312,156 @@ public class AdminMenuDao {
 		}
 		return true;
 	}
-
-
 	
+	// 음료 데이터 가져오기
+	public AdminMenuDto drinkClick(int drinkNo) {
+		AdminMenuDto dto = null;
+		
+		String whereDefault = "select d.drinkNo, d.drinkName, d.drinkPrice, c.categoryName, d.drinkImageName, d.drinkImage, d.drinkStatus from drink d, category c";
+		String whereDefault1 = " where d.categoryNo = c.categoryNo and d.drinkNo = " + drinkNo;
+		
+		try {
+			// DB 연결!!! 선언자
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql, pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();								// 불러올때 사용
+			
+			ResultSet rs = stmt_mysql.executeQuery(whereDefault + whereDefault1);
+			
+			if(rs.next()) {
+				int wkSeq = rs.getInt(1);
+				String wkName = rs.getString(2);
+				int wkPrice = rs.getInt(3);
+				String wkCate = rs.getString(4);
+				String wkImage = rs.getString(5);
+				File file = new File("./" + wkImage);
+				FileOutputStream output = new FileOutputStream(file);
+				InputStream input = rs.getBinaryStream(6);
+				byte[] buffer = new byte[1024];
+				while(input.read(buffer) > 0) {
+					output.write(buffer);
+				}
+				int wkStatus = rs.getInt(7);
+				dto = new AdminMenuDto(wkSeq, wkName, wkPrice, wkCate, wkImage, wkStatus);
+				
+				
+			}
+			
+			conn_mysql.close();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
+	}
 	
+	// 디저트 데이터 가져오기
+	public AdminMenuDto dessertClick(int dessertNo) {
+		AdminMenuDto dto = null;
+		
+		String whereDefault = "select d.dessertNo, d.dessertName, d.dessertStock, d.dessertPrice, c.categoryName, d.dessertImageName, d.dessertImage, d.dessertStatus from dessert d, category c";
+		String whereDefault1 = " where d.categoryNo = c.categoryNo and d.dessertNo = " + dessertNo;
+		
+		try {
+			// DB 연결!!! 선언자
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql, pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();								// 불러올때 사용
+			
+			ResultSet rs = stmt_mysql.executeQuery(whereDefault + whereDefault1);
+			
+			if(rs.next()) {
+				int wkSeq = rs.getInt(1);
+				String wkName = rs.getString(2);
+				int wkQty = rs.getInt(3);
+				int wkPrice = rs.getInt(4);
+				String wkCate = rs.getString(5);
+				String wkImage = rs.getString(6);
+				File file = new File("./" + wkImage);
+				FileOutputStream output = new FileOutputStream(file);
+				InputStream input = rs.getBinaryStream(7);
+				byte[] buffer = new byte[1024];
+				while(input.read(buffer) > 0) {
+					output.write(buffer);
+				}
+				int wkStatus = rs.getInt(8);
+				dto = new AdminMenuDto(wkSeq, wkName, wkQty, wkPrice, wkCate, wkImage, wkStatus);
+				
+			}
+			
+			conn_mysql.close();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
+	}
+	
+	// 카테고리 데이터 가져오기
+	public AdminMenuDto categoryClick(int categoryNo) {
+		AdminMenuDto dto = null;
+		
+		String whereDefault = "select categoryNo, categoryName from category where categoryNo = " + categoryNo;
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql, pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();								// 불러올때 사용
+			
+			ResultSet rs = stmt_mysql.executeQuery(whereDefault);
+			
+			if(rs.next()) {
+				int wkSeq = rs.getInt(1);
+				String wkName = rs.getString(2);
+				dto = new AdminMenuDto(wkSeq, wkName);
+			}
+			conn_mysql.close();
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return dto;
+	}
+	
+	// 음료 데이터 업데이트
+	public boolean updateDrink() {
+		PreparedStatement ps = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection conn_mysql = DriverManager.getConnection(url_mysql,id_mysql, pw_mysql);
+			Statement stmt_mysql = conn_mysql.createStatement();
+			String query2 = "select c.categoryNo, d.drinkNo "
+					+ "from category c, drink d "
+					+ "where c.categoryNo = d.categoryNo and categoryName = " + "'" + categoryName +"' and "
+							+ " drinkName = " + "'" + drinkName + "'";
+			ResultSet rs = stmt_mysql.executeQuery(query2);
+			
+			String query = "update drink set categoryNo = ?, drinkName = ?, drinkPrice = ?, drinkImageName = ?, drinkImage =?, drinkStatus =?";
+			String query1 = " where drinkNo = ?";
+			ps = conn_mysql.prepareStatement(query+query1);
+			
+			if(rs.next()) {
+				ps.setInt(1, rs.getInt(1));
+				ps.setString(2, drinkName);
+				ps.setInt(3, drinkPrice);
+				ps.setString(4, drinkImageName);
+				ps.setBlob(5, drinkImage);
+				ps.setInt(6, drinkStatus);
+				ps.setInt(7, rs.getInt(2));
+				
+				ps.executeUpdate();				
+			}
+				conn_mysql.close();
+
+		}catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		return true;
+		
+	}
 	
 	
 	

@@ -50,9 +50,16 @@ public class AdminMenuDto {
 	
 	
 	
+	// 카테고리 콤보박스 데이터	
 	
+	public AdminMenuDto(String categoryName) {
+		super();
+		this.categoryName = categoryName;
+	}
+
 	// 카테고리 데이터 생성자
-	
+
+
 	public AdminMenuDto(int categoryNo, String categoryName) {
 		super();
 		this.categoryNo = categoryNo;
@@ -60,18 +67,41 @@ public class AdminMenuDto {
 	}
 	
 	
+	// 음료 table 데이터 가져오기
+	public AdminMenuDto(int drinkNo, String drinkName, int drinkPrice, String categoryName,  
+			String drinkImageName, int drinkStatus) {
+		super();
+		this.drinkNo = drinkNo;
+		this.categoryName = categoryName;
+		this.drinkName = drinkName;
+		this.drinkPrice = drinkPrice;
+		this.drinkStatus = drinkStatus;
+		this.drinkImageName = drinkImageName;
+
+	}
+
+	// 디저트 table 데이터 가져오기
 	
+	public AdminMenuDto(int dessertNo, String dessertName, int dessertStock, int dessertPrice, String categoryName,
+			 String dessertImageName, int dessertStatus) {
+		super();
+		this.dessertNo = dessertNo;
+		this.categoryName = categoryName;
+		this.dessertName = dessertName;
+		this.dessertPrice = dessertPrice;
+		this.dessertStatus = dessertStatus;
+		this.dessertStock = dessertStock;
+		this.dessertImageName = dessertImageName;
+	}
 
 
 
-
-
-	
 	public int getDessertStock() {
 		return dessertStock;
 	}
 	
 	
+
 
 	public void setDessertStock(int dessertStock) {
 		this.dessertStock = dessertStock;
@@ -97,9 +127,12 @@ public class AdminMenuDto {
 	}
 
 
+
+
 	public int getDessertNo() {
 		return dessertNo;
 	}
+
 
 
 	public void setDessertNo(int dessertNo) {
