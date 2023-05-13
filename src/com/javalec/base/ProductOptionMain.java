@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.CartDao;
 import com.javalec.dao.ProductDao;
+import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
 
@@ -63,7 +64,7 @@ public class ProductOptionMain extends JFrame {
 	/* 기존 가격 저장 */
 	private int total;
 	/* 메소드에서 돌아가는 가격 */
-	private int wktotal;
+	private int cartOptionPrice;
 	private int shotCount = 0;
 	private int syrupCount = 0;
 	private int sugarCount = 0;
@@ -481,10 +482,10 @@ public class ProductOptionMain extends JFrame {
 		
 		for(int i=0; i<beanList.size(); i++) {
 			total = beanList.get(i).getDrinkPrice();
-			wktotal = beanList.get(i).getDrinkPrice();
+			cartOptionPrice = beanList.get(i).getDrinkPrice();
 			wkItemName = beanList.get(i).getDrinkName();
 			lblProductName.setText(wkItemName);
-			lblPrice.setText(Integer.toString(wktotal));
+			lblPrice.setText(Integer.toString(cartOptionPrice));
 			ImageIcon icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
 			int x = 150;
 			int y = 200;
@@ -499,8 +500,8 @@ public class ProductOptionMain extends JFrame {
 	/* 02. 옵션을 선택 했을 때 반응하는 메소드 */
 	private void addOption(MouseEvent e) {
 
-		wktotal = wktotal + 500;
-		lblPrice.setText(Integer.toString(wktotal));
+		cartOptionPrice = cartOptionPrice + 500;
+		lblPrice.setText(Integer.toString(cartOptionPrice));
 		JLabel clickedLabel = (JLabel) e.getSource();
 	    if (clickedLabel == lblShot) {
 	    	shotCount++;
@@ -522,8 +523,8 @@ public class ProductOptionMain extends JFrame {
 	
 	/* 03. 초기화 버튼을 눌렀을 때 실행되는 메소드 */
 	private void resetAction() {
-		wktotal = total;
-		lblPrice.setText(Integer.toString(wktotal));
+		cartOptionPrice = total;
+		lblPrice.setText(Integer.toString(cartOptionPrice));
 		shotCount = 0;
 		lblAddShot.setText("");
 		lblAddShot2.setText("");
@@ -540,18 +541,19 @@ public class ProductOptionMain extends JFrame {
 
 	/* 04. 주문 담기 버튼을 눌렀을 때 실행되는 메소드 */
 	private void createPurchaseList() {
-		
-		CartDao cartDao = new CartDao(itemNo, userid);
-		boolean result = cartDao.drinkAddToCart();
+		CartDao cartDao = new CartDao(itemNo, userid, cartOptionPrice);
+		boolean result = false;
+		if(categoryNo == 5) {
+			result = cartDao.dessertAddToCart();
+		} else {
+			result = cartDao.drinkAddToCart();
+		}
 		if(result == false) {
 			cartErrorDialog cartErrorDialog = new cartErrorDialog();
 			cartErrorDialog.setLocationRelativeTo(null);
 			cartErrorDialog.setVisible(true);
 		} else {
 			ProductMain productMain = new ProductMain();
-			productMain.setWkItemNo(itemNo);
-			productMain.setWkItemName(wkItemName);
-			productMain.setWkPrice(wktotal);
 			productMain.setLocationRelativeTo(null);
 			productMain.setVisible(true);
 			dispose();

@@ -1,5 +1,6 @@
 package com.javalec.dto;
 
+
 public class CartDto {
 
 	/*** Field ***/
@@ -10,6 +11,7 @@ public class CartDto {
 	/* cart */
 	int cartNo;
 	int cartQty;
+	int cartOptionPrice;
 	
 	
 	/* dessert */
@@ -35,12 +37,31 @@ public class CartDto {
 	String userid;
 	boolean userSecessionStatus;
 	
+	int wkItemNo;
+	String wkItemName;
+	int wkPrice;
+	
 	/* Constructor */
 	public CartDto() {
 		// TODO Auto-generated constructor stub
 	}
-
 	
+	public CartDto(int wkItemNo, String wkItemName, int wkPrice) {
+		super();
+		this.wkItemNo = wkItemNo;
+		this.wkItemName = wkItemName;
+		this.wkPrice = wkPrice;
+	}
+	
+	public CartDto(int cartNo, int cartQty, int drinkNo, String drinkName, int cartOptionPrice) {
+		super();
+		this.cartNo = cartNo;
+		this.cartQty = cartQty;
+		this.drinkNo = drinkNo;
+		this.drinkName = drinkName;
+		this.cartOptionPrice = cartOptionPrice;
+	}
+
 	/* 카트 리스트에 정보를 가져올 생성자 */
 	public CartDto(int cartNo, int cartQty, int dessertNo, String dessertName, int dessertPrice, int drinkNo,
 			String drinkName, int drinkPrice) {
@@ -264,6 +285,38 @@ public class CartDto {
 
 	public void setCartQty(int cartQty) {
 		this.cartQty = cartQty;
+	}
+
+	public int getCartOptionPrice() {
+		return cartOptionPrice;
+	}
+
+	public void setCartOptionPrice(int cartOptionPrice) {
+		this.cartOptionPrice = cartOptionPrice;
+	}
+
+	public int getWkItemNo() {
+		return wkItemNo;
+	}
+
+	public void setWkItemNo(int wkItemNo) {
+		this.wkItemNo = wkItemNo;
+	}
+
+	public String getWkItemName() {
+		return wkItemName;
+	}
+
+	public void setWkItemName(String wkItemName) {
+		this.wkItemName = wkItemName;
+	}
+
+	public int getWkPrice() {
+		return wkPrice;
+	}
+
+	public void setWkPrice(int wkPrice) {
+		this.wkPrice = wkPrice;
 	}
 
 

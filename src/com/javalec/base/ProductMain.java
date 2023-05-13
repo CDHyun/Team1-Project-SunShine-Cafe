@@ -20,6 +20,7 @@ import java.awt.Container;
 
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -90,6 +91,8 @@ public class ProductMain extends JFrame {
 	private String wkItemName;
 	private JPanel panel;
 	private String userid = "donghyun";
+	ArrayList<CartDto> cartList;
+
 	
 	/* Table 	*/
 	private final DefaultTableModel outerTable = new DefaultTableModel();
@@ -145,11 +148,6 @@ public class ProductMain extends JFrame {
 	}
 
 
-
-
-
-	
-	
 	/**
 	 * Launch the application.
 	 */
@@ -183,6 +181,7 @@ public class ProductMain extends JFrame {
 				lblBackGround6.setVisible(false);
 				lblPriviousBtn.setVisible(false);
 				inIt();
+				tableInit();
 				queryDrinkAction();
 				showCartList();
 			}
@@ -240,8 +239,9 @@ public class ProductMain extends JFrame {
 		contentPane.add(getLblBackGround4());
 		contentPane.add(getLblBackGround5());
 		contentPane.add(getLblBackGround6());
-		contentPane.add(getLblPulsBtn());
+		contentPane.add(getLblPlusBtn());
 		contentPane.add(getLblMinusBtn());
+		contentPane.add(getLblDeleteAllBtn());
 	}
 	
 
@@ -870,22 +870,32 @@ public class ProductMain extends JFrame {
 	
 	private JTable getInnerTable() {
 		if (innerTable == null) {
-			innerTable = new JTable();
+			innerTable = new JTable() {
+				public Class getColumnClass(int column) {
+				    switch (column) {
+			        case 2:
+			        case 4:
+			            return Icon.class;
+			        default:
+			            return Object.class;
+				    }
+				}
+			};
 			innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			innerTable.setModel(outerTable);
 			innerTable.setAutoResizeMode(innerTable.AUTO_RESIZE_OFF);
-			innerTable.setRowHeight(150);
+			innerTable.setRowHeight(50);
 		}
 		return innerTable;
 	}
 	
-	private JLabel getLblPulsBtn() {
-		if (lblPulsBtn == null) {
-			lblPulsBtn = new JLabel("");
-			lblPulsBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/plusBtn.png")));
-			lblPulsBtn.setBounds(24, 605, 61, 36);
+	private JLabel getLblPlusBtn() {
+		if (lblPlusBtn == null) {
+			lblPlusBtn = new JLabel("");
+			lblPlusBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/plusBtn.png")));
+			lblPlusBtn.setBounds(24, 605, 61, 36);
 		}
-		return lblPulsBtn;
+		return lblPlusBtn;
 	}
 	private JLabel getLblMinusBtn() {
 		if (lblMinusBtn == null) {
@@ -894,6 +904,27 @@ public class ProductMain extends JFrame {
 			lblMinusBtn.setBounds(117, 599, 61, 36);
 		}
 		return lblMinusBtn;
+	}
+	
+	private JLabel getLblDeleteAllBtn() {
+		if (lblDeleteAllBtn == null) {
+			lblDeleteAllBtn = new JLabel("");
+			lblDeleteAllBtn.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					deleteAllCart();
+				}
+			});
+			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/deleteAllBtn.png"));
+			int x = 70;
+			int y = 70;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon deleteAllBtn = resize.imageResizing();
+			lblDeleteAllBtn.setIcon(deleteAllBtn);
+			lblDeleteAllBtn.setHorizontalAlignment(SwingConstants.CENTER);
+			lblDeleteAllBtn.setBounds(534, 613, 91, 75);
+		}
+		return lblDeleteAllBtn;
 	}
 	
 	
@@ -916,8 +947,9 @@ public class ProductMain extends JFrame {
 	private JLabel lblBackGround5;
 	private JLabel lblBackGround6;
 	private JTable innerTable;
-	private JLabel lblPulsBtn;
+	private JLabel lblPlusBtn;
 	private JLabel lblMinusBtn;
+	private JLabel lblDeleteAllBtn;
 
 //	lblProductImages = {lblProductImage1, lblProductImage2, lblProductImage3, lblProductImage4, lblProductImage5, lblProductImage6};
 //	private JLabel[] lblProductNames = {lblProductName1, lblProductName2, lblProductName3, lblProductName4, lblProductName5, lblProductName6};
@@ -987,7 +1019,7 @@ public class ProductMain extends JFrame {
 		/* 상품명 */
 		vColIndex = 1;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 250;
+		width = 100;
 		col.setPreferredWidth(width);
 		/* + 버튼 */
 		vColIndex = 2;
@@ -1007,7 +1039,7 @@ public class ProductMain extends JFrame {
 		/* 가격 */
 		vColIndex = 5;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 100;
+		width = 50;
 		col.setPreferredWidth(width);
 	}
 	
@@ -1052,7 +1084,6 @@ public class ProductMain extends JFrame {
 	private void updateLabelVisibility() {
 	    int startIndex = currentPage * 6;
 	    int endIndex = Math.min(startIndex + 6, beanList.size());
-	    System.out.println(beanList.size());
 	    DecimalFormat decimalFormat = new DecimalFormat("#,###");	
 	    for (int i = startIndex; i < endIndex; i++) {
 	        int labelIndex = i - startIndex; // 라벨의 인덱스를 계산
@@ -1158,24 +1189,39 @@ public class ProductMain extends JFrame {
 
 	/* 10. 선택한 상품을 보여주기 */
 	private void showCartList() {
-		ArrayList<CartDto> beanList = new ArrayList<CartDto>();
 		CartDao cartDao = new CartDao();
-		beanList = cartDao.cartList(userid);
+		ArrayList<CartDto> cartList = cartDao.cartList(userid);
 		int cartCount = 0;
-
-		System.out.println("Cart List : " + beanList.size());
+		
+		ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/plusBtn.png"));
+		ImageIcon icon2 = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/minusBtn.png"));
+		int x = 50;
+		int y = 50;
+		ImageResize resize = new ImageResize(icon, x, y);
+		ImageResize resize2 = new ImageResize(icon2, x, y);
+		ImageIcon plusBtn = resize.imageResizing();
+		ImageIcon minusBtn = resize2.imageResizing();
 		
 		
-	    // 테이블 데이터 설정
-	    for (int i = 0; i < beanList.size(); i++) {
-	        cartCount++;
-	        if(beanList.get(i).getDrinkName().equals("")) {
-	        	Object[] data = {cartCount, beanList.get(i).getDessertName(), lblPulsBtn, beanList.get(i).getCartQty(), lblMinusBtn, wkTotal};
-	        	outerTable.addRow(data);
-	        } else {
-	        	Object[] data = {cartCount, beanList.get(i).getDrinkName(), lblPulsBtn, beanList.get(i).getCartQty(), lblMinusBtn, wkTotal};
-	        	outerTable.addRow(data);
-	        }
-	    }
+		for(int i=0; i<cartList.size(); i++) {
+			cartCount++;
+			Object[] data = {cartCount, cartList.get(i).getDrinkName(), plusBtn, cartList.get(i).getCartQty(), minusBtn, cartList.get(i).getCartOptionPrice()};
+			outerTable.addRow(data);
+		}
 	}
+	
+	/* 11. Cart List 비우기 */
+	private void deleteAllCart() {
+		CartDao cartDao = new CartDao();
+		boolean result = cartDao.deleteAllCartList();
+		if(result == false) {
+			cartErrorDialog cartErrorDialog = new cartErrorDialog();
+			cartErrorDialog.setLocationRelativeTo(null);
+			cartErrorDialog.setVisible(true);
+		}
+		tableInit();
+	}
+	
+	
+
 }	// End Class
