@@ -37,6 +37,7 @@ public class AdminMenuDao {
 	FileInputStream drinkImage;
 	int drinkStatus;
 	int drinkNo;
+	String drinkContent;
 	// dessert
 	String dessertName;
 	int dessertStock;
@@ -44,6 +45,7 @@ public class AdminMenuDao {
 	String dessertImageName;
 	FileInputStream dessertImage;
 	int dessertStatus;
+	String dessertContent;
 	
 	
 	// 검색
@@ -55,7 +57,7 @@ public class AdminMenuDao {
 
 	// dessert 입력을 위한 생성자
 	public AdminMenuDao(String categoryName, String dessertName, int dessertStock, int dessertPrice, String dessertImageName,
-			FileInputStream dessertImage, int dessertStatus) {
+			FileInputStream dessertImage, int dessertStatus, String dessertContent) {
 		super();
 		this.categoryName = categoryName;
 		this.dessertName = dessertName;
@@ -64,11 +66,12 @@ public class AdminMenuDao {
 		this.dessertImageName = dessertImageName;
 		this.dessertImage = dessertImage;
 		this.dessertStatus = dessertStatus;
+		this.dessertContent = dessertContent;
 	}
 
 	// drink 입력을 위한 생성자
 	public AdminMenuDao(String categoryName, String drinkName, int drinkPrice, String drinkImageName,
-			FileInputStream drinkImage, int drinkStatus) {
+			FileInputStream drinkImage, int drinkStatus, String drinkContent) {
 		super();
 		this.categoryName = categoryName;
 		this.drinkName = drinkName;
@@ -76,6 +79,7 @@ public class AdminMenuDao {
 		this.drinkImageName = drinkImageName;
 		this.drinkImage = drinkImage;
 		this.drinkStatus = drinkStatus;
+		this.drinkContent = drinkContent;
 	}
 
 
@@ -232,7 +236,7 @@ public class AdminMenuDao {
 					+ "where categoryName = " + "'" + categoryName +"'";
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
-			String query = "insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName, drinkImage, drinkStatus)";
+			String query = "insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName, drinkImage, drinkStatus, drinkContent)";
 			String query1 = " values (?, ? , ?, ? , ?, ?)";
 			
 			if(rs.next()) {			// rs는 true, false 값
@@ -243,6 +247,7 @@ public class AdminMenuDao {
 				ps.setString(4, drinkImageName);
 				ps.setBlob(5, drinkImage);
 				ps.setInt(6, drinkStatus);
+				ps.setString(7, drinkContent);
 				
 				ps.executeUpdate();
 				
@@ -270,7 +275,7 @@ public class AdminMenuDao {
 					+ "where categoryName = " + "'" + categoryName +"'";
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
-			String query = "insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName, dessertImage, dessertStatus)";
+			String query = "insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName, dessertImage, dessertStatus, dessertContent)";
 			String query1 = " values (?, ? , ?, ? , ?, ?, ?)";
 			
 			if(rs.next()) {			// rs는 true, false 값
@@ -282,6 +287,7 @@ public class AdminMenuDao {
 				ps.setString(5, dessertImageName);
 				ps.setBlob(6, dessertImage);
 				ps.setInt(7, dessertStatus);
+				ps.setString(8, dessertContent);
 				
 				ps.executeUpdate();
 				
@@ -321,7 +327,7 @@ public class AdminMenuDao {
 	public AdminMenuDto drinkClick(int drinkNo) {
 		AdminMenuDto dto = null;
 		
-		String whereDefault = "select d.drinkNo, d.drinkName, d.drinkPrice, c.categoryName, d.drinkImageName, d.drinkImage, d.drinkStatus from drink d, category c";
+		String whereDefault = "select d.drinkNo, d.drinkName, d.drinkPrice, c.categoryName, d.drinkImageName, d.drinkImage, d.drinkStatus, d.drinkContent from drink d, category c";
 		String whereDefault1 = " where d.categoryNo = c.categoryNo and d.drinkNo = " + drinkNo;
 		
 		try {
@@ -346,7 +352,8 @@ public class AdminMenuDao {
 					output.write(buffer);
 				}
 				int wkStatus = rs.getInt(7);
-				dto = new AdminMenuDto(wkSeq, wkName, wkPrice, wkCate, wkImage, wkStatus);
+				String wkContent = rs.getString(8);
+				dto = new AdminMenuDto(wkSeq, wkName, wkPrice, wkCate, wkImage, wkStatus, wkContent);
 				
 				
 			}
@@ -364,7 +371,7 @@ public class AdminMenuDao {
 	public AdminMenuDto dessertClick(int dessertNo) {
 		AdminMenuDto dto = null;
 		
-		String whereDefault = "select d.dessertNo, d.dessertName, d.dessertStock, d.dessertPrice, c.categoryName, d.dessertImageName, d.dessertImage, d.dessertStatus from dessert d, category c";
+		String whereDefault = "select d.dessertNo, d.dessertName, d.dessertStock, d.dessertPrice, c.categoryName, d.dessertImageName, d.dessertImage, d.dessertStatus, d.dessertContent from dessert d, category c";
 		String whereDefault1 = " where d.categoryNo = c.categoryNo and d.dessertNo = " + dessertNo;
 		
 		try {
@@ -390,7 +397,8 @@ public class AdminMenuDao {
 					output.write(buffer);
 				}
 				int wkStatus = rs.getInt(8);
-				dto = new AdminMenuDto(wkSeq, wkName, wkQty, wkPrice, wkCate, wkImage, wkStatus);
+				String wkContent = rs.getString(9);
+				dto = new AdminMenuDto(wkSeq, wkName, wkQty, wkPrice, wkCate, wkImage, wkStatus, wkContent);
 				
 			}
 			
@@ -442,7 +450,7 @@ public class AdminMenuDao {
 						
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
-			String query = "update drink set categoryNo = ?, drinkName = ?, drinkPrice = ?, drinkImageName = ?, drinkImage =?, drinkStatus =?";
+			String query = "update drink set categoryNo = ?, drinkName = ?, drinkPrice = ?, drinkImageName = ?, drinkImage = ?, drinkStatus = ?, drinkContent = ?";
 			String query1 = " where drinkNo = ?";
 			ps = conn_mysql.prepareStatement(query+query1);
 		
@@ -454,6 +462,7 @@ public class AdminMenuDao {
 				ps.setBlob(5, drinkImage);
 				ps.setInt(6, drinkStatus);
 				ps.setInt(7, drinkNo);
+				ps.setString(8, drinkContent);
 				
 				ps.executeUpdate();				
 			}
@@ -480,7 +489,7 @@ public class AdminMenuDao {
 					+ "where categoryName = " + "'" + categoryName +"'";
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
-			String query = "update dessert set categoryNo = ?, dessertName = ?, dessertStock = ?, dessertPrice = ?, dessertImageName = ?, dessertImage = ?, dessertStatus = ?";
+			String query = "update dessert set categoryNo = ?, dessertName = ?, dessertStock = ?, dessertPrice = ?, dessertImageName = ?, dessertImage = ?, dessertStatus = ?, dessrtContent = ?";
 			String query1 = " where dessertNo = ?";
 			
 			if(rs.next()) {			// rs는 true, false 값
@@ -493,6 +502,7 @@ public class AdminMenuDao {
 				ps.setBlob(6, dessertImage);
 				ps.setInt(7, dessertStatus);
 				ps.setInt(8, dessertNo);
+				ps.setString(9, dessertContent);
 				
 				ps.executeUpdate();
 				

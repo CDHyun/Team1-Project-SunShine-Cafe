@@ -21,6 +21,8 @@ public class AdminMenuDto {
 	FileInputStream drinkImage;		// 음료 사진
 	String dessertImageName;		// 디저트 사진 이름
 	FileInputStream dessertImage;	// 디저트 사진
+	String drinkContent;			// 음료 상품상세
+	String dessertContent;			// 디저트 상품상세
 	
 	// 음료 데이터 생성자
 	
@@ -69,7 +71,7 @@ public class AdminMenuDto {
 	
 	// 음료 table 데이터 가져오기
 	public AdminMenuDto(int drinkNo, String drinkName, int drinkPrice, String categoryName,  
-			String drinkImageName, int drinkStatus) {
+			String drinkImageName, int drinkStatus, String drinkContent) {
 		super();
 		this.drinkNo = drinkNo;
 		this.categoryName = categoryName;
@@ -77,6 +79,7 @@ public class AdminMenuDto {
 		this.drinkPrice = drinkPrice;
 		this.drinkStatus = drinkStatus;
 		this.drinkImageName = drinkImageName;
+		this.drinkContent = drinkContent;
 
 	}
 
@@ -84,7 +87,7 @@ public class AdminMenuDto {
 	// 디저트 table 데이터 가져오기
 	
 	public AdminMenuDto(int dessertNo, String dessertName, int dessertStock, int dessertPrice, String categoryName,
-			 String dessertImageName, int dessertStatus ) {
+			 String dessertImageName, int dessertStatus , String dessertContent) {
 		super();
 		this.dessertNo = dessertNo;
 		this.categoryName = categoryName;
@@ -93,6 +96,40 @@ public class AdminMenuDto {
 		this.dessertStatus = dessertStatus;
 		this.dessertStock = dessertStock;
 		this.dessertImageName = dessertImageName;
+		this.dessertContent = dessertContent;
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public String getDrinkContent() {
+		return drinkContent;
+	}
+
+
+
+	public void setDrinkContent(String drinkContent) {
+		this.drinkContent = drinkContent;
+	}
+
+
+
+	public String getDessertContent() {
+		return dessertContent;
+	}
+
+
+
+	public void setDessertContent(String dessertContent) {
+		this.dessertContent = dessertContent;
 	}
 
 

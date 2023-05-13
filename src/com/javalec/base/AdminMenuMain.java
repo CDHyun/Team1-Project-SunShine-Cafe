@@ -45,7 +45,6 @@ public class AdminMenuMain extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
 	private JRadioButton rbInsert;
 	private JRadioButton rbUpdate;
 	private JComboBox cbSearch;
@@ -91,6 +90,8 @@ public class AdminMenuMain extends JFrame {
 	private JLabel lblNewLabel_4_2_1_1_1;
 	private JTextField tfImageName;
 	private JLabel lblBack;
+	private JLabel lblNewLabel_2;
+	private JTextField tfContent;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -158,6 +159,8 @@ public class AdminMenuMain extends JFrame {
 		contentPane.add(getLblNewLabel_4_2_1_1_1());
 		contentPane.add(getTfImageName());
 		contentPane.add(getLblBack());
+		contentPane.add(getLblNewLabel_2());
+		contentPane.add(getTfContent());
 	}
 
 	private JLabel getLblNewLabel() {
@@ -236,7 +239,7 @@ public class AdminMenuMain extends JFrame {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(26, 138, 573, 397);
+			scrollPane.setBounds(26, 138, 573, 407);
 			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
@@ -247,10 +250,13 @@ public class AdminMenuMain extends JFrame {
 			innerTable.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-						tableClick();						
+						//clearColumn();
+						tableClick();
+						if(rbInsert.isSelected()) {
+							btnInsrut.setEnabled(false);
+						}
 				}
 			});
-			innerTable.setEnabled(false);
 			innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
 			innerTable.setModel(outerTable);		// table 셋팅
 			innerTable.setRowHeight(20);
@@ -260,14 +266,14 @@ public class AdminMenuMain extends JFrame {
 	private JLabel getLblimage() {
 		if (lblimage == null) {
 			lblimage = new JLabel("");
-			lblimage.setBounds(26, 547, 260, 212);
+			lblimage.setBounds(24, 557, 262, 174);
 		}
 		return lblimage;
 	}
 	private JLabel getLblNewLabel_3() {
 		if (lblNewLabel_3 == null) {
 			lblNewLabel_3 = new JLabel("Image");
-			lblNewLabel_3.setBounds(26, 782, 43, 16);
+			lblNewLabel_3.setBounds(26, 754, 43, 16);
 		}
 		return lblNewLabel_3;
 	}
@@ -275,7 +281,7 @@ public class AdminMenuMain extends JFrame {
 		if (tfimage == null) {
 			tfimage = new JTextField();
 			tfimage.setEditable(false);
-			tfimage.setBounds(72, 777, 214, 26);
+			tfimage.setBounds(72, 749, 156, 26);
 			tfimage.setColumns(10);
 		}
 		return tfimage;
@@ -288,7 +294,7 @@ public class AdminMenuMain extends JFrame {
 					filePath();
 				}
 			});
-			btnimage.setBounds(217, 805, 75, 29);
+			btnimage.setBounds(230, 749, 75, 29);
 		}
 		return btnimage;
 	}
@@ -367,7 +373,7 @@ public class AdminMenuMain extends JFrame {
 						actionPartition(); 
 				}
 			});
-			btnInsrut.setBounds(482, 805, 117, 29);
+			btnInsrut.setBounds(482, 826, 117, 29);
 		}
 		return btnInsrut;
 	}
@@ -584,6 +590,7 @@ public class AdminMenuMain extends JFrame {
 		int drinkPrice = Integer.parseInt(tfPrice.getText().trim());
 		String drinkImage = tfImageName.getText().trim();
 		int drinkStatus =  cbWhether.getSelectedIndex();
+		String drinkContent = tfContent.getText().trim();
 		
 		FileInputStream input = null;
 		File file = new File(tfimage.getText());
@@ -594,7 +601,7 @@ public class AdminMenuMain extends JFrame {
 			// TODO: handle exception
 		}
 	
-		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus);
+		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus, drinkContent);
 		boolean result = dao.drinkAction();
 		
 		if(result) {
@@ -612,6 +619,7 @@ public class AdminMenuMain extends JFrame {
 		int dessertPrice = Integer.parseInt(tfPrice.getText());
 		String dessertImage = tfImageName.getText().trim();
 		int dessertStatus = cbWhether.getSelectedIndex();
+		String dessertContent = tfContent.getText();
 		
 		FileInputStream input = null;
 		File file = new File(tfimage.getText());
@@ -622,7 +630,7 @@ public class AdminMenuMain extends JFrame {
 			// TODO: handle exception
 		}
 		
-		AdminMenuDao dao = new AdminMenuDao(categoryName, dessertName, dessertStock, dessertPrice, dessertImage, input, dessertStatus);
+		AdminMenuDao dao = new AdminMenuDao(categoryName, dessertName, dessertStock, dessertPrice, dessertImage, input, dessertStatus, dessertContent);
 		boolean result = dao.dessertAction();
 		
 		if(result) {
@@ -666,10 +674,10 @@ public class AdminMenuMain extends JFrame {
 				tfCategory.setEnabled(false);
 				tfQty.setEnabled(false);
 				tfImageName.setEnabled(true);
+				tfContent.setEnabled(true);
 				cbWhether.setEnabled(true);
 				btnInsrut.setEnabled(true);
 				btnimage.setEnabled(true);
-				innerTable.setEnabled(false);
 				cbCategory.setEnabled(true);
 				lblimage.setIcon(null);
 				tfCategory.setText((String)cbCategory.getSelectedItem());
@@ -681,10 +689,10 @@ public class AdminMenuMain extends JFrame {
 				tfCategory.setEnabled(false);
 				tfQty.setEnabled(true);
 				tfImageName.setEnabled(true);
+				tfContent.setEnabled(true);
 				cbWhether.setEnabled(true);
 				btnInsrut.setEnabled(true);
 				btnimage.setEnabled(true);
-				innerTable.setEnabled(false);
 				cbCategory.setEnabled(true);
 				lblimage.setIcon(null);
 				tfCategory.setText((String)cbCategory.getSelectedItem());
@@ -696,10 +704,10 @@ public class AdminMenuMain extends JFrame {
 				tfCategory.setEnabled(true);
 				tfImageName.setEnabled(false);
 				tfQty.setEnabled(false);
+				tfContent.setEnabled(false);
 				cbWhether.setEnabled(false);
 				btnInsrut.setEnabled(true);
 				btnimage.setEnabled(false);	
-				innerTable.setEnabled(false);
 				cbCategory.setEnabled(false);
 				lblimage.setIcon(null);
 				cbCategory.setSelectedIndex(0);
@@ -716,10 +724,10 @@ public class AdminMenuMain extends JFrame {
 			tfCategory.setEnabled(false);
 			tfImageName.setEnabled(false);
 			tfQty.setEnabled(false);
+			tfContent.setEnabled(false);
 			cbWhether.setEnabled(false);
 			btnInsrut.setEnabled(false);
 			btnimage.setEnabled(false);	
-			innerTable.setEnabled(true);
 			cbCategory.setEnabled(false);
 			lblimage.setIcon(null);
 		}
@@ -733,10 +741,10 @@ public class AdminMenuMain extends JFrame {
 			tfCategory.setEnabled(false);
 			tfQty.setEnabled(false);
 			tfImageName.setEnabled(true);
+			tfContent.setEnabled(true);
 			cbWhether.setEnabled(true);
 			btnInsrut.setEnabled(true);
 			btnimage.setEnabled(true);
-			innerTable.setEnabled(true);
 			cbCategory.setEnabled(true);
 
 		// 디저트 입력	
@@ -746,10 +754,10 @@ public class AdminMenuMain extends JFrame {
 			tfCategory.setEnabled(false);
 			tfQty.setEnabled(true);
 			tfImageName.setEnabled(true);
+			tfContent.setEnabled(true);
 			cbWhether.setEnabled(true);
 			btnInsrut.setEnabled(true);
 			btnimage.setEnabled(true);
-			innerTable.setEnabled(true);
 			cbCategory.setEnabled(true);
 
 		// 카테고리 입력
@@ -759,11 +767,12 @@ public class AdminMenuMain extends JFrame {
 			tfCategory.setEnabled(true);
 			tfImageName.setEnabled(false);
 			tfQty.setEnabled(false);
+			tfContent.setEnabled(false);
 			cbWhether.setEnabled(false);
 			btnInsrut.setEnabled(true);
 			btnimage.setEnabled(false);	
-			innerTable.setEnabled(true);
 			cbCategory.setEnabled(false);
+			
 		
 			
 		}
@@ -780,6 +789,7 @@ public class AdminMenuMain extends JFrame {
 		tfCategory.setText("");
 		tfImageName.setText("");
 		tfimage.setText("");
+		tfContent.setText("");
 		cbWhether.setSelectedIndex(0);
 		lblimage.setIcon(null);
 	}
@@ -811,6 +821,11 @@ public class AdminMenuMain extends JFrame {
 					tfimage.requestFocus();
 				}				
 			}
+			if(tfContent.getText().length() == 0) {
+				i ++;
+				message = "상품상세";
+				tfContent.requestFocus();
+			}
 			
 					
 		}else if(cbSearch.getSelectedIndex() == 1) {
@@ -841,6 +856,11 @@ public class AdminMenuMain extends JFrame {
 					message = "이미지";
 					tfimage.requestFocus();
 				}				
+			}
+			if(tfContent.getText().length() == 0) {
+				i ++;
+				message = "상품상세";
+				tfContent.requestFocus();
 			}
 		}else {
 			if(tfCategory.getText().length() == 0) {
@@ -895,7 +915,7 @@ public class AdminMenuMain extends JFrame {
 		
 	
 	
-	// 수정 테이블 클릭 했을때
+	// 테이블 클릭 했을때 데이터 보이기
 	private void tableClick() {
 		int i = innerTable.getSelectedRow();
 		String wkSequence = String.valueOf(innerTable.getValueAt(i, 0));
@@ -913,10 +933,10 @@ public class AdminMenuMain extends JFrame {
 			cbCategory.setSelectedItem(dto.getCategoryName());
 			tfImageName.setText(dto.getDrinkImageName());
 			cbWhether.setSelectedItem(dto.getDrinkStatus());
-			
+			tfContent.setText(dto.getDrinkContent());
 			
 			ImageIcon icon = new ImageIcon("./" + dto.getDrinkImageName());
-			int x = 320;
+			int x = 280;
 			int y = 200;
 			ImageResize resize = new ImageResize(icon,x,y);
 			ImageIcon productIcon = resize.imageResizing();
@@ -935,9 +955,10 @@ public class AdminMenuMain extends JFrame {
 			cbCategory.setSelectedItem(dto.getCategoryName());
 			tfImageName.setText(dto.getDessertImageName());
 			cbWhether.setSelectedItem(dto.getDessertStatus());
+			tfContent.setText(dto.getDessertContent());
 			
 			ImageIcon icon = new ImageIcon("./" + dto.getDessertImageName());
-			int x = 320;
+			int x = 280;
 			int y = 200;
 			ImageResize resize = new ImageResize(icon,x,y);
 			ImageIcon productIcon = resize.imageResizing();
@@ -964,6 +985,7 @@ public class AdminMenuMain extends JFrame {
 		String drinkImage = tfImageName.getText().trim();
 		int drinkStatus =  cbWhether.getSelectedIndex();
 		int drinkNo = Integer.parseInt(tfNumber.getText().trim());
+		String drinkContent = tfContent.getText().trim();
 		
 		FileInputStream input = null;
 		File file = new File(tfimage.getText());
@@ -973,7 +995,7 @@ public class AdminMenuMain extends JFrame {
 			// TODO: handle exception
 		}
 		
-		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus);
+		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus, drinkContent);
 		boolean result = dao.updateDrink(drinkNo);
 		if(result) {
 			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
@@ -992,7 +1014,7 @@ public class AdminMenuMain extends JFrame {
 		String dessertImage = tfImageName.getText().trim();
 		int dessertStatus =  cbWhether.getSelectedIndex();
 		int dessertNo = Integer.parseInt(tfNumber.getText().trim());
-		
+		String dessertContent = tfContent.getText();
 		
 		FileInputStream input = null;
 		File file = new File(tfimage.getText());
@@ -1002,7 +1024,7 @@ public class AdminMenuMain extends JFrame {
 			// TODO: handle exception
 		}
 		
-		AdminMenuDao dao = new AdminMenuDao(categoryName, dessertName, dessertQty, dessertPrice, dessertImage, input, dessertStatus);
+		AdminMenuDao dao = new AdminMenuDao(categoryName, dessertName, dessertQty, dessertPrice, dessertImage, input, dessertStatus, dessertContent);
 		boolean result = dao.updateDessert(dessertNo);
 		if(result) {
 			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
@@ -1237,5 +1259,20 @@ public class AdminMenuMain extends JFrame {
 	
 	
 	
+	private JLabel getLblNewLabel_2() {
+		if (lblNewLabel_2 == null) {
+			lblNewLabel_2 = new JLabel("상품상세");
+			lblNewLabel_2.setBounds(24, 796, 44, 16);
+		}
+		return lblNewLabel_2;
+	}
+	private JTextField getTfContent() {
+		if (tfContent == null) {
+			tfContent = new JTextField();
+			tfContent.setBounds(72, 791, 527, 26);
+			tfContent.setColumns(10);
+		}
+		return tfContent;
+	}
 } // end
 
