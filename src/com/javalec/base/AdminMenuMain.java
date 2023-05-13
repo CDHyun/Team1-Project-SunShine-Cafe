@@ -68,7 +68,7 @@ public class AdminMenuMain extends JFrame {
 	private JButton btnInsrut;
 
 	String message = "";
-	
+	int count = 0;
 	
 	
 	
@@ -90,6 +90,7 @@ public class AdminMenuMain extends JFrame {
 	private JComboBox cbCategory;
 	private JLabel lblNewLabel_4_2_1_1_1;
 	private JTextField tfImageName;
+	private JLabel lblBack;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -129,7 +130,7 @@ public class AdminMenuMain extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.add(getLblNewLabel());
-		contentPane.add(getLblNewLabel_1());
+		
 		contentPane.add(getRbInsert());
 		contentPane.add(getRbUpdate());
 		contentPane.add(getCbSearch());
@@ -156,6 +157,7 @@ public class AdminMenuMain extends JFrame {
 		contentPane.add(getCbCategory());
 		contentPane.add(getLblNewLabel_4_2_1_1_1());
 		contentPane.add(getTfImageName());
+		contentPane.add(getLblBack());
 	}
 
 	private JLabel getLblNewLabel() {
@@ -166,13 +168,7 @@ public class AdminMenuMain extends JFrame {
 		}
 		return lblNewLabel;
 	}
-	private JLabel getLblNewLabel_1() {
-		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("뒤로가기");
-			lblNewLabel_1.setBounds(26, 45, 61, 16);
-		}
-		return lblNewLabel_1;
-	}
+
 	private JRadioButton getRbInsert() {
 		if (rbInsert == null) {
 			rbInsert = new JRadioButton("입력");
@@ -228,6 +224,11 @@ public class AdminMenuMain extends JFrame {
 	private JButton getBtnSearch() {
 		if (btnSearch == null) {
 			btnSearch = new JButton("검색");
+			btnSearch.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					conditionQuery();
+				}
+			});
 			btnSearch.setBounds(493, 103, 106, 29);
 		}
 		return btnSearch;
@@ -515,7 +516,9 @@ public class AdminMenuMain extends JFrame {
 		nameList = dao.cetagoryNameList();
 		int namecount = nameList.size();
 		int num = 0;
-		int count = 0;
+		
+		
+		// 카테고리 자동 추가
 		for(int c = 0; c < namecount ; c++ ) {
 			String categoryName = nameList.get(c).getCategoryName();
 			cbCategory.addItem(categoryName);
@@ -655,7 +658,7 @@ public class AdminMenuMain extends JFrame {
 			clearColumn();
 			tableInit();
 			searchAction();
-			
+			tfSearch.setText("");
 			// 음료 입력
 			if(cbSearch.getSelectedIndex() == 0) {
 				tfName.setEnabled(true);
@@ -707,7 +710,7 @@ public class AdminMenuMain extends JFrame {
 		// 수정
 		if(rbUpdate.isSelected()){
 			clearColumn();
-			
+			tfSearch.setText("");
 			tfName.setEnabled(false);
 			tfPrice.setEnabled(false);
 			tfCategory.setEnabled(false);
@@ -757,7 +760,7 @@ public class AdminMenuMain extends JFrame {
 			tfImageName.setEnabled(false);
 			tfQty.setEnabled(false);
 			cbWhether.setEnabled(false);
-			btnInsrut.setEnabled(false);
+			btnInsrut.setEnabled(true);
 			btnimage.setEnabled(false);	
 			innerTable.setEnabled(true);
 			cbCategory.setEnabled(false);
@@ -774,6 +777,8 @@ public class AdminMenuMain extends JFrame {
 		tfName.setText("");
 		tfPrice.setText("");
 		tfCategory.setText("");
+		tfImageName.setText("");
+		tfimage.setText("");
 		cbWhether.setSelectedIndex(0);
 		lblimage.setIcon(null);
 	}
@@ -798,11 +803,14 @@ public class AdminMenuMain extends JFrame {
 				message = "이미지 이름";
 				tfNumber.requestFocus();
 			}
-			if(tfimage.getText().length() == 0) {
-				i++;
-				message = "이미지";
-				tfimage.requestFocus();
+			if(rbInsert.isSelected()) {
+				if(tfimage.getText().length() == 0) {
+					i++;
+					message = "이미지";
+					tfimage.requestFocus();
+				}				
 			}
+			
 					
 		}else if(cbSearch.getSelectedIndex() == 1) {
 			if(tfName.getText().length() == 0) {
@@ -826,10 +834,12 @@ public class AdminMenuMain extends JFrame {
 				message = "이미지 이름";
 				tfImageName.requestFocus();
 			}
-			if(tfimage.getText().length() == 0) {
-				i++;
-				message = "이미지";
-				tfimage.requestFocus();
+			if(rbInsert.isSelected()) {
+				if(tfimage.getText().length() == 0) {
+					i++;
+					message = "이미지";
+					tfimage.requestFocus();
+				}				
 			}
 		}else {
 			if(tfCategory.getText().length() == 0) {
@@ -866,11 +876,11 @@ public class AdminMenuMain extends JFrame {
 			int i_chk = insertFieldChack();
 			if(i_chk == 0) {
 				if(cbSearch.getSelectedIndex() == 0) {
-					updateClick();						
+					drinkUpdate();						
 				}else if(cbSearch.getSelectedIndex() == 1) {
-					
+					dessertUpdate();
 				}else {
-					
+					categoryUpdate();
 				}
 				tableInit();
 				searchAction();
@@ -945,13 +955,14 @@ public class AdminMenuMain extends JFrame {
 			screenPartitionClick();
 	}
 	
-	// 데이터 수정
-	private void updateClick() {
+	// 음료 수정
+	private void drinkUpdate() {
 		String categoryName = tfCategory.getText().trim();
 		String drinkName = tfName.getText().trim();
 		int drinkPrice = Integer.parseInt(tfPrice.getText().trim());
 		String drinkImage = tfImageName.getText().trim();
 		int drinkStatus =  cbWhether.getSelectedIndex();
+		int drinkNo = Integer.parseInt(tfNumber.getText().trim());
 		
 		FileInputStream input = null;
 		File file = new File(tfimage.getText());
@@ -962,7 +973,7 @@ public class AdminMenuMain extends JFrame {
 		}
 		
 		AdminMenuDao dao = new AdminMenuDao(categoryName, drinkName, drinkPrice, drinkImage, input, drinkStatus);
-		boolean result = dao.updateDrink();
+		boolean result = dao.updateDrink(drinkNo);
 		if(result) {
 			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
 		}else {
@@ -970,8 +981,50 @@ public class AdminMenuMain extends JFrame {
 		}
 		
 	}
-
-
+	
+	// 디저트 수정
+	private void dessertUpdate() {
+		String categoryName = tfCategory.getText().trim();
+		String dessertName = tfName.getText().trim();
+		int dessertQty = Integer.parseInt(tfQty.getText().trim());
+		int dessertPrice = Integer.parseInt(tfPrice.getText().trim());
+		String dessertImage = tfImageName.getText().trim();
+		int dessertStatus =  cbWhether.getSelectedIndex();
+		int dessertNo = Integer.parseInt(tfNumber.getText().trim());
+		
+		
+		FileInputStream input = null;
+		File file = new File(tfimage.getText());
+		try {
+			input = new FileInputStream(file);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		AdminMenuDao dao = new AdminMenuDao(categoryName, dessertName, dessertQty, dessertPrice, dessertImage, input, dessertStatus);
+		boolean result = dao.updateDessert(dessertNo);
+		if(result) {
+			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(this, "제품 입력에 오류가 발생했습니다. \n관리자에게 문의하세요.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+	}
+	
+	// 카테고리 수정
+	private void categoryUpdate() {
+		String categoryName = tfCategory.getText().trim();
+		int categoryNo = Integer.parseInt(tfNumber.getText().trim());
+		
+		
+		AdminMenuDao dao = new AdminMenuDao(categoryName);
+		boolean result = dao.updateCategory(categoryNo);
+		if(result) {
+			JOptionPane.showMessageDialog(this, "제품 수정이 정상적으로 처리되었습니다.", "제품 수정", JOptionPane.INFORMATION_MESSAGE);
+		}else {
+			JOptionPane.showMessageDialog(this, "제품 입력에 오류가 발생했습니다. \n관리자에게 문의하세요.", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
 	
 	
 	// 이미지 로드
@@ -1030,25 +1083,64 @@ public class AdminMenuMain extends JFrame {
 	
 	// 관리자가 입력한 조건 검색
 	private void conditionQueryAction(String conditionQueryColumn) {
+		AdminMenuDao dao = new AdminMenuDao(conditionQueryColumn, tfSearch.getText());
+		ArrayList<AdminMenuDto> menuList = new ArrayList<AdminMenuDto>();
+				
+
+		int num = 0;
+		
+		if(cbSearch.getSelectedIndex() == 0) {
+			menuList = dao.drinkconditionList();
+			for(int i = 0; i < count; i++) {
+				tfNumber.setText(Integer.toString(count + 1));
+				num++;
+				String drinkName = menuList.get(i).getDrinkName();
+				int drinkPrice =  menuList.get(i).getDrinkPrice();
+				String categoryName = menuList.get(i).getCategoryName();
+				int drinkStatus = menuList.get(i).getDrinkStatus();
+				
+				Object[] tempData = {num, drinkName, drinkPrice, categoryName , drinkStatus};
+				
+				outerTable.addRow(tempData);
+			}	
+		}else if(cbSearch.getSelectedIndex() == 1) {
+			menuList = dao.dessertconditionList();
+			for(int i = 0; i < count; i++) {
+				tfNumber.setText(Integer.toString(count + 1));
+				num++;
+				String dessertName = menuList.get(i).getDessertName();
+				int dessertPrice = menuList.get(i).getDessertPrice();
+				int dessertStock = menuList.get(i).getDessertStock();
+				String categoryName = menuList.get(i).getCategoryName();
+				int dessertStatus = menuList.get(i).getDrinkStatus();
+				
+				Object[] tempData = {num, dessertName,  dessertStock, dessertPrice, categoryName, dessertStatus};
+				outerTable.addRow(tempData);
+							
+			}
+			
+		}else {
+			menuList = dao.cetagoryconditionList();
+			for(int i =0; i < count; i++) {
+				int categoryNo = menuList.get(i).getCategoryNo();
+				String categoryName = menuList.get(i).getCategoryName();
+				
+				Object[] tempData = {categoryNo,categoryName};
+				outerTable.addRow(tempData);
+				
+			}
+			
+		}
 		
 		
 	}
 	
-	
-	// table 클릭했을 때 실행4
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// Main 버튼
+	private void redirecAdminMain() {
+		AdminMain main = new AdminMain();
+		main.setVisible(true);
+		dispose();
+	}
 	
 	
 	
@@ -1115,6 +1207,27 @@ public class AdminMenuMain extends JFrame {
 			tfImageName.setBounds(387, 752, 212, 26);
 		}
 		return tfImageName;
+	}
+	private JLabel getLblBack() {
+		if (lblBack == null) {
+			lblBack = new JLabel("");
+			lblBack.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecAdminMain();
+				}
+			});
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/back.png"));
+			int x = 30;
+			int y = 30;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblBack.setIcon(backArrow);
+			lblBack.setBounds(19, 6, 43, 38);
+		}
+		return lblBack;
 	}
 } // end
 

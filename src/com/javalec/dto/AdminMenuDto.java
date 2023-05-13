@@ -80,10 +80,11 @@ public class AdminMenuDto {
 
 	}
 
+		
 	// 디저트 table 데이터 가져오기
 	
 	public AdminMenuDto(int dessertNo, String dessertName, int dessertStock, int dessertPrice, String categoryName,
-			 String dessertImageName, int dessertStatus) {
+			 String dessertImageName, int dessertStatus ) {
 		super();
 		this.dessertNo = dessertNo;
 		this.categoryName = categoryName;
