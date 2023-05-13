@@ -21,19 +21,12 @@ public class PaymentMain extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblback;
 	private JLabel lblNewLabel_1_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_2_1;
 	private JLabel lblcard;
 	private JLabel lblNewLabel_1_1_1;
-	private JLabel lblNewLabel_2_2;
 	private JLabel lblkakao;
-	private JLabel lblNewLabel_2_2_1;
 	private JLabel lblpayco;
-	private JLabel lblNewLabel_2_2_2;
 	private JLabel lblnaver;
-	private JLabel lblNewLabel_2_2_3;
 	private JLabel lblzero;
-	private JLabel lblNewLabel_2_2_4;
 	private JLabel lblpaybooc;
 	private JLabel lblWhite1;
 	private JLabel lblWhite2;
@@ -42,6 +35,7 @@ public class PaymentMain extends JFrame {
 	private JLabel lblWhite4;
 	private JLabel lblWhite5;
 	private JLabel lblWhite6;
+	private JLabel lblSun;
 
 	/**
 	 * Launch the application.
@@ -75,19 +69,12 @@ public class PaymentMain extends JFrame {
 		contentPane.add(getLblNewLabel());
 		contentPane.add(getLblback());
 		contentPane.add(getLblNewLabel_1_1());
-		contentPane.add(getLblNewLabel_2());
-		contentPane.add(getLblNewLabel_2_1());
 		contentPane.add(getLblcard());
 		contentPane.add(getLblNewLabel_1_1_1());
-		contentPane.add(getLblNewLabel_2_2());
 		contentPane.add(getLblkakao());
-		contentPane.add(getLblNewLabel_2_2_1());
 		contentPane.add(getLblpayco());
-		contentPane.add(getLblNewLabel_2_2_2());
 		contentPane.add(getLblnaver());
-		contentPane.add(getLblNewLabel_2_2_3());
 		contentPane.add(getLblzero());
-		contentPane.add(getLblNewLabel_2_2_4());
 		contentPane.add(getLblpaybooc());
 		contentPane.add(getLblWhite1());
 		contentPane.add(getLblWhite2());
@@ -95,13 +82,14 @@ public class PaymentMain extends JFrame {
 		contentPane.add(getLblWhite4());
 		contentPane.add(getLblWhite5());
 		contentPane.add(getLblWhite6());
+		contentPane.add(getLblSun());
 		
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Sunshine Cafe");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			lblNewLabel.setBounds(176, 6, 282, 69);
+			lblNewLabel.setBounds(169, 6, 282, 69);
 		}
 		return lblNewLabel;
 	}
@@ -129,28 +117,12 @@ public class PaymentMain extends JFrame {
 		}
 		return lblNewLabel_1_1;
 	}
-	private JLabel getLblNewLabel_2() {
-		if (lblNewLabel_2 == null) {
-			lblNewLabel_2 = new JLabel("카드결제");
-			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2.setBounds(27, 299, 75, 25);
-		}
-		return lblNewLabel_2;
-	}
-	private JLabel getLblNewLabel_2_1() {
-		if (lblNewLabel_2_1 == null) {
-			lblNewLabel_2_1 = new JLabel("삼성페이/LG페이");
-			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-			lblNewLabel_2_1.setBounds(103, 302, 88, 25);
-		}
-		return lblNewLabel_2_1;
-	}
 	private JLabel getLblcard() {
 		if (lblcard == null) {
 			lblcard = new JLabel("");
 		
 			
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/card.png"));
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/cardPay.png"));
 			int x = 150;
 			int y = 150;
 			
@@ -158,7 +130,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblcard.setIcon(backArrow);
-			lblcard.setBounds(27, 197, 155, 90);
+			lblcard.setBounds(28, 185, 155, 148);
 		}
 		return lblcard;
 	}
@@ -170,72 +142,45 @@ public class PaymentMain extends JFrame {
 		}
 		return lblNewLabel_1_1_1;
 	}
-	private JLabel getLblNewLabel_2_2() {
-		if (lblNewLabel_2_2 == null) {
-			lblNewLabel_2_2 = new JLabel("카카오페이");
-			lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2.setBounds(55, 549, 103, 25);
-		}
-		return lblNewLabel_2_2;
-	}
 	private JLabel getLblkakao() {
 		if (lblkakao == null) {
 			lblkakao = new JLabel("");
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/kakao.png"));
-			int x = 200;
-			int y = 130;
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/kakaopay.png"));
+			int x = 150;
+			int y = 150;
 			
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblkakao.setIcon(backArrow);
-			lblkakao.setBounds(7, 426, 202, 128);
+			lblkakao.setBounds(28, 435, 155, 148);
 		}
 		return lblkakao;
-	}
-	private JLabel getLblNewLabel_2_2_1() {
-		if (lblNewLabel_2_2_1 == null) {
-			lblNewLabel_2_2_1 = new JLabel("페이코");
-			lblNewLabel_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_1.setBounds(264, 547, 103, 25);
-		}
-		return lblNewLabel_2_2_1;
 	}
 	private JLabel getLblpayco() {
 		if (lblpayco == null) {
 			lblpayco = new JLabel("");
 			lblpayco.setHorizontalAlignment(SwingConstants.CENTER);
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/payco.png"));
-			int x = 300;
-			int y = 300;
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/paycopay.png"));
+			int x = 150;
+			int y = 150;
 			
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblpayco.setIcon(backArrow);
 			
-			lblpayco.setBounds(239, 454, 155, 69);
+			lblpayco.setBounds(239, 435, 155, 148);
 		}
 		return lblpayco;
-	}
-	private JLabel getLblNewLabel_2_2_2() {
-		if (lblNewLabel_2_2_2 == null) {
-			lblNewLabel_2_2_2 = new JLabel("네이버페이");
-			lblNewLabel_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_2.setBounds(477, 547, 103, 25);
-		}
-		return lblNewLabel_2_2_2;
 	}
 	private JLabel getLblnaver() {
 		if (lblnaver == null) {
 			lblnaver = new JLabel("");
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/naver.png"));
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/naverpay.png"));
 			
-			int x = 100;
-			int y = 80;
+			int x = 150;
+			int y = 150;
 			
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backArrow = resize.imageResizing();
@@ -244,26 +189,17 @@ public class PaymentMain extends JFrame {
 			
 			
 			lblnaver.setHorizontalAlignment(SwingConstants.CENTER);
-			lblnaver.setBounds(462, 456, 126, 69);
+			lblnaver.setBounds(441, 435, 162, 148);
 		}
 		return lblnaver;
-	}
-	private JLabel getLblNewLabel_2_2_3() {
-		if (lblNewLabel_2_2_3 == null) {
-			lblNewLabel_2_2_3 = new JLabel("제로페이");
-			lblNewLabel_2_2_3.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_3.setBounds(55, 724, 103, 25);
-		}
-		return lblNewLabel_2_2_3;
 	}
 	private JLabel getLblzero() {
 		if (lblzero == null) {
 			lblzero = new JLabel("");
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/zero.png"));
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/zeropay.png"));
 			
-			int x = 100;
-			int y = 80;
+			int x = 180;
+			int y = 180;
 			
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backArrow = resize.imageResizing();
@@ -271,34 +207,25 @@ public class PaymentMain extends JFrame {
 			lblzero.setIcon(backArrow);
 			
 			
-			lblzero.setHorizontalAlignment(SwingConstants.RIGHT);
-			lblzero.setBounds(32, 643, 126, 69);
+			lblzero.setHorizontalAlignment(SwingConstants.CENTER);
+			lblzero.setBounds(18, 616, 171, 148);
 		}
 		return lblzero;
-	}
-	private JLabel getLblNewLabel_2_2_4() {
-		if (lblNewLabel_2_2_4 == null) {
-			lblNewLabel_2_2_4 = new JLabel("BC페이북");
-			lblNewLabel_2_2_4.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_4.setBounds(264, 722, 103, 25);
-		}
-		return lblNewLabel_2_2_4;
 	}
 	private JLabel getLblpaybooc() {
 		if (lblpaybooc == null) {
 			lblpaybooc = new JLabel("");
 			lblpaybooc.setHorizontalAlignment(SwingConstants.CENTER);
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/paybooc.png"));
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/payboocpay.png"));
 			
-			int x = 80;
-			int y = 70;
+			int x = 150;
+			int y = 150;
 			
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblpaybooc.setIcon(backArrow);
-			lblpaybooc.setBounds(255, 641, 126, 69);
+			lblpaybooc.setBounds(234, 616, 171, 148);
 		}
 		return lblpaybooc;
 	}
@@ -401,15 +328,19 @@ public class PaymentMain extends JFrame {
 		}
 		return lblWhite6;
 	}
-	
-	
-	// ===========function============
-	
-	
-	
-	
-	
-	
-	
-	
+	private JLabel getLblSun() {
+		if (lblSun == null) {
+			lblSun = new JLabel("");
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/SunShineTeamLogo.png"));
+			int x = 80;
+			int y = 80;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblSun.setIcon(backArrow);
+			lblSun.setBounds(515, 6, 88, 69);
+		}
+		return lblSun;
+	}
 }//end

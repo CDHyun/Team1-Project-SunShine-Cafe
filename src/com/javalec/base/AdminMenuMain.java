@@ -517,7 +517,7 @@ public class AdminMenuMain extends JFrame {
 		int namecount = nameList.size();
 		int num = 0;
 		
-		
+		cbCategory.removeAllItems();
 		// 카테고리 자동 추가
 		for(int c = 0; c < namecount ; c++ ) {
 			String categoryName = nameList.get(c).getCategoryName();
@@ -697,7 +697,7 @@ public class AdminMenuMain extends JFrame {
 				tfImageName.setEnabled(false);
 				tfQty.setEnabled(false);
 				cbWhether.setEnabled(false);
-				btnInsrut.setEnabled(false);
+				btnInsrut.setEnabled(true);
 				btnimage.setEnabled(false);	
 				innerTable.setEnabled(false);
 				cbCategory.setEnabled(false);
@@ -776,6 +776,7 @@ public class AdminMenuMain extends JFrame {
 		tfNumber.setText("");
 		tfName.setText("");
 		tfPrice.setText("");
+		tfQty.setText("");
 		tfCategory.setText("");
 		tfImageName.setText("");
 		tfimage.setText("");
@@ -1229,5 +1230,12 @@ public class AdminMenuMain extends JFrame {
 		}
 		return lblBack;
 	}
+	
+	
+	
+	
+	
+	
+	
 } // end
 
