@@ -196,6 +196,7 @@ public class AdminMenuDao {
 		
 	}
 	
+	// 콤보박스에 카테고리 데이터 추가
 	public ArrayList<AdminMenuDto> cetagoryNameList(){
 		ArrayList<AdminMenuDto> dtoList = new ArrayList<AdminMenuDto>();
 		
@@ -237,7 +238,7 @@ public class AdminMenuDao {
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
 			String query = "insert into drink(categoryNo, drinkName, drinkPrice, drinkImageName, drinkImage, drinkStatus, drinkContent)";
-			String query1 = " values (?, ? , ?, ? , ?, ?)";
+			String query1 = " values (?, ? , ?, ? , ?, ?, ?)";
 			
 			if(rs.next()) {			// rs는 true, false 값
 				ps  = conn_mysql.prepareStatement(query + query1);
@@ -276,7 +277,7 @@ public class AdminMenuDao {
 			ResultSet rs = stmt_mysql.executeQuery(query2);
 			
 			String query = "insert into dessert(categoryNo, dessertName, dessertStock, dessertPrice, dessertImageName, dessertImage, dessertStatus, dessertContent)";
-			String query1 = " values (?, ? , ?, ? , ?, ?, ?)";
+			String query1 = " values (?, ? , ?, ? , ?, ?, ?, ?)";
 			
 			if(rs.next()) {			// rs는 true, false 값
 				ps  = conn_mysql.prepareStatement(query + query1);
@@ -461,8 +462,8 @@ public class AdminMenuDao {
 				ps.setString(4, drinkImageName);
 				ps.setBlob(5, drinkImage);
 				ps.setInt(6, drinkStatus);
-				ps.setInt(7, drinkNo);
-				ps.setString(8, drinkContent);
+				ps.setString(7, drinkContent);
+				ps.setInt(8, drinkNo);
 				
 				ps.executeUpdate();				
 			}
@@ -501,8 +502,8 @@ public class AdminMenuDao {
 				ps.setString(5, dessertImageName);
 				ps.setBlob(6, dessertImage);
 				ps.setInt(7, dessertStatus);
-				ps.setInt(8, dessertNo);
-				ps.setString(9, dessertContent);
+				ps.setString(8, dessertContent);
+				ps.setInt(9, dessertNo);
 				
 				ps.executeUpdate();
 				
