@@ -3,8 +3,7 @@ package com.javalec.dto;
 public class PurchaseMainDto {
 
 	int cartNo;
-	String drinkName;
-	String dessertName;
+	String itemName;
 	int cartQty;
 	int cartOptionPrice;
 	
@@ -16,10 +15,10 @@ public class PurchaseMainDto {
 
 
 	// 카트 데이터 가져오기
-	public PurchaseMainDto(String drinkName, String dessertName, int cartQty, int cartOptionPrice) {
+
+	public PurchaseMainDto(String itemName, int cartQty, int cartOptionPrice) {
 		super();
-		this.drinkName = drinkName;
-		this.dessertName = dessertName;
+		this.itemName = itemName;
 		this.cartQty = cartQty;
 		this.cartOptionPrice = cartOptionPrice;
 	}
@@ -31,28 +30,23 @@ public class PurchaseMainDto {
 	}
 
 
+
+
 	public void setCartNo(int cartNo) {
 		this.cartNo = cartNo;
 	}
 
 
-	public String getDrinkName() {
-		return drinkName;
+
+
+
+	public String getItemName() {
+		return itemName;
 	}
 
 
-	public void setDrinkName(String drinkName) {
-		this.drinkName = drinkName;
-	}
-
-
-	public String getDessertName() {
-		return dessertName;
-	}
-
-
-	public void setDessertName(String dessertName) {
-		this.dessertName = dessertName;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 

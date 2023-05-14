@@ -14,39 +14,36 @@ public class PurchaseMainDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 	
-	int cartNo;
-	int dessertNo;
-	int drinkNo;
 	String userid = "donghyun";
-	int cartQty;
+
+	
+	public PurchaseMainDao() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	public ArrayList<PurchaseMainDto> purchaseList(){
 		ArrayList<PurchaseMainDto> dtoList = new ArrayList<PurchaseMainDto>();
 		
-		String query = "select ds.dessertNo, d.drinkNo, c.cartQty, c.cartOptionPrice from cart ";
-		String query1 = " where userid = " + "'" + userid + "'";
+		String query = "select i.itemName, c.cartQty, c.cartOptionPrice " 
+				+ " from cart c, item i"
+				+ " where i.itemNo = c.itemNo and c.userid = 'donghyun'";
 		
-		String query2 = "select dessertName from dessert where dessertNo = ";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 			Statement stmt_mysql = conn_mysql.createStatement();
 			
-			ResultSet rs = stmt_mysql.executeQuery(query+query1);
+			ResultSet rs = stmt_mysql.executeQuery(query);
 				
 			while(rs.next()) {
-				String wkDessertName = rs.getString(1);
-				System.out.println(wkDessertName);
-				String wkDrinkName = rs.getString(2);
-				System.out.println(wkDrinkName);
-				int wkCartQty = rs.getInt(3);
-				System.out.println(wkCartQty);
-				int wkPrice = rs.getInt(4);
-				System.out.println(wkPrice);
+				String wkName = rs.getString(1);
+				int wkCartQty = rs.getInt(2);
+				int wkPrice = rs.getInt(3);
+
 				
-				PurchaseMainDto dto = new PurchaseMainDto(wkDrinkName, wkDessertName, wkCartQty, wkPrice);
+				PurchaseMainDto dto = new PurchaseMainDto(wkName, wkCartQty, wkPrice);
 				dtoList.add(dto);
 				
 				

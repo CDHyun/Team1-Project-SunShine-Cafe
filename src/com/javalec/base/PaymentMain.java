@@ -13,6 +13,8 @@ import java.awt.Font;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /* 기본 키오스크에서 결제 수단을 선택하는 페이지 */
 public class PaymentMain extends JFrame {
@@ -96,6 +98,12 @@ public class PaymentMain extends JFrame {
 	private JLabel getLblback() {
 		if (lblback == null) {
 			lblback = new JLabel("");
+			lblback.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPurchaseMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/back.png"));
 			int x = 50;
 			int y = 50;
@@ -343,4 +351,22 @@ public class PaymentMain extends JFrame {
 		}
 		return lblSun;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private void redirecPurchaseMain() {
+		PurchaseMain main = new PurchaseMain();
+		main.setVisible(true);
+		dispose();
+	}
+	
+	
+	
+	
 }//end

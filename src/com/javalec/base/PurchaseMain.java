@@ -22,6 +22,8 @@ import javax.swing.ListSelectionModel;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.Window.Type;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /* 기본 키오스크에서 주문 세부 내역 확인하고 결제 옵션 페이지로 보내주는 페이지. */
 public class PurchaseMain extends JFrame {
@@ -124,6 +126,12 @@ public class PurchaseMain extends JFrame {
 	private JLabel getLblHere() {
 		if (lblHere == null) {
 			lblHere = new JLabel("먹고가기");
+			lblHere.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentMain();
+				}
+			});
 			lblHere.setBounds(259, 811, 61, 16);
 		}
 		return lblHere;
@@ -131,6 +139,12 @@ public class PurchaseMain extends JFrame {
 	private JLabel getLblTakeout() {
 		if (lblTakeout == null) {
 			lblTakeout = new JLabel("포장하기");
+			lblTakeout.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentMain();
+				}
+			});
 			lblTakeout.setBounds(558, 811, 61, 16);
 		}
 		return lblTakeout;
@@ -181,20 +195,16 @@ public class PurchaseMain extends JFrame {
 		list = dao.purchaseList();
 		int num = 0;
 		int count = list.size();
-		String menu = "";
+		System.out.println(count);
+		
 		for(int i = 0 ; i < count ; i ++) {
 			num++;
-			String dessertName = list.get(i).getDessertName();
-			String drinkName = list.get(i).getDrinkName();
+			String menuName = list.get(i).getItemName();
 			int menuQty = list.get(i).getCartQty();
 			int menuPrice = list.get(i).getCartOptionPrice();
-			if(dessertName.equals(null)) {
-				menu = drinkName;
-			}else {
-				menu = dessertName;
-			}
+
 			
-			Object[] tempData = {num, menu, menuQty, menuPrice};
+			Object[] tempData = {num, menuName, menuQty, menuPrice};
 			outerTable.addRow(tempData);
 		}
 		
@@ -202,6 +212,12 @@ public class PurchaseMain extends JFrame {
 		
 	}
 	
+	private void redirecPaymentMain() {
+		PaymentMain main = new PaymentMain();
+		main.setVisible(true);
+		dispose();
+		
+	}
 	
 	
 	
