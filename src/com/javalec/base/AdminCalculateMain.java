@@ -7,15 +7,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import com.javalec.dao.AdminCalculateDao;
 import com.javalec.dto.AdminCalculateDto;
 import com.javalec.function.ImageResize;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,11 +26,15 @@ import java.awt.Font;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.print.PrinterJob;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ListSelectionModel;
@@ -51,8 +58,15 @@ public class AdminCalculateMain extends JFrame {
 	
 	// 데이터 불러올 테이블 뼈대 초기화 
 	private final DefaultTableModel outerTable = new DefaultTableModel();
+	
 	// 초기 테이블 요약 정보 받아올 리스트
 	ArrayList<AdminCalculateDto> beanList = null; 		
+	
+	static int purchaseNo; 			// 구매 번호 (주문순서) 	
+	static Date purchaseDate; 		// 구매 날짜 및 시간 
+	static int purchasePrice;			// 계산 금액 (제품수량(주문내역) * 금액) 
+	static String[] items;			// 주문 내역 
+	static String userId;				// 회원 아이디 
 	
 	
 
@@ -81,6 +95,7 @@ public class AdminCalculateMain extends JFrame {
 			public void windowOpened(WindowEvent e) {
 				setDate();
 				tableInit();
+				//searchAction();
 			}
 		});
 		setTitle("관리자 페이지 - 매장 마감");
@@ -208,6 +223,12 @@ public class AdminCalculateMain extends JFrame {
 	private JButton getBtnBillReprint() { 		// 영수증 재출력 버튼 
 		if (btnBillReprint == null) {
 			btnBillReprint = new JButton("영수증 재출력");
+			btnBillReprint.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					reprintBill() ;
+				}
+			});
 			btnBillReprint.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 			btnBillReprint.setBounds(50, 600, 250, 60);
 		}
@@ -216,6 +237,12 @@ public class AdminCalculateMain extends JFrame {
 	private JButton getBtnOrderCancel() { 		// 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행 
 		if (btnOrderCancel == null) {
 			btnOrderCancel = new JButton("주문 취소");
+			btnOrderCancel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					cancelPurchase();
+				}
+			});
 			btnOrderCancel.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 			btnOrderCancel.setBounds(325, 600, 250, 60);
 		}
@@ -224,6 +251,12 @@ public class AdminCalculateMain extends JFrame {
 	private JButton getBtnCalculate() { 		// 매장 마감 버튼 : 클릭시 데이터베이스에서 그 날 하루의 총 매출액을 뽑아주고 창을 종료함. 
 		if (btnCalculate == null) {
 			btnCalculate = new JButton("마감");
+			btnCalculate.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					showTodayTotal();
+				}
+			});
 			btnCalculate.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 			btnCalculate.setBounds(170, 680, 255, 80);
 		}
@@ -295,13 +328,23 @@ public class AdminCalculateMain extends JFrame {
 		col = innerTable.getColumnModel().getColumn(vColIndex) ;
 		width = 80; 
 		col.setPreferredWidth(width); 
-	
-		/* 테이블 칼럼들, 데이터들 중앙으로 정렬하고 싶었는데... 
-		TableCellRenderer centerRenderer = new TableCellRenderer();
-		centerRenderer.setHorizontalAlignment( SwingConstants.CENTER ); // 셀 가운데 정렬
-		for(int j = 0; j < innerTable.getColumnCount(); j++){
-		    innerTable.getColumnModel().getColumn(j).setCellRenderer(centerRenderer); 
-		}	*/
+		
+		
+		// 테이블의 칼럼명 및 데이터들 중앙정렬 시키기 
+		// 테이블의 DefaultTableCellRenderer를 생성
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER); // 데이터를 중앙정렬
+
+		// 테이블 칼럼의 DefaultTableCellRenderer를 생성
+		DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) innerTable.getTableHeader().getDefaultRenderer();
+		headerRenderer.setHorizontalAlignment(JLabel.CENTER); // 칼럼명을 중앙정렬
+
+		// 테이블에 DefaultTableCellRenderer를 적용
+		innerTable.setDefaultRenderer(Object.class, centerRenderer); // Object.class는 데이터 모델의 타입에 맞게 설정해주세요.
+
+		// 테이블 칼럼에 DefaultTableCellRenderer를 적용
+		innerTable.getTableHeader().setDefaultRenderer(headerRenderer);
+		
 	}
 	
 	
@@ -323,12 +366,96 @@ public class AdminCalculateMain extends JFrame {
 			
 			String[] qTxt = {productCode, brandName, productName, size, stock};
 			outerTable.addRow(qTxt);
-		}
-	}*/
+		} 
+	} 	*/
 	
 	
 	
 	private void tableClick() {
+		
+	}
+	
+	private void reprintBill() {
+		try {
+			int i = innerTable.getSelectedRow();
+			
+			// 관리자가 데이터를 선택하지 않고 영수증재출력 버튼을 눌렀을 때 
+			if (i == -1) { 		
+				JOptionPane.showMessageDialog(this, "재출력 할 구매 내역을 선택해주세요! ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			} 
+			
+			// 관리자가 데이터를 선택한 후 영수증 재출력 버튼을 눌렀을 때 
+			purchaseNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+			int result = JOptionPane.showConfirmDialog(this, "영수증을 재출력 할까요?", "확인", JOptionPane.YES_NO_OPTION);
+
+			if (i>0 && result == JOptionPane.YES_OPTION) {		// Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기 
+				printReceipt() ;//purchaseNo가 선택된 조건으로 SQL 쿼리 작성해서 불러오기 (다오)
+			} else {									// No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기 
+				JOptionPane.getRootFrame().setVisible(false);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// 영수증 출력 메소드 
+	public static void printReceipt() {
+	    // 구매일시에서 년월 제외한 일, 시, 분, 초 추출
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd일 HH:mm:ss");
+	
+	    // 영수증 출력
+	    System.out.println("======== 영 수 증 ========");
+	    System.out.println("구매번호: " + purchaseNo);
+	    System.out.println("구매일시: " + dateFormat.format(purchaseDate));
+	    System.out.println("결제금액: " + purchasePrice + "원");
+
+	    System.out.println("--------------------------");
+	    System.out.println("구매 상품 목록:");
+	    for (int i = 0; i < items.length; i++) {
+	        System.out.println((i + 1) + ". " + items[i]);
+	    }
+
+	    System.out.println("--------------------------");
+	    System.out.println("회원 ID: " + userId);
+	    System.out.println("==========================");
+	}
+	
+	
+	    
+		        
+	
+	
+	// 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행 
+	private void cancelPurchase() {
+		try {
+			int i = innerTable.getSelectedRow();
+			
+			// 관리자가 데이터를 선택하지 않고 주문취소 버튼을 눌렀을 때 
+			if (i == -1) { 		
+				JOptionPane.showMessageDialog(this, "취소 할 구매 내역을 선택해주세요! ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			} 
+			
+			// 관리자가 데이터를 선택한 후 주문 취소 버튼을 눌렀을 때 
+			purchaseNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+			int result = JOptionPane.showConfirmDialog(this, "구매 내역을 취소 할까요?", "확인", JOptionPane.YES_NO_OPTION);
+
+			if (i>0 && result == JOptionPane.YES_OPTION) {		// Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기 
+				//purchaseNo가 선택된 조건으로 SQL 쿼리 작성해서 불러오기 (다오)
+			} else {									// No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기 
+				JOptionPane.getRootFrame().setVisible(false);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 매장 마감 버튼 : 클릭시 데이터베이스에서 그 날 하루의 총 매출액을 뽑아주고 창을 종료함. 
+	private void showTodayTotal() {
 		
 	}
 	
@@ -341,9 +468,6 @@ public class AdminCalculateMain extends JFrame {
 	
 	
 	
-	
-	
-	
-	
+// END
 	
 }

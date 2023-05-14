@@ -15,7 +15,7 @@ public class AdminLoginDao {
 	private final String pw_mysql = ShareVar.DBPass;
 	
 	// 관리자가 로그인 할 때 입력할 데이터 초기화
-	String adminId ; 			// 관리자는 staff 테이블에, 관리자 아이디는 스텝 넘버와 같음 
+	int adminId ; 			// 관리자는 staff 테이블에, 관리자 아이디는 스텝 넘버와 같음 
 	String adminPassword; 
 	
 	
@@ -25,15 +25,18 @@ public class AdminLoginDao {
 	}
 
 
-	// DB에 아이디가 있는지 확인해 줄 생성자 		: AdminLoginMain 에서 existAdminId()
-	public AdminLoginDao(String adminId) {
+	
+	// 관리자가 아이디 입력시 존재하는지 확인 -> existAdminId()
+	public AdminLoginDao(int adminId) {
 		super();
 		this.adminId = adminId;
 	}
 
 
+
+
 	// 관리자가 로그인 할 때 받아올 데이터(아이디, 패스워드) 생성자  
-	public AdminLoginDao(String adminId, String adminPassword) {
+	public AdminLoginDao(int adminId, String adminPassword) {
 		super();
 		this.adminId = adminId;
 		this.adminPassword = adminPassword;
@@ -47,14 +50,14 @@ public class AdminLoginDao {
 	// Method
 	
 	// 관리자가 입력한 아이디가 DB에 있는지 존재여부 확인해 줄 메소드 
-	public int existsAdminId(String adminId) { 		
+	public int existsAdminId(int adminId) { 		
 		int count = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 			Statement stmt = con.createStatement();
 			
-			String query = "select count(staffno) from staff where staffid = '" + adminId + "'";
+			String query = "select count(staffNo) from staff where staffNo = '" + adminId + "' " ; 
 			
 	        ResultSet rs = stmt.executeQuery(query);
 	        
@@ -70,7 +73,7 @@ public class AdminLoginDao {
 	
 	
 	// 관리자가 입력한 아이디와 비밀번호가 DB에 존재하는지 확인해즐 메소드 -> 일치하면 로그인 완료되도록.
-	public boolean loginCheck(String adminId, String adminPassword) {
+	public boolean loginCheck(int adminId, String adminPassword) {
 		boolean result = false;
 		int count = 0;
 		try {
@@ -78,7 +81,7 @@ public class AdminLoginDao {
 			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 			Statement stmt = con.createStatement();
 			
-			String query = "select count(staffno) from staff where staffno = '" + adminId + "'" + " and staffPassword = '" + adminPassword + "'";
+			String query = "select count(staffNo) from staff where staffNo = " + adminId  + " and staffPassword = '" + adminPassword + "'";
 			
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
