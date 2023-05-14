@@ -9,7 +9,6 @@ public class AdminMenuDto {
 	int categoryNo;					// 카테고리 프키
 	int drinkNo;					// 음료 프키
 	int dessertNo;					// 디저트 프키
-	String categoryName;			// 카테고리네임
 	String drinkName;				// 음료네임
 	String dessertName;				// 디저트네임
 	int drinkPrice;					// 음료가격
@@ -24,17 +23,23 @@ public class AdminMenuDto {
 	String drinkContent;			// 음료 상품상세
 	String dessertContent;			// 디저트 상품상세
 	
-	// 음료 데이터 생성자
+	String menuName;
+	int menuPrice;
+	String categoryName;			// 카테고리네임
+	int menuStatus;
 	
 	
-	public AdminMenuDto(String drinkName, int drinkPrice, String categoryName, 
-			int drinkStatus) {
+	
+	
+	
+	
+	// 메뉴 화면 데이터
+	public AdminMenuDto(String menuName, int menuPrice, String categoryName, int menuStatus) {
 		super();
-
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
 		this.categoryName = categoryName;
-		this.drinkName = drinkName;
-		this.drinkPrice = drinkPrice;
-		this.drinkStatus = drinkStatus;
+		this.menuStatus = menuStatus;
 	}
 	
 	
@@ -109,6 +114,42 @@ public class AdminMenuDto {
 	
 	
 	
+
+	public String getMenuName() {
+		return menuName;
+	}
+
+
+
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+
+
+
+	public int getMenuPrice() {
+		return menuPrice;
+	}
+
+
+
+	public void setMenuPrice(int menuPrice) {
+		this.menuPrice = menuPrice;
+	}
+
+
+
+	public int getMenuStatus() {
+		return menuStatus;
+	}
+
+
+
+	public void setMenuStatus(int menuStatus) {
+		this.menuStatus = menuStatus;
+	}
+
+
 
 	public String getDrinkContent() {
 		return drinkContent;
