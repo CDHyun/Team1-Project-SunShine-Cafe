@@ -59,6 +59,8 @@ public class StudyUserSingUpMain extends JFrame {
 	private JLabel lblTel;
 	private JPasswordField pfUserPassword;
 	private JPasswordField pfUserPassword1;
+	private JLabel lblNewLabel_1_5;
+	private JTextField tfName;
 
 	
 	/**
@@ -112,6 +114,8 @@ public class StudyUserSingUpMain extends JFrame {
 		contentPane.add(getBtnCheckID());
 		contentPane.add(getPfUserPassword());
 		contentPane.add(getPfUserPassword1());
+		contentPane.add(getLblNewLabel_1_5());
+		contentPane.add(getTfName());
 	}
 
 	private JLabel getLblHome() {
@@ -132,7 +136,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("회원 가입");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-			lblNewLabel.setBounds(357, 118, 194, 71);
+			lblNewLabel.setBounds(357, 97, 194, 71);
 		}
 		return lblNewLabel;
 	}
@@ -140,7 +144,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("회원 아이디");
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1.setBounds(143, 227, 91, 16);
+			lblNewLabel_1.setBounds(310, 283, 91, 16);
 		}
 		return lblNewLabel_1;
 	}
@@ -161,7 +165,7 @@ public class StudyUserSingUpMain extends JFrame {
 				}
 			});
 			tfUserId.setHorizontalAlignment(SwingConstants.CENTER);
-			tfUserId.setBounds(284, 222, 255, 38);
+			tfUserId.setBounds(451, 278, 255, 38);
 			tfUserId.setColumns(10);
 		}
 		return tfUserId;
@@ -170,7 +174,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_1 == null) {
 			lblNewLabel_1_1 = new JLabel("비밀번호");
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_1.setBounds(149, 316, 97, 21);
+			lblNewLabel_1_1.setBounds(316, 372, 97, 21);
 		}
 		return lblNewLabel_1_1;
 	}
@@ -178,7 +182,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_2 == null) {
 			lblNewLabel_1_2 = new JLabel("비밀번호 확인");
 			lblNewLabel_1_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_2.setBounds(143, 394, 118, 21);
+			lblNewLabel_1_2.setBounds(310, 450, 118, 21);
 		}
 		return lblNewLabel_1_2;
 	}
@@ -186,7 +190,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_3 == null) {
 			lblNewLabel_1_3 = new JLabel("전화번호(Tel)");
 			lblNewLabel_1_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_3.setBounds(143, 470, 118, 21);
+			lblNewLabel_1_3.setBounds(310, 526, 118, 21);
 		}
 		return lblNewLabel_1_3;
 	}
@@ -196,7 +200,7 @@ public class StudyUserSingUpMain extends JFrame {
 			tfPhone.setEditable(false);
 			tfPhone.setHorizontalAlignment(SwingConstants.CENTER);
 			tfPhone.setColumns(10);
-			tfPhone.setBounds(284, 464, 255, 38);
+			tfPhone.setBounds(451, 520, 255, 38);
 			
 			// 전화번호 TextField까지 입력을 해야 가입버튼 활성화 
 						tfPhone.getDocument().addDocumentListener(new DocumentListener() {
@@ -229,7 +233,7 @@ public class StudyUserSingUpMain extends JFrame {
 	                }
 				}
 			});
-			btnJoin.setBounds(601, 513, 117, 51);
+			btnJoin.setBounds(763, 507, 117, 51);
 			
 			
 		}
@@ -239,7 +243,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_4 == null) {
 			lblNewLabel_1_4 = new JLabel("ID");
 			lblNewLabel_1_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_4.setBounds(180, 244, 26, 16);
+			lblNewLabel_1_4.setBounds(347, 300, 26, 16);
 		}
 		return lblNewLabel_1_4;
 	}
@@ -247,7 +251,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_1_1 == null) {
 			lblNewLabel_1_1_1 = new JLabel("Password");
 			lblNewLabel_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_1_1.setBounds(143, 335, 97, 26);
+			lblNewLabel_1_1_1.setBounds(310, 391, 97, 26);
 		}
 		return lblNewLabel_1_1_1;
 	}
@@ -255,7 +259,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblCheck == null) {
 			lblCheck = new JLabel("");
 			lblCheck.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblCheck.setBounds(294, 259, 201, 16);
+			lblCheck.setBounds(461, 315, 201, 16);
 		}
 		return lblCheck;
 	}
@@ -263,7 +267,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblPass == null) {
 			lblPass = new JLabel("");
 			lblPass.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblPass.setBounds(294, 426, 201, 16);
+			lblPass.setBounds(461, 482, 201, 16);
 		}
 		return lblPass;
 	}
@@ -278,7 +282,7 @@ public class StudyUserSingUpMain extends JFrame {
 					tfPhone.setEditable(true);
 				}
 			});
-			btnCheckID.setBounds(575, 225, 91, 29);
+			btnCheckID.setBounds(742, 281, 91, 29);
 		}
 		return btnCheckID;
 	}
@@ -391,30 +395,56 @@ public class StudyUserSingUpMain extends JFrame {
 	}
 	
 	
-	
-	
-	
-	
-	
-	private void checkButtonEnabled() {
-	    if (tfUserId.getText().isEmpty() || tfPhone.getText().isEmpty() || pfUserPassword.getPassword().length == 0 || pfUserPassword1.getPassword().length == 0) {
-	        btnJoin.setEnabled(false);
-	    } else {
-	        btnJoin.setEnabled(true);
-	    }
-	}
+
 	private JPasswordField getPfUserPassword() {
 		if (pfUserPassword == null) {
 			pfUserPassword = new JPasswordField();
-			pfUserPassword.setBounds(284, 316, 255, 38);
+			pfUserPassword.setBounds(451, 372, 255, 38);
 		}
 		return pfUserPassword;
 	}
 	private JPasswordField getPfUserPassword1() {
 		if (pfUserPassword1 == null) {
 			pfUserPassword1 = new JPasswordField();
-			pfUserPassword1.setBounds(284, 388, 255, 38);
+			pfUserPassword1.setBounds(451, 444, 255, 38);
 		}
 		return pfUserPassword1;
 	}
+	private JLabel getLblNewLabel_1_5() {
+		if (lblNewLabel_1_5 == null) {
+			lblNewLabel_1_5 = new JLabel("성함");
+			lblNewLabel_1_5.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+			lblNewLabel_1_5.setBounds(339, 218, 46, 26);
+		}
+		return lblNewLabel_1_5;
+	}
+	private JTextField getTfName() {
+		if (tfName == null) {
+			tfName = new JTextField();
+			tfName.setHorizontalAlignment(SwingConstants.CENTER);
+			tfName.setColumns(10);
+			tfName.setBounds(451, 215, 255, 38);
+		}
+		return tfName;
+	}
+	
+	
+	// TextField가 전부 적혀야 버튼 활성화 하는 메소드(전화 번호TestField에 글자 길이10~11자리까지만 적을수있게 변경) 
+			private void checkButtonEnabled() {
+				String phone = tfPhone.getText().replaceAll("[^0-9]", ""); // 입력된 전화번호에서 숫자만 추출
+		        if (tfUserId.getText().isEmpty() || phone.length() < 10 || phone.length() > 11 || pfUserPassword.getPassword().length == 0 || pfUserPassword1.getPassword().length == 0) {
+		            btnJoin.setEnabled(false);
+		        } else {
+		            btnJoin.setEnabled(true);
+		        }
+		    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }// End
