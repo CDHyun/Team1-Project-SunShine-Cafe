@@ -25,6 +25,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 
@@ -151,6 +153,20 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfUserId() {
 		if (tfUserId == null) {
 			tfUserId = new JTextField();
+			tfUserId.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// 입력한 키가 한글인 경우
+			        if (Character.getType(e.getKeyChar()) == Character.OTHER_LETTER) {
+			            lblCheck.setText("영어와 숫자로만 입력할 수 있습니다.");
+			            lblCheck.setForeground(Color.RED);
+			            e.consume(); // 입력한 키 무시
+			        } else {
+			            lblCheck.setText("");
+			        }
+				
+				}
+			});
 			tfUserId.setHorizontalAlignment(SwingConstants.LEFT);
 			tfUserId.setBounds(263, 306, 222, 37);
 			tfUserId.setColumns(10);
@@ -279,7 +295,7 @@ public class UserSingUp extends JFrame {
 			        String re_pw = new String(pfUserPassword1.getPassword());
 
 			        
-			        // 비밀번호 중복 체크 하면서 바로 라벨에 나오도록 하는 코드 
+			     // 비밀번호 중복 체크 하면서 바로 라벨에 나오도록 하는 코드 
 			        if (pw.equals("")) { // 비밀번호 TextField가 빈칸인 경우
 			            lblPass.setForeground(Color.RED);
 			            lblPass.setText("비밀번호를 입력해주세요.");
@@ -288,6 +304,9 @@ public class UserSingUp extends JFrame {
 			            lblPass.setForeground(Color.RED);
 			            lblPass.setText("비밀번호가 일치하지 않습니다.");
 			            btnJoin.setEnabled(pfUserPassword.getPassword().equals(pfUserPassword1.getPassword()));
+			            pfUserPassword.requestFocus(); // 포커스 이동
+			            pfUserPassword.setText("");    // 비밀번호 필드 값 지우기
+			            pfUserPassword1.setText("");   // 비밀번호 확인 필드 값 지우기 
 			        } else {
 			            lblPass.setForeground(Color.BLACK);
 			            lblPass.setText("비밀번호가 일치합니다.");
@@ -379,26 +398,46 @@ public class UserSingUp extends JFrame {
 	
 	
 	private void checkID() {
-		String insertID = tfUserId.getText();
+		String insertID = tfUserId.getText().trim().replaceAll("\\s+", "");
+		
+
+		// 입력된 아이디가 빈 문자열인 경우
+	    if (insertID.isEmpty()) {
+	        tfUserId.requestFocus();      // 아이디 입력창에 포커스 맞추기
+	        lblCheck.setText("아이디를 입력해주세요.");  // 안내 문자 설정하기
+	        lblCheck.setForeground(Color.RED);
+	        return;   // 메소드 종료
+	    }
+		
+		
+		
 		UserSingUpDao singupdao = new UserSingUpDao();
-		boolean isDuplicated = singupdao.checkID(insertID) == 1; 
+		int checkResult = singupdao.checkID(insertID); 
 		// DB에서 아이디를 찾고 중복값을 라벨에 보여주려면 boolean을 사용  꼭 뒤에 == 1 값을 넣어야한다.
 		
 		
 		// 라벨에 중복값을 체크하여 설정값을 나오게 하는 코드 
-		if(isDuplicated) {
-			tfUserId.requestFocus();                 // 중복된 값이면 아이디에 다시 포커스 맞춰주기 
-			tfUserId.setText("");                    // 중복된 값이면 아이디에 적힌 글자 지워주기 
-			lblCheck.setText("중복된 아이디입니다.");
-			lblCheck.setForeground(Color.RED);
-			
-		}else {
-			lblCheck.setText("사용 가능한 아이디 입니다.");
-			lblCheck.setForeground(Color.GREEN);
-			if(!"".equals(new String(pfUserPassword.getPassword()))) {
-				 
-			}
-		}
+		// 아이디 입력 할때 2글자 이상부터 쓸수있도록 제한
+	    if (checkResult == -1) {
+	        tfUserId.requestFocus();      // 아이디 입력창에 포커스 맞추기
+	        tfUserId.setText("");         // 입력된 아이디 지우기
+	        lblCheck.setText("아이디는 두 글자 이상 입력해주세요.");  // 안내 문자 설정하기
+	        lblCheck.setForeground(Color.RED);
+	    }
+	     // 라벨에 중복값을 체크하여 설정값을 나오게 하는 코드 
+	    // 아이디가 중복된 경우
+	    else if (checkResult == 1) {
+	        tfUserId.requestFocus();
+	        tfUserId.setText("");
+	        lblCheck.setText("중복된 아이디입니다.");
+	        lblCheck.setForeground(Color.RED);
+	    }
+	    // 아이디가 사용 가능한 경우
+	    else {
+	        lblCheck.setText("사용 가능한 아이디입니다.");
+	        lblCheck.setForeground(Color.GREEN);
+	        btnCheckID.setEnabled(false);      // 사용 가능할시 중복확인 버튼 비활성화 
+	    }
 	}		
 	
 	
@@ -433,14 +472,15 @@ public class UserSingUp extends JFrame {
 	}
 
 
-	private void checkButtonEnabled() {
-	    if (tfUserId.getText().isEmpty() || tfPhone.getText().isEmpty() || pfUserPassword.getPassword().length == 0 || pfUserPassword1.getPassword().length == 0) {
-	        btnJoin.setEnabled(false);
-	    } else {
-	        btnJoin.setEnabled(true);
+	// TextField가 전부 적혀야 버튼 활성화 하는 메소드(전화 번호TestField에 글자 길이10~11자리까지만 적을수있게 변경) 
+		private void checkButtonEnabled() {
+			String phone = tfPhone.getText().replaceAll("[^0-9]", ""); // 입력된 전화번호에서 숫자만 추출
+	        if (tfUserId.getText().isEmpty() || phone.length() < 10 || phone.length() > 11 || pfUserPassword.getPassword().length == 0 || pfUserPassword1.getPassword().length == 0) {
+	            btnJoin.setEnabled(false);
+	        } else {
+	            btnJoin.setEnabled(true);
+	        }
 	    }
-	}
-	
 
 	
 	

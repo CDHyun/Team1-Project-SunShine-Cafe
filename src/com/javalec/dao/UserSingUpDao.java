@@ -48,13 +48,22 @@ public class UserSingUpDao {
 			
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				int wkCount = rs.getInt(1);
-				return wkCount;
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 1;
+	            int wkCount = rs.getInt(1);
+	            if (wkCount == 0) {
+	                // 아이디가 중복되지 않으면서, 숫자와 영어로만 구성된 문자열인지 체크
+	                if (insertID.matches("^[a-zA-Z0-9]*$")) {
+	                    return 0; // 아이디가 중복되지 않음
+	                } else {
+	                    return 2; // 숫자와 영어로만 구성되지 않음
+	                }
+	            } else {
+	                return 1; // 아이디가 중복됨
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return 1;
 	}
 
 	// 사용자 등록 처리 
@@ -83,7 +92,7 @@ public class UserSingUpDao {
 		
 		} 
 		    catch (Exception e) {
-		        JOptionPane.showMessageDialog(null, "회원 가입 중 오류가 발생했습니다: " + e.getMessage());
+		        
 		        return false;
 		    }
 
