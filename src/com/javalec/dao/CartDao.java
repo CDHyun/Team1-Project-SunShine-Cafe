@@ -26,25 +26,16 @@ public class CartDao {
 	int categoryNo;
 	String categoryName;
 
-	/* dessert */
-	int dessertNo;
-	String dessertNane;
-	int dessertStock;
-	int dessertPrice;
-	String dessertInsertDate;
-	String dessertImageName;
-	FileInputStream dessertImage;
-	boolean dessertStatus;
-
-	/* drink */
-	int drinkNo;
-	String drinkName;
-	int drinkPrice;
-	String drinkInsertDate;
-	String drinkImageName;
-	FileInputStream drinkImage;
-	boolean drinkStatus;
-
+	
+	/* item */
+	int itemNo;
+	String itemName;
+	int itemPrice;
+	String itemInsertDate;
+	String itemImageName;
+	FileInputStream itemImage;
+	boolean itemStatus;
+	
 	/* user */
 	String userid = ShareVar.userid;
 
@@ -54,9 +45,9 @@ public class CartDao {
 	int wkItemPrice;
 	int cartOptionPrice;
 
-	public CartDao(int drinkNo, String userid, int cartOptionPrice) {
+	public CartDao(int itemNo, String userid, int cartOptionPrice) {
 		super();
-		this.drinkNo = drinkNo;
+		this.itemNo = itemNo;
 		this.userid = userid;
 		this.cartOptionPrice = cartOptionPrice;
 	}
@@ -67,15 +58,15 @@ public class CartDao {
 	}
 
 	/* 01. 선택한 상품을 카트에 담아주는 메소드 */
-	public boolean drinkAddToCart() {
-		String query = "insert into cart(drinkNo, userid, cartOptionPrice) values(?, ?, ?)";
+	public boolean itemAddToCart() {
+		String query = "insert into cart(itemNo, userid, cartOptionPrice) values(?, ?, ?)";
 		PreparedStatement ps = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 			Statement stmt = con.createStatement();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, drinkNo);
+			ps.setInt(1, itemNo);
 			ps.setString(2, userid);
 			ps.setInt(3, cartOptionPrice);
 			ps.executeUpdate();
@@ -88,17 +79,36 @@ public class CartDao {
 	}
 
 	public boolean dessertAddToCart() {
-		String query = "insert into cart(dessertNo, userid) values(?, ?)";
-		PreparedStatement ps = null;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-			Statement stmt = con.createStatement();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, drinkNo);
-			ps.setString(2, userid);
-			ps.executeUpdate();
-			con.close();
+		String countQuery = "select count(itemNo) from cart where itemNo = ? and userid = ?";
+		String insertQuery = "insert into cart(itemNo, userid, cartOptionPrice) values(?, ?, ?)";
+		String updateQuery = "update cart set cartQty = cartQty + 1 where itemNo = ? and userid = ?";
+	    PreparedStatement countPs = null;
+	    PreparedStatement insertPs = null;
+	    PreparedStatement updatePs = null;
+	    
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+	        countPs = con.prepareStatement(countQuery);
+	        countPs.setInt(1, itemNo);
+	        countPs.setString(2, userid);
+	        ResultSet countResult = countPs.executeQuery();
+	        countResult.next();
+	        int count = countResult.getInt(1);
+	        
+	        if (count == 0) {
+	            insertPs = con.prepareStatement(insertQuery);
+	            insertPs.setInt(1, itemNo);
+	            insertPs.setString(2, userid);
+	            insertPs.setInt(3, cartOptionPrice);
+	            insertPs.executeUpdate();
+	        } else {
+	            // Update query
+	            updatePs = con.prepareStatement(updateQuery);
+	            updatePs.setInt(1, itemNo);
+	            updatePs.setString(2, userid);
+	            updatePs.executeUpdate();
+	        }
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,7 +119,8 @@ public class CartDao {
 	/* 02. 카트 리스트를 불러오는 메소드 */
 	public ArrayList<CartDto> cartList(String userid) {
 		ArrayList<CartDto> beanList = new ArrayList<CartDto>();
-		String query = "select c.cartNo, c.cartQty, c.drinkNo, d.drinkName, c.cartOptionPrice from cart c, drink d where c.drinkNo = d.drinkNo and userid = '" + userid + "'";
+		String query = "select c.cartNo, c.cartQty, c.itemNo, i.itemName, c.cartOptionPrice from cart c, item i where c.itemNo = i.itemNo and c.userid = '" + userid + "'";
+
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -120,27 +131,15 @@ public class CartDao {
 			while(rs.next()) {
 				int wkCartNo = rs.getInt(1);
 				int wkCartQty = rs.getInt(2);
-				int wkDrinkNo = rs.getInt(3);
-				String wkDrinkName = rs.getString(4);
+				int wkItemNo = rs.getInt(3);
+				String wkItem = rs.getString(4);
 				int wkCartOptionPrice = rs.getInt(5);
-				CartDto cartDto = new CartDto(wkCartNo, wkCartQty, wkDrinkNo, wkDrinkName, wkCartOptionPrice);
+				CartDto cartDto = new CartDto(wkCartNo, wkCartQty, wkCartOptionPrice, wkItemNo, wkItem);
 				beanList.add(cartDto);
 			}
+			
 			System.out.println(beanList.size());
 			
-//			while (rs.next()) {
-//				int wkCartNo = rs.getInt(1);
-//				int wkCartQty = rs.getInt(2);
-//				int wkDrinkNo = rs.getInt(3);
-//				String wkDrinkName = rs.getString(4);
-//				int wkDrinkPrice = rs.getInt(5);
-//				int wkDessertNo = rs.getInt(6);
-//				String wkDessertName = rs.getString(7);
-//				int wkDessertPrice = rs.getInt(8);
-//				CartDto cartDto = new CartDto(wkCartNo, wkCartQty, wkDessertNo, wkDessertName, wkDessertPrice, wkDrinkNo, wkDrinkName, wkDrinkPrice);
-//				beanList.add(cartDto);
-//			}
-
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();

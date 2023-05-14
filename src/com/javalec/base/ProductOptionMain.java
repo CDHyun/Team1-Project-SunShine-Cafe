@@ -345,7 +345,9 @@ public class ProductOptionMain extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					ProductMain productMain = new ProductMain();
+					productMain.setLocationRelativeTo(null);
 					productMain.setVisible(true);
+					dispose();
 				}
 			});
 			ImageIcon icon = new ImageIcon(ProductOptionMain.class.getResource("/com/javalec/image/cancle.png"));
@@ -481,18 +483,18 @@ public class ProductOptionMain extends JFrame {
 		beanList = productDao.itemDetail(categoryNo, itemNo);
 		
 		for(int i=0; i<beanList.size(); i++) {
-			total = beanList.get(i).getDrinkPrice();
-			cartOptionPrice = beanList.get(i).getDrinkPrice();
-			wkItemName = beanList.get(i).getDrinkName();
+			total = beanList.get(i).getItemPrice();
+			cartOptionPrice = beanList.get(i).getItemPrice();
+			wkItemName = beanList.get(i).getItemName();
 			lblProductName.setText(wkItemName);
 			lblPrice.setText(Integer.toString(cartOptionPrice));
-			ImageIcon icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
+			ImageIcon icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 150;
 			int y = 200;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon productIcon = resize.imageResizing();
 			lblProductImage.setIcon(productIcon);
-			lblContent.setText(beanList.get(i).getDrinkContent());
+			lblContent.setText(beanList.get(i).getItemContent());
 		}
 		
 	}
@@ -542,13 +544,14 @@ public class ProductOptionMain extends JFrame {
 	/* 04. 주문 담기 버튼을 눌렀을 때 실행되는 메소드 */
 	private void createPurchaseList() {
 		CartDao cartDao = new CartDao(itemNo, userid, cartOptionPrice);
-		boolean result = false;
-		if(categoryNo == 5) {
-			result = cartDao.dessertAddToCart();
-		} else {
-			result = cartDao.drinkAddToCart();
-		}
-		if(result == false) {
+//		boolean result = false;
+//		if(categoryNo == 5) {
+//			result = cartDao.dessertAddToCart();
+//		} else {
+//			result = cartDao.drinkAddToCart();
+//		}
+		boolean result = cartDao.itemAddToCart();
+		if(!result) {
 			cartErrorDialog cartErrorDialog = new cartErrorDialog();
 			cartErrorDialog.setLocationRelativeTo(null);
 			cartErrorDialog.setVisible(true);

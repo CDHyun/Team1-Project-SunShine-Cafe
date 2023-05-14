@@ -9,24 +9,14 @@ public class ProductDto {
 	int categoryNo;
 	String categoryName;
 	
-	/* dessert */
-	int dessertNo;
-	String dessertNane;
-	int dessertStock;
-	int dessertPrice;
-	String dessertInsertDate;
-	String dessertImageName;
-	boolean dessertStatus;
-	String dessertContent;
-	
-	/* drink */
-	int drinkNo;
-	String drinkName;
-	int drinkPrice;
-	String drinkInsertDate;
-	String drinkImageName;
-	boolean drinkStatus;
-	String drinkContent;
+	/* item */
+	int itemNo;
+	String itemName;
+	int itemPrice;
+	String itemInsertDate;
+	String itemImageName;
+	boolean itemStatus;
+	String itemContent;
 	
 	/* user */
 	String userid;
@@ -38,229 +28,134 @@ public class ProductDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProductDto(int drinkNo, String drinkName, int drinkPrice, String drinkImageName) {
+	public ProductDto(int itemNo, String itemName, int itemPrice, String itemImageName, int categoryNo) {
 		super();
-		this.drinkNo = drinkNo;
-		this.drinkName = drinkName;
-		this.drinkPrice = drinkPrice;
-		this.drinkImageName = drinkImageName;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemImageName = itemImageName;
+		this.categoryNo = categoryNo;
 	}
 	
 	/* 음료(디저트) 리스트를 띄우기 위한 생성자 */
-	public ProductDto(int categoryNo, int drinkNo, String drinkName, int drinkPrice, String drinkImageName) {
+	public ProductDto(int categoryNo, int itemNo, String itemName, int itemPrice, String itemImageName) {
 		super();
 		this.categoryNo = categoryNo;
-		this.drinkNo = drinkNo;
-		this.drinkName = drinkName;
-		this.drinkPrice = drinkPrice;
-		this.drinkImageName = drinkImageName;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemImageName = itemImageName;
 	}
 
 	/* 음료(디저트) 상세 페이지를 띄우기 위한 생성자 */
-	public ProductDto(String drinkName, int drinkPrice, String drinkImageName,
-			String drinkContent) {
+	public ProductDto(String itemName, int itemPrice, String itemImageName, String itemContent) {
 		super();
-		this.drinkName = drinkName;
-		this.drinkPrice = drinkPrice;
-		this.drinkImageName = drinkImageName;
-		this.drinkContent = drinkContent;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.itemImageName = itemImageName;
+		this.itemContent = itemContent;
 	}
 	
 	/* Cart 역할을 해주는 생성자 */
-	public ProductDto(int drinkNo, String drinkName, int drinkPrice) {
+	public ProductDto(int itemNo, String itemName, int itemPrice) {
 		super();
-		this.drinkNo = drinkNo;
-		this.drinkName = drinkName;
-		this.drinkPrice = drinkPrice;
+		this.itemNo = itemNo;
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
 	}
 
+	
 	/*** getter&setter ***/
 	public int getCategoryNo() {
 		return categoryNo;
 	}
 
-
-
-
 	public void setCategoryNo(int categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-
 
 	public String getCategoryName() {
 		return categoryName;
 	}
 
-
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
 
-
-	public int getDessertNo() {
-		return dessertNo;
+	public int getItemNo() {
+		return itemNo;
 	}
 
-
-	public void setDessertNo(int dessertNo) {
-		this.dessertNo = dessertNo;
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
 	}
 
-
-	public String getDessertNane() {
-		return dessertNane;
+	public String getItemName() {
+		return itemName;
 	}
 
-
-	public void setDessertNane(String dessertNane) {
-		this.dessertNane = dessertNane;
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-
-	public int getDessertStock() {
-		return dessertStock;
+	public int getItemPrice() {
+		return itemPrice;
 	}
 
-
-	public void setDessertStock(int dessertStock) {
-		this.dessertStock = dessertStock;
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 
-
-	public int getDessertPrice() {
-		return dessertPrice;
+	public String getItemInsertDate() {
+		return itemInsertDate;
 	}
 
-
-	public void setDessertPrice(int dessertPrice) {
-		this.dessertPrice = dessertPrice;
+	public void setItemInsertDate(String itemInsertDate) {
+		this.itemInsertDate = itemInsertDate;
 	}
 
-
-	public String getDessertInsertDate() {
-		return dessertInsertDate;
+	public String getItemImageName() {
+		return itemImageName;
 	}
 
-
-	public void setDessertInsertDate(String dessertInsertDate) {
-		this.dessertInsertDate = dessertInsertDate;
+	public void setItemImageName(String itemImageName) {
+		this.itemImageName = itemImageName;
 	}
 
-
-	public String getDessertImageName() {
-		return dessertImageName;
+	public boolean isItemStatus() {
+		return itemStatus;
 	}
 
-
-	public void setDessertImageName(String dessertImageName) {
-		this.dessertImageName = dessertImageName;
+	public void setItemStatus(boolean itemStatus) {
+		this.itemStatus = itemStatus;
 	}
 
-
-	public boolean isDessertStatus() {
-		return dessertStatus;
+	public String getItemContent() {
+		return itemContent;
 	}
 
-
-	public void setDessertStatus(boolean dessertStatus) {
-		this.dessertStatus = dessertStatus;
+	public void setItemContent(String itemContent) {
+		this.itemContent = itemContent;
 	}
-
-
-	public int getDrinkNo() {
-		return drinkNo;
-	}
-
-
-	public void setDrinkNo(int drinkNo) {
-		this.drinkNo = drinkNo;
-	}
-
-
-	public String getDrinkName() {
-		return drinkName;
-	}
-
-
-	public void setDrinkName(String drinkName) {
-		this.drinkName = drinkName;
-	}
-
-
-	public int getDrinkPrice() {
-		return drinkPrice;
-	}
-
-
-	public void setDrinkPrice(int drinkPrice) {
-		this.drinkPrice = drinkPrice;
-	}
-
-
-	public String getDrinkInsertDate() {
-		return drinkInsertDate;
-	}
-
-
-	public void setDrinkInsertDate(String drinkInsertDate) {
-		this.drinkInsertDate = drinkInsertDate;
-	}
-
-
-	public String getDrinkImageName() {
-		return drinkImageName;
-	}
-
-
-	public void setDrinkImageName(String drinkImageName) {
-		this.drinkImageName = drinkImageName;
-	}
-
-
-	public boolean isDrinkStatus() {
-		return drinkStatus;
-	}
-
-
-	public void setDrinkStatus(boolean drinkStatus) {
-		this.drinkStatus = drinkStatus;
-	}
-
 
 	public String getUserid() {
 		return userid;
 	}
 
-
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-
 
 	public boolean isUserSecessionStatus() {
 		return userSecessionStatus;
 	}
 
-
 	public void setUserSecessionStatus(boolean userSecessionStatus) {
 		this.userSecessionStatus = userSecessionStatus;
 	}
 
-	public String getDessertContent() {
-		return dessertContent;
-	}
 
-	public void setDessertContent(String dessertContent) {
-		this.dessertContent = dessertContent;
-	}
 
-	public String getDrinkContent() {
-		return drinkContent;
-	}
-
-	public void setDrinkContent(String drinkContent) {
-		this.drinkContent = drinkContent;
-	}
 	
 	
 	

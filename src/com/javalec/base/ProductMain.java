@@ -182,7 +182,7 @@ public class ProductMain extends JFrame {
 				lblPriviousBtn.setVisible(false);
 				inIt();
 				tableInit();
-				queryDrinkAction();
+				queryItemAction();
 				showCartList();
 			}
 		});
@@ -239,9 +239,10 @@ public class ProductMain extends JFrame {
 		contentPane.add(getLblBackGround4());
 		contentPane.add(getLblBackGround5());
 		contentPane.add(getLblBackGround6());
-		contentPane.add(getLblPlusBtn());
-		contentPane.add(getLblMinusBtn());
 		contentPane.add(getLblDeleteAllBtn());
+		contentPane.add(getLblNewLabel());
+		contentPane.add(getLblRemainingTime());
+		contentPane.add(getLblNewLabel_1());
 	}
 	
 
@@ -619,7 +620,7 @@ public class ProductMain extends JFrame {
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
 					lblAll.setForeground(Color.WHITE);
-					queryDrinkAction();
+					queryItemAction();
 				}
 			});
 			lblAll.setForeground(Color.WHITE);
@@ -635,7 +636,6 @@ public class ProductMain extends JFrame {
 			lblIce.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					categoryNo = 1;
 					lblAll.setForeground(Color.BLACK);
 					lblHot.setForeground(Color.BLACK);
 					lblJuice.setForeground(Color.BLACK);
@@ -648,7 +648,7 @@ public class ProductMain extends JFrame {
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
 					lblIce.setForeground(Color.WHITE);
-					conditionDrinkQueryAciton();
+					conditionItemQueryAction(1);
 					updateLabelVisibility();
 				}
 			});
@@ -677,7 +677,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(true);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
-					conditionDrinkQueryAciton();
+					conditionItemQueryAction(3);
 				}
 			});
 			lblJuice.setHorizontalAlignment(SwingConstants.CENTER);
@@ -705,7 +705,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(true);
 					lblBackGround6.setVisible(false);
-					conditionDrinkQueryAciton();
+					conditionItemQueryAction(4);
 				}
 			});
 			lblTea.setHorizontalAlignment(SwingConstants.CENTER);
@@ -733,7 +733,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(true);
-					conditionDessertQueryAciton();
+					conditionItemQueryAction(5);
 				}
 			});
 			lblDessert.setHorizontalAlignment(SwingConstants.CENTER);
@@ -761,7 +761,7 @@ public class ProductMain extends JFrame {
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
-					conditionDrinkQueryAciton();
+					conditionItemQueryAction(2);
 				}
 			});
 			lblHot.setHorizontalAlignment(SwingConstants.CENTER);
@@ -889,23 +889,6 @@ public class ProductMain extends JFrame {
 		return innerTable;
 	}
 	
-	private JLabel getLblPlusBtn() {
-		if (lblPlusBtn == null) {
-			lblPlusBtn = new JLabel("");
-			lblPlusBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/plusBtn.png")));
-			lblPlusBtn.setBounds(24, 605, 61, 36);
-		}
-		return lblPlusBtn;
-	}
-	private JLabel getLblMinusBtn() {
-		if (lblMinusBtn == null) {
-			lblMinusBtn = new JLabel("");
-			lblMinusBtn.setIcon(new ImageIcon(ProductMain.class.getResource("/com/javalec/image/minusBtn.png")));
-			lblMinusBtn.setBounds(117, 599, 61, 36);
-		}
-		return lblMinusBtn;
-	}
-	
 	private JLabel getLblDeleteAllBtn() {
 		if (lblDeleteAllBtn == null) {
 			lblDeleteAllBtn = new JLabel("");
@@ -927,6 +910,52 @@ public class ProductMain extends JFrame {
 		return lblDeleteAllBtn;
 	}
 	
+	private JLabel getLblNewLabel() {
+		if (lblNewLabel == null) {
+			lblNewLabel = new JLabel("남은 시간");
+			lblNewLabel.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
+			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			lblNewLabel.setBounds(406, 638, 133, 47);
+		}
+		return lblNewLabel;
+	}
+	private JLabel getLblRemainingTime() {
+	    if (lblRemainingTime == null) {
+	        lblRemainingTime = new JLabel("120");
+	        lblRemainingTime.setForeground(Color.RED);
+	        lblRemainingTime.setHorizontalAlignment(SwingConstants.LEFT);
+	        lblRemainingTime.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
+	        lblRemainingTime.setBounds(405, 673, 61, 47);
+
+	        Thread timerThread = new Thread(() -> {
+	            int seconds = 120;
+	            while (seconds > 0) {
+	                try {
+	                    Thread.sleep(1000); // 1초(1000밀리초) 대기
+	                } catch (InterruptedException e) {
+	                    e.printStackTrace();
+	                }
+	                seconds--;
+	                lblRemainingTime.setText(Integer.toString(seconds));
+	                if (seconds == 0) {
+	                    dispose();
+	                }
+	            }
+	        });
+
+	        timerThread.start();
+	    }
+	    return lblRemainingTime;
+	}
+	private JLabel getLblNewLabel_1() {
+		if (lblNewLabel_1 == null) {
+			lblNewLabel_1 = new JLabel("초");
+			lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+			lblNewLabel_1.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
+			lblNewLabel_1.setBounds(456, 675, 23, 47);
+		}
+		return lblNewLabel_1;
+	}
 	
 	
 	/********************** Functions **********************/
@@ -947,9 +976,10 @@ public class ProductMain extends JFrame {
 	private JLabel lblBackGround5;
 	private JLabel lblBackGround6;
 	private JTable innerTable;
-	private JLabel lblPlusBtn;
-	private JLabel lblMinusBtn;
 	private JLabel lblDeleteAllBtn;
+	private JLabel lblNewLabel;
+	private JLabel lblRemainingTime;
+	private JLabel lblNewLabel_1;
 
 //	lblProductImages = {lblProductImage1, lblProductImage2, lblProductImage3, lblProductImage4, lblProductImage5, lblProductImage6};
 //	private JLabel[] lblProductNames = {lblProductName1, lblProductName2, lblProductName3, lblProductName4, lblProductName5, lblProductName6};
@@ -1044,25 +1074,25 @@ public class ProductMain extends JFrame {
 	}
 	
 	
-	/* 02. 첫 화면에 전체 메뉴 띄우기 (Drink 한정) */
-	private void queryDrinkAction() {
+	/* 02. 첫 화면에 전체 메뉴 띄우기 */
+	private void queryItemAction() {
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.selectDrinkList();
 		
 		for(int i=0; i<6; i++) {
-			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
+			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 100;
 			int y = 120;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon productIcon = resize.imageResizing();
 			lblProductImageList.get(i).setIcon(productIcon);
-			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
-			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
+			lblProductNameList.get(i).setText(beanList.get(i).getItemName());
+			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getItemPrice()));
 		}
 		updateLabelVisibility();
 	}
-
+	
 	/* 03. 메뉴 페이지 뒤로 가기 버튼  */
 	private void priviousPage() {
 		if (currentPage > 0) {
@@ -1094,14 +1124,14 @@ public class ProductMain extends JFrame {
 	        lblProductPriceList.get(labelIndex).setVisible(true);
 	        lblItemStotList.get(labelIndex).setVisible(true);
 
-	        icon = new ImageIcon("./" + product.getDrinkImageName());
+	        icon = new ImageIcon("./" + product.getItemImageName());
 	        int x = 100;
 	        int y = 120;
 	        ImageResize resize = new ImageResize(icon, x, y);
 	        ImageIcon productIcon = resize.imageResizing();
 	        lblProductImageList.get(labelIndex).setIcon(productIcon);
-	        lblProductNameList.get(labelIndex).setText(product.getDrinkName());
-	        lblProductPriceList.get(labelIndex).setText(decimalFormat.format(product.getDrinkPrice()) + "원");
+	        lblProductNameList.get(labelIndex).setText(product.getItemName());
+	        lblProductPriceList.get(labelIndex).setText(decimalFormat.format(product.getItemPrice()) + "원");
 	    }
 
 	    // 나머지 라벨은 비활성화
@@ -1117,45 +1147,45 @@ public class ProductMain extends JFrame {
 	}
 	
 	/* 06. 카테고리 검색 (Drink) */
-	private void conditionDrinkQueryAciton() {
+	private void conditionItemQueryAction(int categoryNo) {
 		currentPage = 0;
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
-		beanList = productDao.conditionDrinkQuery(categoryNo);
+		beanList = productDao.conditionItemQuery(categoryNo);
 
 		for (int i = 0; i < beanList.size(); i++) {
-			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
+			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 100;
 			int y = 120;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon productIcon = resize.imageResizing();
 			lblProductImageList.get(i).setIcon(productIcon);
-			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
-			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
+			lblProductNameList.get(i).setText(beanList.get(i).getItemName());
+			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getItemPrice()));
 		}
 		updateLabelVisibility();
 	}
 	
-	/* 07. 카테고리 검색 (Dessert) */
-	private void conditionDessertQueryAciton() {
-		currentPage = 0;
-		lblPriviousBtn.setVisible(false);
-		beanList = new ArrayList<ProductDto>();
-		ProductDao productDao = new ProductDao();
-		beanList = productDao.conditionDessertQuery(categoryNo);
-
-		for (int i = 0; i < beanList.size(); i++) {
-			icon = new ImageIcon("./" + beanList.get(i).getDrinkImageName());
-			int x = 100;
-			int y = 120;
-			ImageResize resize = new ImageResize(icon, x, y);
-			ImageIcon productIcon = resize.imageResizing();
-			lblProductImageList.get(i).setIcon(productIcon);
-			lblProductNameList.get(i).setText(beanList.get(i).getDrinkName());
-			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getDrinkPrice()));
-		}
-		updateLabelVisibility();
-	}
+//	/* 07. 카테고리 검색 (Dessert) */
+//	private void conditionDessertQueryAciton(int categoryNo) {
+//		currentPage = 0;
+//		lblPriviousBtn.setVisible(false);
+//		beanList = new ArrayList<ProductDto>();
+//		ProductDao productDao = new ProductDao();
+//		beanList = productDao.conditionDessertQuery(categoryNo);
+//
+//		for (int i = 0; i < beanList.size(); i++) {
+//			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
+//			int x = 100;
+//			int y = 120;
+//			ImageResize resize = new ImageResize(icon, x, y);
+//			ImageIcon productIcon = resize.imageResizing();
+//			lblProductImageList.get(i).setIcon(productIcon);
+//			lblProductNameList.get(i).setText(beanList.get(i).getItemName());
+//			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getItemPrice()));
+//		}
+//		updateLabelVisibility();
+//	}
 	
 	/* 08. 선택한 상품의 번호 가져오기 */
 	private int getItemNo(int index) {
@@ -1163,7 +1193,7 @@ public class ProductMain extends JFrame {
 	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
 	        ProductDto selectedProduct = beanList.get(startIndex + index);
 
-	        return selectedProduct.getDrinkNo();
+	        return selectedProduct.getItemNo();
 	    }
 
 	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
@@ -1172,16 +1202,24 @@ public class ProductMain extends JFrame {
 	/* 09. 선택한 상품의 정보를 넘겨주기 */
 	private void itemClick(int index) {
 	    int itemNo = getItemNo(index);
-	    if (itemNo != -1) {
-	        // 선택한 상품 데이터 활용
-	        String itemName = beanList.get(currentPage * 6 + index).getDrinkName();
-	        int itemPrice = beanList.get(currentPage * 6 + index).getDrinkPrice();
-	        ProductOptionMain productOptionMain = new ProductOptionMain();
-	        productOptionMain.setCategoryNo(categoryNo);
-	        productOptionMain.setItemNo(itemNo);
-	        productOptionMain.setLocationRelativeTo(null);
-	        productOptionMain.setVisible(true);
-	        dispose();
+	    System.out.println("itemNo : " +itemNo);
+	    categoryNo = beanList.get(index).getCategoryNo();
+	    System.out.println(" categoryNo : " + categoryNo);
+	    if (categoryNo == 5) {
+	    	int itemPrice = beanList.get(currentPage * 6 + index).getItemPrice();
+	    	CartDao cartDao = new CartDao(itemNo, userid, itemPrice);
+	    	boolean result = cartDao.dessertAddToCart();
+	    	tableInit();
+	    	showCartList();
+	    } else {
+	    	String itemName = beanList.get(currentPage * 6 + index).getItemName();
+	    	int itemPrice = beanList.get(currentPage * 6 + index).getItemPrice();
+	    	ProductOptionMain productOptionMain = new ProductOptionMain();
+	    	productOptionMain.setCategoryNo(categoryNo);
+	    	productOptionMain.setItemNo(itemNo);
+	    	productOptionMain.setLocationRelativeTo(null);
+	    	productOptionMain.setVisible(true);
+	    	dispose();
 	    }
 	}
 	
@@ -1205,9 +1243,11 @@ public class ProductMain extends JFrame {
 		
 		for(int i=0; i<cartList.size(); i++) {
 			cartCount++;
-			Object[] data = {cartCount, cartList.get(i).getDrinkName(), plusBtn, cartList.get(i).getCartQty(), minusBtn, cartList.get(i).getCartOptionPrice()};
+			Object[] data = {cartCount, cartList.get(i).getItemName() ,plusBtn, cartList.get(i).getCartQty(), minusBtn, (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty())};
 			outerTable.addRow(data);
 		}
+		lblQty.setText(Integer.toString(cartList.size()));
+		
 	}
 	
 	/* 11. Cart List 비우기 */
@@ -1220,8 +1260,10 @@ public class ProductMain extends JFrame {
 			cartErrorDialog.setVisible(true);
 		}
 		tableInit();
+		lblQty.setText("0");
 	}
 	
 	
 
+	
 }	// End Class
