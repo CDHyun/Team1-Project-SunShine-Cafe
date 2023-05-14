@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /* 스터디룸 키오스크에서 주문 완료가 뜨면서 주문번호 알려주는 페이지 */
 public class StudyPaymentSuccessMain extends JFrame {
@@ -45,6 +49,21 @@ public class StudyPaymentSuccessMain extends JFrame {
 	 * Create the frame.
 	 */
 	public StudyPaymentSuccessMain() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+	            Timer timer = new Timer();			// 5초 뒤 종료
+	            TimerTask task = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						dispose();
+					}
+				};
+	            timer.schedule(task, 5000);
+			}
+		});
 		setTitle("결제 완료");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);

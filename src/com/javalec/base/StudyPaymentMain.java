@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /* 스터디룸 키오스크에서 결제 수단을 선택하는 페이지 */
 public class StudyPaymentMain extends JFrame {
@@ -31,6 +33,17 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel lblpaybooc;
 	private JLabel lblNewLabel_1;
 
+	int sum = 0;
+	
+	
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -53,7 +66,7 @@ public class StudyPaymentMain extends JFrame {
 	public StudyPaymentMain() {
 		setTitle("결제 수단 선택");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 750);
+		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -81,7 +94,7 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Sunshine Cafe");
-			lblNewLabel.setBounds(462, 16, 276, 48);
+			lblNewLabel.setBounds(320, 21, 276, 48);
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		}
 		return lblNewLabel;
@@ -113,6 +126,13 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblcard() {
 		if (lblcard == null) {
 			lblcard = new JLabel("");
+			lblcard.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+	
+				}
+			});
 			lblcard.setBounds(87, 157, 126, 69);
 		}
 		return lblcard;
@@ -130,7 +150,7 @@ public class StudyPaymentMain extends JFrame {
 			lblNewLabel_2_2 = new JLabel("카카오페이");
 			lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2.setBounds(110, 473, 103, 25);
+			lblNewLabel_2_2.setBounds(84, 473, 103, 25);
 		}
 		return lblNewLabel_2_2;
 	}
@@ -146,7 +166,7 @@ public class StudyPaymentMain extends JFrame {
 			lblNewLabel_2_2_1 = new JLabel("페이코");
 			lblNewLabel_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_1.setBounds(343, 473, 103, 25);
+			lblNewLabel_2_2_1.setBounds(330, 473, 103, 25);
 		}
 		return lblNewLabel_2_2_1;
 	}
@@ -162,7 +182,7 @@ public class StudyPaymentMain extends JFrame {
 			lblNewLabel_2_2_2 = new JLabel("네이버페이");
 			lblNewLabel_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_2.setBounds(596, 473, 103, 25);
+			lblNewLabel_2_2_2.setBounds(583, 473, 103, 25);
 		}
 		return lblNewLabel_2_2_2;
 	}
@@ -178,7 +198,7 @@ public class StudyPaymentMain extends JFrame {
 			lblNewLabel_2_2_3 = new JLabel("제로페이");
 			lblNewLabel_2_2_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_2_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_3.setBounds(94, 641, 103, 25);
+			lblNewLabel_2_2_3.setBounds(84, 641, 103, 25);
 		}
 		return lblNewLabel_2_2_3;
 	}
@@ -208,9 +228,33 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("뒤로 가기");
+			lblNewLabel_1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPurchaseMain();
+					
+				}
+			});
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
 			lblNewLabel_1.setBounds(26, 16, 119, 69);
 		}
 		return lblNewLabel_1;
 	}
-}
+	
+	
+	private void redirecPurchaseMain() {
+		StudyPurchaseMain main = new StudyPurchaseMain();
+		main.setVisible(true);
+		dispose();
+	}
+	
+	private void redirecPaymentConfirmationMain() {
+		StudyPaymentConfirmationMain main = new StudyPaymentConfirmationMain();
+		main.setSum(sum);
+		main.setVisible(true);
+		dispose();
+	}
+	
+	
+	
+}// end

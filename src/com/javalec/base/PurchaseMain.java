@@ -24,6 +24,7 @@ import java.awt.event.WindowEvent;
 import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 
 /* 기본 키오스크에서 주문 세부 내역 확인하고 결제 옵션 페이지로 보내주는 페이지. */
 public class PurchaseMain extends JFrame {
@@ -37,11 +38,19 @@ public class PurchaseMain extends JFrame {
 	private JLabel lblHere;
 	private JLabel lblTakeout;
 
+	int sum = 0;
+	int count =0;
 	/**
 	 * Launch the application.
 	 */
 	
 	private final DefaultTableModel outerTable = new DefaultTableModel();
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_2_1;
+	private JLabel lblNewLabel_2_2;
+	private JLabel lblNewLabel_2_3;
+	private JLabel lblPay;
+	private JLabel lblCount;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,6 +90,12 @@ public class PurchaseMain extends JFrame {
 		contentPane.add(getLblback());
 		contentPane.add(getLblHere());
 		contentPane.add(getLblTakeout());
+		contentPane.add(getLblNewLabel_2());
+		contentPane.add(getLblNewLabel_2_1());
+		contentPane.add(getLblNewLabel_2_2());
+		contentPane.add(getLblNewLabel_2_3());
+		contentPane.add(getLblPay());
+		contentPane.add(getLblCount());
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -119,6 +134,12 @@ public class PurchaseMain extends JFrame {
 	private JLabel getLblback() {
 		if (lblback == null) {
 			lblback = new JLabel("돌아가기");
+			lblback.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecProductMain();
+				}
+			});
 			lblback.setBounds(16, 811, 61, 16);
 		}
 		return lblback;
@@ -129,6 +150,7 @@ public class PurchaseMain extends JFrame {
 			lblHere.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+				
 					redirecPaymentMain();
 				}
 			});
@@ -142,6 +164,7 @@ public class PurchaseMain extends JFrame {
 			lblTakeout.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
+			
 					redirecPaymentMain();
 				}
 			});
@@ -194,35 +217,95 @@ public class PurchaseMain extends JFrame {
 		PurchaseMainDao dao = new PurchaseMainDao();
 		list = dao.purchaseList();
 		int num = 0;
-		int count = list.size();
-		System.out.println(count);
+		sum = 0;
+		count = list.size();
 		
 		for(int i = 0 ; i < count ; i ++) {
 			num++;
 			String menuName = list.get(i).getItemName();
 			int menuQty = list.get(i).getCartQty();
 			int menuPrice = list.get(i).getCartOptionPrice();
-
+			sum += menuPrice;
 			
 			Object[] tempData = {num, menuName, menuQty, menuPrice};
 			outerTable.addRow(tempData);
 		}
-		
-		
+			lblCount.setText(Integer.toString(count));
+			lblPay.setText(Integer.toString(sum));
 		
 	}
 	
 	private void redirecPaymentMain() {
 		PaymentMain main = new PaymentMain();
+		main.setSum(sum);
 		main.setVisible(true);
 		dispose();
 		
 	}
 	
+	private void redirecProductMain() {
+		ProductMain main = new ProductMain();
+		main.setVisible(true);
+		dispose();
+		
+	}
+	
+
 	
 	
 	
 	
-	
+	private JLabel getLblNewLabel_2() {
+		if (lblNewLabel_2 == null) {
+			lblNewLabel_2 = new JLabel("총 수량");
+			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblNewLabel_2.setBounds(6, 744, 92, 39);
+		}
+		return lblNewLabel_2;
+	}
+	private JLabel getLblNewLabel_2_1() {
+		if (lblNewLabel_2_1 == null) {
+			lblNewLabel_2_1 = new JLabel("개");
+			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblNewLabel_2_1.setBounds(206, 744, 42, 39);
+		}
+		return lblNewLabel_2_1;
+	}
+	private JLabel getLblNewLabel_2_2() {
+		if (lblNewLabel_2_2 == null) {
+			lblNewLabel_2_2 = new JLabel("총 결재금액");
+			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblNewLabel_2_2.setBounds(277, 744, 148, 39);
+		}
+		return lblNewLabel_2_2;
+	}
+	private JLabel getLblNewLabel_2_3() {
+		if (lblNewLabel_2_3 == null) {
+			lblNewLabel_2_3 = new JLabel("원");
+			lblNewLabel_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblNewLabel_2_3.setBounds(577, 744, 42, 39);
+		}
+		return lblNewLabel_2_3;
+	}
+	private JLabel getLblPay() {
+		if (lblPay == null) {
+			lblPay = new JLabel("");
+			lblPay.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblPay.setForeground(new Color(255, 0, 0));
+			lblPay.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblPay.setBounds(423, 744, 148, 39);
+		}
+		return lblPay;
+	}
+	private JLabel getLblCount() {
+		if (lblCount == null) {
+			lblCount = new JLabel("");
+			lblCount.setForeground(new Color(255, 0, 0));
+			lblCount.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblCount.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
+			lblCount.setBounds(162, 744, 42, 39);
+		}
+		return lblCount;
+	}
 }// end
 

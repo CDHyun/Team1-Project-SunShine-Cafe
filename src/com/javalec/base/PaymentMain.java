@@ -39,6 +39,19 @@ public class PaymentMain extends JFrame {
 	private JLabel lblWhite6;
 	private JLabel lblSun;
 
+	
+	int sum = 0 ;
+	
+	
+	public int getSum() {
+		return sum;
+	}
+
+	public void setSum(int sum) {
+		this.sum = sum;
+
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -128,6 +141,12 @@ public class PaymentMain extends JFrame {
 	private JLabel getLblcard() {
 		if (lblcard == null) {
 			lblcard = new JLabel("");
+			lblcard.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 		
 			
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/cardPay.png"));
@@ -352,19 +371,23 @@ public class PaymentMain extends JFrame {
 		return lblSun;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	private void redirecPurchaseMain() {
 		PurchaseMain main = new PurchaseMain();
 		main.setVisible(true);
 		dispose();
 	}
+	
+	private void redirecPaymentConfirmationMain() {
+		PaymentConfirmationMain main = new PaymentConfirmationMain();
+		main.setSum(sum);
+		main.setVisible(true);
+		dispose();
+	}
+	
+	
+	
+	
 	
 	
 	
