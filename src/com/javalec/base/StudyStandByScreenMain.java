@@ -50,7 +50,7 @@ import java.util.TimerTask;
 	private static final int TICKET_SECONDS = TICKET_MINUTES * 60; // 이용권 시간(초)
 	private static LocalDateTime startTime; // 이용 시작 시간
 	private static int remainingSeconds; // 남은 시간(초)
-	
+	int count = 0;
 	final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 	
 	
@@ -110,57 +110,32 @@ import java.util.TimerTask;
 
 
 	public void windowopen() {
-			startTime = LocalDateTime.now(); // 이용 시작 시간 설정
-	         remainingSeconds = TICKET_SECONDS; // 남은 시간 초기화
-	         // 1초마다 타이머 갱신
-	         Timer timer = new Timer();
-	         timer.scheduleAtFixedRate(new TimerTask() {
-	             public void run() {
-	                 remainingSeconds--;
-	                 
-	                 // 시간 종료되면 타이머 종료
-	                 if (remainingSeconds == 0) {
-	                     timer.cancel();
-	                 }
-
-	                 // 화면에 남은 시간 출력
-	                 int minutes = remainingSeconds / 60;
-	                 int seconds = remainingSeconds % 60;
-	                 System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
-	             }
-	         }, 0, 1000);
-	     }
-
-	}
-
-
-
-
  
-//	 Timer timer = new Timer();
-//	 TimerTask task = new TimerTask() {
-//		 @Override
-//		 public void run() {
-//			 // TODO Auto-generated method stub
-//			 if(count <= 1) {
-//				 System.out.println("강사님");
-//				 count++;
-//			 }
-//			 else if(count <=2){
-//				 System.out.println("도와주세요");
-//				 count++;
-//			 }
-//			 else if(count <=3){
-//				 System.out.println("살려주세요");
-//				 count++;
-//				 
-//			 }else {
-//				 
-//			 }
-//		 }
-//	 };
-//	 timer.schedule(task, 1000, 2000);
-//		 }
+	 Timer timer = new Timer();
+	 TimerTask task = new TimerTask() {
+		 @Override
+		 public void run() {
+			 // TODO Auto-generated method stub
+			 if(count <= 1) {
+				 System.out.println("Image1");
+				 count++;
+			 }
+			 else if(count <=2){
+				 System.out.println("Image2");
+				 count++;
+			 }
+			 else if(count <=3){
+				 System.out.println("Image3");
+				 count++;
+				 
+			 }else {
+				 
+			 }
+		 }
+	 };
+	 timer.schedule(task, 1000, 2000);
+		 }
+	}
 		 
 	 // 설정 시간 값에서 떨어지는 데이터 값
 	

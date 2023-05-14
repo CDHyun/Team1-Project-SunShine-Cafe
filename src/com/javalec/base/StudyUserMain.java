@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.function.ImageResize;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -22,6 +25,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.UIManager;
 
 /* 스터디룸 키오스크에서 남은 시간을 보여줄 유저 메인 페이지 */
 public class StudyUserMain extends JFrame {
@@ -35,12 +39,13 @@ public class StudyUserMain extends JFrame {
 	
 	
 	private JPanel contentPane;
-	private JLabel lblLogoImage;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_2_1;
+	private JLabel lblStudyImage;
+	private JLabel lblName;
 	private JButton btnNewButton;
 	private JLabel lblStopWatch;
+	private JLabel lblBackground;
+	private JLabel lblStudyContent;
+	private JLabel lblStudyProductEx;
 
 	/**
 	 * Launch the application.
@@ -71,30 +76,25 @@ public class StudyUserMain extends JFrame {
 		});
 		setTitle("남은시간 및 주문내역");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 625);
+		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.add(getLblLogoImage());
-		contentPane.add(getLblNewLabel_1());
-		contentPane.add(getLblNewLabel_2());
-		contentPane.add(getLblNewLabel_2_1());
+		contentPane.add(getLblStudyContent());
+		contentPane.add(getLblStudyImage());
+		contentPane.add(getLblName());
 		contentPane.add(getBtnNewButton());
 		
 		JLabel lblNewLabel_1_1 = new JLabel("남은시간");
-		lblNewLabel_1_1.setBounds(75, 99, 233, 60);
-		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 50));
+		lblNewLabel_1_1.setBounds(175, 97, 154, 60);
+		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 25));
 		contentPane.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_2_1_1 = new JLabel("2,000원");
-		lblNewLabel_2_1_1.setBounds(515, 157, 106, 36);
-		lblNewLabel_2_1_1.setFont(new Font("Dialog", Font.PLAIN, 30));
-		contentPane.add(lblNewLabel_2_1_1);
-		
 		JButton btnaddOrder = new JButton("추가주문");
+		btnaddOrder.setBounds(719, 356, 117, 60);
 		btnaddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int result = JOptionPane.showConfirmDialog(null,"추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
@@ -107,42 +107,41 @@ public class StudyUserMain extends JFrame {
 					}
 			}
 		});
-		btnaddOrder.setBounds(719, 358, 117, 60);
 		btnaddOrder.setFont(new Font("Dialog", Font.PLAIN, 20));
 		contentPane.add(btnaddOrder);
 		contentPane.add(getLblStopWatch());
+		
+		JLabel lblStudyPrice = new JLabel("2,000원");
+		lblStudyPrice.setBounds(731, 157, 106, 42);
+		contentPane.add(lblStudyPrice);
+		lblStudyPrice.setForeground(new Color(255, 0, 0));
+		lblStudyPrice.setFont(new Font("Dialog", Font.PLAIN, 30));
+		contentPane.add(getLblBackground());
+		contentPane.add(getLblStudyProductEx());
 	}
 
-	private JLabel getLblLogoImage() {
-		if (lblLogoImage == null) {
-			lblLogoImage = new JLabel("");
-			lblLogoImage.setBounds(12, 157, 198, 177);
+	private JLabel getLblStudyImage() {
+		if (lblStudyImage == null) {
+			lblStudyImage = new JLabel("");
+			lblStudyImage.setBounds(0, 157, 271, 139);
+			ImageIcon icon = new ImageIcon(StudyUserMain.class.getResource("/com/javalec/image/IceWaterMelon.png"));
+			int x = 140;
+			int y = 180;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon productIcon = resize.imageResizing();
+			lblStudyImage.setIcon(productIcon);
+			lblStudyImage.setHorizontalAlignment(SwingConstants.CENTER);
+			lblStudyImage.setBounds(-2, 84, 150, 215);
 		}
-		return lblLogoImage;
+		return lblStudyImage;
 	}
-	private JLabel getLblNewLabel_1() {
-		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("Sunshine Cafe");
-			lblNewLabel_1.setBounds(175, 27, 411, 60);
-			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.BOLD, 50));
+	private JLabel getLblName() {
+		if (lblName == null) {
+			lblName = new JLabel("Sunshine Cafe");
+			lblName.setBounds(226, 27, 411, 60);
+			lblName.setFont(new Font("Lucida Grande", Font.BOLD, 50));
 		}
-		return lblNewLabel_1;
-	}
-	private JLabel getLblNewLabel_2() {
-		if (lblNewLabel_2 == null) {
-			lblNewLabel_2 = new JLabel("(ICE) 아메리카노");
-			lblNewLabel_2.setBounds(245, 157, 233, 36);
-			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		}
-		return lblNewLabel_2;
-	}
-	private JLabel getLblNewLabel_2_1() {
-		if (lblNewLabel_2_1 == null) {
-			lblNewLabel_2_1 = new JLabel("커피 설명");
-			lblNewLabel_2_1.setBounds(245, 226, 471, 154);
-			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		}
-		return lblNewLabel_2_1;
+		return lblName;
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
@@ -170,7 +169,7 @@ public class StudyUserMain extends JFrame {
                 if (remainingSeconds == 0) {
                     timer.cancel();
                 }
-
+                
                 // 화면에 남은 시간 출력
                 int hour = remainingSeconds / 7200;
                 int minutes = remainingSeconds / 60;
@@ -188,6 +187,30 @@ public class StudyUserMain extends JFrame {
 			lblStopWatch.setBounds(341, 132, 223, 16);
 		}
 		return lblStopWatch;
+	}
+	private JLabel getLblBackground() {
+		if (lblBackground == null) {
+			lblBackground = new JLabel("");
+			lblBackground.setIcon(new ImageIcon(StudyUserMain.class.getResource("/com/javalec/image/whiteBoard.png")));
+			lblBackground.setForeground(new Color(255, 255, 255));
+			lblBackground.setBackground(new Color(240, 240, 240));
+			lblBackground.setBounds(0, 157, 884, 139);
+		}
+		return lblBackground;
+	}
+	private JLabel getLblStudyContent() {
+		if (lblStudyContent == null) {
+			lblStudyContent = new JLabel("New label");
+			lblStudyContent.setBounds(293, 172, 271, 24);
+		}
+		return lblStudyContent;
+	}
+	private JLabel getLblStudyProductEx() {
+		if (lblStudyProductEx == null) {
+			lblStudyProductEx = new JLabel("아메리카노란");
+			lblStudyProductEx.setBounds(293, 212, 271, 24);
+		}
+		return lblStudyProductEx;
 	}
 }
 
