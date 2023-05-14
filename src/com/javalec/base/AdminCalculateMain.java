@@ -1,6 +1,7 @@
 package com.javalec.base;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 
@@ -78,6 +79,7 @@ public class AdminCalculateMain extends JFrame {
 			public void run() {
 				try {
 					AdminCalculateMain frame = new AdminCalculateMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -103,6 +105,7 @@ public class AdminCalculateMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -119,6 +122,12 @@ public class AdminCalculateMain extends JFrame {
 	private JLabel getLblBackImage() { 		// 관리자 홈 화면으로 돌아가는 이미지 레이블 
 		if (lblBackImage == null) {
 			lblBackImage = new JLabel("");
+			lblBackImage.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirectAdminMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/back.png"));
 			int x = 50;
 			int y = 50;
@@ -268,6 +277,12 @@ public class AdminCalculateMain extends JFrame {
 	
 	
 	// -----------function----------------------------
+	
+	private void redirectAdminMain() { 		// 관리자 메인 화면으로 돌려보내주는 메소드 
+		AdminMain main = new AdminMain();
+		main.setVisible(true);
+		dispose();
+	}
 	 
 	private void setDate() { 		// 날짜 세팅하는 메소드 
 		// 현재 날짜 가져오기 

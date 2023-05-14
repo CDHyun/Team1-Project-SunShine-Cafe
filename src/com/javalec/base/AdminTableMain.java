@@ -1,15 +1,23 @@
 package com.javalec.base;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.function.ImageResize;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 /* 관리자가 전력사용 가능한 좌석과 관련된 작업을(좌석 사용 가능,불가능 설정) 하는 페이지 
@@ -19,7 +27,7 @@ public class AdminTableMain extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
-	private JLabel lblHomeButton;
+	private JLabel lblBackImage;
 	private JButton btnTable1;
 	private JButton btnTable2;
 	private JButton btnTable3;
@@ -28,14 +36,18 @@ public class AdminTableMain extends JFrame {
 	private JButton btnTable6;
 	private JButton btnTable7;
 	private JButton btnTable8;
-	private JLabel lblUserId;
+	private JLabel lblUserName;
 	private JTextField tfUserId;
-	private JLabel lblUserId_1;
-	private JTextField textField;
-	private JLabel lblUserId_2;
-	private JTextField textField_1;
-	private JLabel lblUserId_3;
-	private JTextField textField_2;
+	private JLabel lblPurchaseHistory;
+	private JTextField tfPurchaseHistory;
+	private JLabel lblStartTime;
+	private JTextField tfStartTime;
+	private JLabel lblUserId;
+	private JTextField tfUserName;
+	private JLabel lblEndTime;
+	private JTextField tfEndTime;
+	private JLabel lblUserPhone;
+	private JTextField tfUserPhone;
 
 	/**
 	 * Launch the application.
@@ -45,6 +57,7 @@ public class AdminTableMain extends JFrame {
 			public void run() {
 				try {
 					AdminTableMain frame = new AdminTableMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,10 +75,11 @@ public class AdminTableMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.add(getLblHomeButton());
+		contentPane.add(getLblBackImage());
 		contentPane.add(getLblNewLabel());
 		contentPane.add(getBtnTable1());
 		contentPane.add(getBtnTable2());
@@ -75,31 +89,49 @@ public class AdminTableMain extends JFrame {
 		contentPane.add(getBtnTable6());
 		contentPane.add(getBtnTable7());
 		contentPane.add(getBtnTable8());
-		contentPane.add(getLblUserId());
+		contentPane.add(getLblUserName());
 		contentPane.add(getTfUserId());
-		contentPane.add(getLblUserId_1());
-		contentPane.add(getTextField());
-		contentPane.add(getLblUserId_2());
-		contentPane.add(getTextField_1());
-		contentPane.add(getLblUserId_3());
-		contentPane.add(getTextField_2());
+		contentPane.add(getLblPurchaseHistory());
+		contentPane.add(getTfPurchaseHistory());
+		contentPane.add(getLblStartTime());
+		contentPane.add(getTfStartTime());
+		contentPane.add(getLblUserId());
+		contentPane.add(getTfUserName());
+		contentPane.add(getLblEndTime());
+		contentPane.add(getTfEndTime());
+		contentPane.add(getLblUserPhone());
+		contentPane.add(getTfUserPhone());
 	}
 
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("좌석 관리");
+			lblNewLabel = new JLabel("좌석 현황");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel.setBounds(0, 0, 625, 50);
 		}
 		return lblNewLabel;
 	}
-	private JLabel getLblHomeButton() {
-		if (lblHomeButton == null) {
-			lblHomeButton = new JLabel("홈화면");
-			lblHomeButton.setBounds(0, 0, 50, 50);
+	private JLabel getLblBackImage() {
+		if (lblBackImage == null) {
+			lblBackImage = new JLabel("");
+			lblBackImage.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirectAdminMain();
+				}
+			});
+			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/back.png"));
+			int x = 50;
+			int y = 50;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backPage = resize.imageResizing();
+			
+			lblBackImage.setIcon(backPage);
+			lblBackImage.setHorizontalAlignment(SwingConstants.CENTER);
+			lblBackImage.setBounds(5, 0, 70, 70);
 		}
-		return lblHomeButton;
+		return lblBackImage;
 	}
 	private JButton getBtnTable1() {
 		if (btnTable1 == null) {
@@ -173,64 +205,113 @@ public class AdminTableMain extends JFrame {
 		}
 		return btnTable8;
 	}
-	private JLabel getLblUserId() {
-		if (lblUserId == null) {
-			lblUserId = new JLabel("사용 고객 : ");
-			lblUserId.setBounds(24, 441, 61, 16);
+	private JLabel getLblUserName() {
+		if (lblUserName == null) {
+			lblUserName = new JLabel("사용 고객 : ");
+			lblUserName.setBounds(24, 428, 110, 16);
 		}
-		return lblUserId;
+		return lblUserName;
 	}
 	private JTextField getTfUserId() {
 		if (tfUserId == null) {
 			tfUserId = new JTextField();
-			tfUserId.setBounds(90, 436, 130, 26);
+			tfUserId.setBounds(202, 385, 130, 26);
 			tfUserId.setColumns(10);
 		}
 		return tfUserId;
 	}
-	private JLabel getLblUserId_1() {
-		if (lblUserId_1 == null) {
-			lblUserId_1 = new JLabel("주문 번호 : ");
-			lblUserId_1.setBounds(24, 503, 61, 16);
+	private JLabel getLblPurchaseHistory() {
+		if (lblPurchaseHistory == null) {
+			lblPurchaseHistory = new JLabel("주문 내역 : ");
+			lblPurchaseHistory.setBounds(24, 508, 61, 16);
 		}
-		return lblUserId_1;
+		return lblPurchaseHistory;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
-			textField.setBounds(90, 498, 130, 26);
+	private JTextField getTfPurchaseHistory() {
+		if (tfPurchaseHistory == null) {
+			tfPurchaseHistory = new JTextField();
+			tfPurchaseHistory.setColumns(10);
+			tfPurchaseHistory.setBounds(202, 503, 130, 26);
 		}
-		return textField;
+		return tfPurchaseHistory;
 	}
-	private JLabel getLblUserId_2() {
-		if (lblUserId_2 == null) {
-			lblUserId_2 = new JLabel("이용 시작 시간 : ");
-			lblUserId_2.setBounds(24, 561, 61, 16);
+	private JLabel getLblStartTime() {
+		if (lblStartTime == null) {
+			lblStartTime = new JLabel("이용 시작 시간 : ");
+			lblStartTime.setBounds(24, 561, 146, 16);
 		}
-		return lblUserId_2;
+		return lblStartTime;
 	}
-	private JTextField getTextField_1() {
-		if (textField_1 == null) {
-			textField_1 = new JTextField();
-			textField_1.setColumns(10);
-			textField_1.setBounds(90, 556, 130, 26);
+	private JTextField getTfStartTime() {
+		if (tfStartTime == null) {
+			tfStartTime = new JTextField();
+			tfStartTime.setColumns(10);
+			tfStartTime.setBounds(202, 556, 130, 26);
 		}
-		return textField_1;
+		return tfStartTime;
 	}
-	private JLabel getLblUserId_3() {
-		if (lblUserId_3 == null) {
-			lblUserId_3 = new JLabel("사용 고객 : ");
-			lblUserId_3.setBounds(24, 390, 61, 16);
+	private JLabel getLblUserId() {
+		if (lblUserId == null) {
+			lblUserId = new JLabel("사용 중인 고객ID  : ");
+			lblUserId.setBounds(24, 390, 166, 16);
 		}
-		return lblUserId_3;
+		return lblUserId;
 	}
-	private JTextField getTextField_2() {
-		if (textField_2 == null) {
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(90, 385, 130, 26);
+	private JTextField getTfUserName() {
+		if (tfUserName == null) {
+			tfUserName = new JTextField();
+			tfUserName.setColumns(10);
+			tfUserName.setBounds(202, 423, 130, 26);
 		}
-		return textField_2;
+		return tfUserName;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------ functions-----------
+	
+	private void redirectAdminMain() {
+		AdminMain main = new AdminMain();
+		main.setVisible(true);
+		dispose();
+	}
+	private JLabel getLblEndTime() {
+		if (lblEndTime == null) {
+			lblEndTime = new JLabel("이용 종료 예정 시간 : ");
+			lblEndTime.setBounds(24, 615, 130, 16);
+		}
+		return lblEndTime;
+	}
+	private JTextField getTfEndTime() {
+		if (tfEndTime == null) {
+			tfEndTime = new JTextField();
+			tfEndTime.setColumns(10);
+			tfEndTime.setBounds(202, 610, 130, 26);
+		}
+		return tfEndTime;
+	}
+	private JLabel getLblUserPhone() {
+		if (lblUserPhone == null) {
+			lblUserPhone = new JLabel("사용 고객 전화번호 : ");
+			lblUserPhone.setBounds(24, 470, 130, 16);
+		}
+		return lblUserPhone;
+	}
+	private JTextField getTfUserPhone() {
+		if (tfUserPhone == null) {
+			tfUserPhone = new JTextField();
+			tfUserPhone.setColumns(10);
+			tfUserPhone.setBounds(202, 465, 130, 26);
+		}
+		return tfUserPhone;
 	}
 }

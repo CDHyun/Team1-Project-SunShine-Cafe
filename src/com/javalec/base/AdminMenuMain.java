@@ -1,5 +1,6 @@
 package com.javalec.base;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -96,6 +97,7 @@ public class AdminMenuMain extends JFrame {
 			public void run() {
 				try {
 					AdminMenuMain frame = new AdminMenuMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -125,6 +127,7 @@ public class AdminMenuMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

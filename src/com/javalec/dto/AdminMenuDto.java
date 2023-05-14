@@ -15,7 +15,7 @@ public class AdminMenuDto {
 	int dessertPrice;				// 디저트가격
 	int drinkStatus;				// 음료 판매여부
 	int dessertStatus;				// 디저트 판매여부
-	int dessertStock;					// 디저트 수량
+	int dessertStock;				// 디저트 수량
 	String drinkImageName;			// 음료 사진 이름
 	FileInputStream drinkImage;		// 음료 사진
 	String dessertImageName;		// 디저트 사진 이름

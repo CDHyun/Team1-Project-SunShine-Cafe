@@ -51,6 +51,7 @@ public class AdminLoginMain extends JFrame {
 			public void run() {
 				try {
 					AdminLoginMain frame = new AdminLoginMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -66,6 +67,7 @@ public class AdminLoginMain extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
+				
 				tfAdminId.requestFocus(); 		// 로그인 창 열리면 자동으로 아이디 입력창에 포커스 주도록 
 			}
 		});
@@ -74,6 +76,7 @@ public class AdminLoginMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -89,16 +92,16 @@ public class AdminLoginMain extends JFrame {
 		if (lblLogoImage == null) {
 			lblLogoImage = new JLabel("");
 			ImageIcon icon = new ImageIcon(AdminLoginMain.class.getResource("/com/javalec/image/SunShineTeamLogo.png"));
-			int x = 325;
-			int y = 325;
+			int x = 200;
+			int y = 200;
 			ImageResize resize = new ImageResize(icon, x, y); 		// 이미지 리사이즈 메소드 생성자 통해 호출해서 필요한 값 주기  
 			ImageIcon logo = resize.imageResizing();				// 로고에 할당.
 			
-			lblLogoImage.setIcon(logo);
+			lblLogoImage.setIcon(new ImageIcon(AdminLoginMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
 			
 			lblLogoImage.setBackground(Color.WHITE);
 			lblLogoImage.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLogoImage.setBounds(150, 120, 325, 325);
+			lblLogoImage.setBounds(150, 100, 365, 365);
 		}
 		return lblLogoImage;
 	}
@@ -114,7 +117,7 @@ public class AdminLoginMain extends JFrame {
 	private JLabel getLblAdminId() {
 		if (lblAdminId == null) {
 			lblAdminId = new JLabel("ID : ");
-			lblAdminId.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+			lblAdminId.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
 			lblAdminId.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblAdminId.setBounds(64, 555, 60, 40);
 		}
@@ -143,9 +146,9 @@ public class AdminLoginMain extends JFrame {
 	private JLabel getLblAdminPw() {
 		if (lblAdminPw == null) {
 			lblAdminPw = new JLabel("PW : ");
-			lblAdminPw.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblAdminPw.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblAdminPw.setBounds(64, 620, 60, 40);
+			lblAdminPw.setFont(new Font("Comic Sans MS", Font.PLAIN, 28));
+			lblAdminPw.setHorizontalAlignment(SwingConstants.LEFT);
+			lblAdminPw.setBounds(60, 620, 80, 40);
 		}
 		return lblAdminPw;
 	}
@@ -160,9 +163,12 @@ public class AdminLoginMain extends JFrame {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("Log In");
+			btnNewButton.setFont(new Font("Comic Sans MS", Font.PLAIN, 30));
+			btnNewButton.setBackground(Color.WHITE);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					loginAction();
+					directAdminMain();
 				}
 			});
 			btnNewButton.setBounds(450, 555, 120, 105);
@@ -255,6 +261,13 @@ public class AdminLoginMain extends JFrame {
 			}
 		}		
 		
+	}
+	
+	private void directAdminMain() {
+		AdminMain main = new AdminMain();
+		main.setLocationRelativeTo(null);
+		main.setVisible(true);
+		dispose();
 	}
 	
 }
