@@ -180,7 +180,7 @@ public class StudyProductMain extends JFrame {
 		});
 		setTitle("스터디룸 상품 페이지");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1100, 750);
+		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(248, 211, 72));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -446,7 +446,7 @@ public class StudyProductMain extends JFrame {
 			lblTitle = new JLabel("SunShine Cafe");
 			lblTitle.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
 			lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-			lblTitle.setBounds(343, -2, 394, 47);
+			lblTitle.setBounds(253, 6, 394, 47);
 		}
 		return lblTitle;
 	}
@@ -460,7 +460,7 @@ public class StudyProductMain extends JFrame {
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon payBtn = resize.imageResizing();
 			lblPayBtn.setIcon(payBtn);
-			lblPayBtn.setBounds(912, 613, 182, 103);
+			lblPayBtn.setBounds(681, 602, 182, 103);
 		}
 		return lblPayBtn;
 	}
@@ -469,7 +469,7 @@ public class StudyProductMain extends JFrame {
 			lblTitle_1 = new JLabel("선택한 상품");
 			lblTitle_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTitle_1.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 16));
-			lblTitle_1.setBounds(868, 558, 91, 47);
+			lblTitle_1.setBounds(665, 551, 91, 47);
 		}
 		return lblTitle_1;
 	}
@@ -478,7 +478,7 @@ public class StudyProductMain extends JFrame {
 			lblTitle_1_1 = new JLabel("개");
 			lblTitle_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTitle_1_1.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 16));
-			lblTitle_1_1.setBounds(993, 557, 32, 47);
+			lblTitle_1_1.setBounds(778, 551, 32, 47);
 		}
 		return lblTitle_1_1;
 	}
@@ -488,7 +488,7 @@ public class StudyProductMain extends JFrame {
 			lblQty.setForeground(new Color(255, 41, 0));
 			lblQty.setHorizontalAlignment(SwingConstants.CENTER);
 			lblQty.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-			lblQty.setBounds(954, 557, 61, 47);
+			lblQty.setBounds(742, 551, 61, 47);
 		}
 		return lblQty;
 	}
@@ -594,7 +594,7 @@ public class StudyProductMain extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 
-			scrollPane.setBounds(-1, 530, 646, 193);
+			scrollPane.setBounds(-1, 530, 553, 193);
 			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
@@ -972,7 +972,7 @@ public class StudyProductMain extends JFrame {
 			ImageIcon deleteAllBtn = resize.imageResizing();
 			lblDeleteAllBtn.setIcon(deleteAllBtn);
 			lblDeleteAllBtn.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDeleteAllBtn.setBounds(1009, 459, 91, 75);
+			lblDeleteAllBtn.setBounds(803, 530, 91, 75);
 		}
 		return lblDeleteAllBtn;
 	}
@@ -982,7 +982,7 @@ public class StudyProductMain extends JFrame {
 			lblNewLabel = new JLabel("남은 시간");
 			lblNewLabel.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel.setBounds(879, 398, 133, 47);
+			lblNewLabel.setBounds(700, 479, 133, 47);
 		}
 		return lblNewLabel;
 	}
@@ -992,7 +992,7 @@ public class StudyProductMain extends JFrame {
 	        lblRemainingTime.setForeground(Color.RED);
 	        lblRemainingTime.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblRemainingTime.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
-	        lblRemainingTime.setBounds(972, 400, 61, 47);
+	        lblRemainingTime.setBounds(776, 477, 61, 47);
 
 	        Thread timerThread = new Thread(() -> {
 	            int seconds = 120;
@@ -1019,7 +1019,7 @@ public class StudyProductMain extends JFrame {
 			lblNewLabel_1 = new JLabel("초");
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
-			lblNewLabel_1.setBounds(1045, 398, 23, 47);
+			lblNewLabel_1.setBounds(828, 479, 23, 47);
 		}
 		return lblNewLabel_1;
 	}
@@ -1028,7 +1028,7 @@ public class StudyProductMain extends JFrame {
 			lblOne = new JLabel("원");
 			lblOne.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
 			lblOne.setForeground(Color.WHITE);
-			lblOne.setBounds(1045, 635, 23, 35);
+			lblOne.setBounds(822, 622, 23, 35);
 		}
 		return lblOne;
 	}
@@ -1037,7 +1037,7 @@ public class StudyProductMain extends JFrame {
 			lblPay = new JLabel("결제하기");
 			lblPay.setForeground(Color.WHITE);
 			lblPay.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
-			lblPay.setBounds(1000, 664, 68, 35);
+			lblPay.setBounds(768, 650, 68, 35);
 		}
 		return lblPay;
 	}
@@ -1046,7 +1046,7 @@ public class StudyProductMain extends JFrame {
 			lblTotalPrice = new JLabel("");
 			lblTotalPrice.setForeground(Color.WHITE);
 			lblTotalPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-			lblTotalPrice.setBounds(991, 635, 56, 35);
+			lblTotalPrice.setBounds(768, 622, 56, 35);
 		}
 		return lblTotalPrice;
 	}
@@ -1124,7 +1124,7 @@ public class StudyProductMain extends JFrame {
 		
 	}
 	
-	/* */
+	/* 02. 테이블 초기화 하기 */
 	private void tableInit() {
 		outerTable.addColumn("No");
 		outerTable.addColumn("상품명");
@@ -1175,7 +1175,7 @@ public class StudyProductMain extends JFrame {
 		innerTable.setFont(font);
 	}
 	
-	/* Table Data 중앙 정렬 시키기 */
+	/* 03. Table Data 중앙 정렬 시키기 */
 	public void tableCellCenter(JTable innerTable) {
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -1190,11 +1190,11 @@ public class StudyProductMain extends JFrame {
 		tableColumnModel.getColumn(5).setCellRenderer(renderer);
 	}
 
-	/* 02. 첫 화면에 전체 메뉴 띄우기 */
+	/* 04. 첫 화면에 전체 메뉴 띄우기 */
 	private void queryItemAction() {
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
-		beanList = productDao.selectDrinkList();
+		beanList = productDao.selectItemList();
 		
 		for(int i=0; i<6; i++) {
 			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
@@ -1209,7 +1209,7 @@ public class StudyProductMain extends JFrame {
 		updateLabelVisibility();
 	}
 	
-	/* 03. 메뉴 페이지 뒤로 가기 버튼  */
+	/* 05. 메뉴 페이지 뒤로 가기 버튼  */
 	private void priviousPage() {
 		if (currentPage > 0) {
 			currentPage--;
@@ -1217,7 +1217,7 @@ public class StudyProductMain extends JFrame {
 		}
 	}
 
-	/* 04. 메뉴 페이지 앞으로 가기 버튼  */
+	/* 06. 메뉴 페이지 앞으로 가기 버튼  */
 	private void nextPage() {
 	    int maxPage = (int) Math.ceil(beanList.size() / 6.0);
 	    if (currentPage < maxPage - 1) {
@@ -1226,7 +1226,7 @@ public class StudyProductMain extends JFrame {
 	    updateLabelVisibility();
 	}
 	
-	/* 05. 요청에 따라 라벨 정리하기 */
+	/* 07. 요청에 따라 라벨 정리하기 */
 	private void updateLabelVisibility() {
 	    int startIndex = currentPage * 6;
 	    int endIndex = Math.min(startIndex + 6, beanList.size());
@@ -1262,7 +1262,7 @@ public class StudyProductMain extends JFrame {
 	    lblNextBtn.setVisible(endIndex < beanList.size());
 	}
 	
-	/* 06. 카테고리 검색 */
+	/* 08. 카테고리 검색 */
 	private void conditionItemQueryAction(int categoryNo) {
 		currentPage = 0;
 		beanList = new ArrayList<ProductDto>();
@@ -1282,28 +1282,7 @@ public class StudyProductMain extends JFrame {
 		updateLabelVisibility();
 	}
 	
-//	/* 07. 카테고리 검색 (Dessert) */
-//	private void conditionDessertQueryAciton(int categoryNo) {
-//		currentPage = 0;
-//		lblPriviousBtn.setVisible(false);
-//		beanList = new ArrayList<ProductDto>();
-//		ProductDao productDao = new ProductDao();
-//		beanList = productDao.conditionDessertQuery(categoryNo);
-//
-//		for (int i = 0; i < beanList.size(); i++) {
-//			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
-//			int x = 100;
-//			int y = 120;
-//			ImageResize resize = new ImageResize(icon, x, y);
-//			ImageIcon productIcon = resize.imageResizing();
-//			lblProductImageList.get(i).setIcon(productIcon);
-//			lblProductNameList.get(i).setText(beanList.get(i).getItemName());
-//			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getItemPrice()));
-//		}
-//		updateLabelVisibility();
-//	}
-	
-	/* 08. 선택한 상품의 번호 가져오기 */
+	/* 09. 선택한 상품의 번호 가져오기 */
 	private int getItemNo(int index) {
 	    int startIndex = currentPage * 6; // startIndex 계산
 	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
@@ -1314,6 +1293,7 @@ public class StudyProductMain extends JFrame {
 	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
 	}
 	
+	/* 10. 선택한 상품의 카테고리 번호 가져오기 */
 	private int getCategoryNo(int index) {
 	    int startIndex = currentPage * 6; // startIndex 계산
 	    if (startIndex >= 0 && startIndex + index < beanList.size()) {
@@ -1324,13 +1304,13 @@ public class StudyProductMain extends JFrame {
 	    return -1; // 유효하지 않은 인덱스이거나 선택한 상품이 없는 경우
 	}
 	
-	/* 09. 선택한 상품의 정보를 넘겨주기 */
+	/* 11. 선택한 상품의 정보를 넘겨주기 */
 	private void itemClick(int index) {
 	    int itemNo = getItemNo(index);
 	    System.out.println("itemNo : " +itemNo);
 	    categoryNo = getCategoryNo(index);
 	    System.out.println(" categoryNo : " + categoryNo);
-	    if (categoryNo == 5) {
+	    if (categoryNo == 5 || categoryNo == 6) {
 	    	int itemPrice = beanList.get(currentPage * 6 + index).getItemPrice();
 	    	CartDao cartDao = new CartDao(itemNo, userid, itemPrice);
 	    	boolean result = cartDao.dessertAddToCart();
@@ -1339,18 +1319,18 @@ public class StudyProductMain extends JFrame {
 	    } else {
 	    	String itemName = beanList.get(currentPage * 6 + index).getItemName();
 	    	int itemPrice = beanList.get(currentPage * 6 + index).getItemPrice();
-	    	ProductOptionMain productOptionMain = new ProductOptionMain();
-	    	productOptionMain.setCategoryNo(categoryNo);
-	    	productOptionMain.setItemNo(itemNo);
-	    	productOptionMain.setLocationRelativeTo(null);
-	    	productOptionMain.setVisible(true);
+	    	StudyProductOptionMain studyProductOptionMain = new StudyProductOptionMain();
+	    	studyProductOptionMain.setCategoryNo(categoryNo);
+	    	studyProductOptionMain.setItemNo(itemNo);
+	    	studyProductOptionMain.setLocationRelativeTo(null);
+	    	studyProductOptionMain.setVisible(true);
 	    	dispose();
 	    }
 	}
 	
 
 
-	/* 10. 선택한 상품을 보여주기 */
+	/* 12. 선택한 상품을 보여주기 */
 	private void showCartList() {
 		CartDao cartDao = new CartDao();
 		ArrayList<CartDto> cartList = cartDao.cartList(userid);
@@ -1369,7 +1349,7 @@ public class StudyProductMain extends JFrame {
 		
 		for(int i=0; i<cartList.size(); i++) {
 			cartCount++;
-			Object[] data = {cartCount, cartList.get(i).getItemName() ,plusBtn, cartList.get(i).getCartQty(), minusBtn, (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty())};
+			Object[] data = {cartCount, cartList.get(i).getItemName() ,plusBtn, cartList.get(i).getCartQty(), minusBtn, (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty()) + "원"};
 			outerTable.addRow(data);
 			sum += (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty());
 		}
@@ -1380,7 +1360,7 @@ public class StudyProductMain extends JFrame {
 		tableCellCenter(innerTable);
 	}
 	
-	/* 11. Cart List 비우기 */
+	/* 13. Cart List 비우기 */
 	private void deleteAllCart() {
 		CartDao cartDao = new CartDao();
 		boolean result = cartDao.deleteAllCartList();
@@ -1396,6 +1376,7 @@ public class StudyProductMain extends JFrame {
 		lblOne.setText("");
 	}
 
+	/* 14. 컬럼 이벤트 메소드 */
 	private void columnClick() {
 		CartDao cartDao = new CartDao();
 		ArrayList<CartDto> cartList = cartDao.cartList(userid);

@@ -603,7 +603,7 @@ public class ProductMain extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 
-			scrollPane.setBounds(6, 673, 394, 210);
+			scrollPane.setBounds(18, 656, 394, 210);
 			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
@@ -921,7 +921,7 @@ public class ProductMain extends JFrame {
 			ImageIcon deleteAllBtn = resize.imageResizing();
 			lblDeleteAllBtn.setIcon(deleteAllBtn);
 			lblDeleteAllBtn.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDeleteAllBtn.setBounds(534, 613, 91, 75);
+			lblDeleteAllBtn.setBounds(527, 645, 91, 75);
 		}
 		return lblDeleteAllBtn;
 	}
@@ -931,7 +931,7 @@ public class ProductMain extends JFrame {
 			lblNewLabel = new JLabel("남은 시간");
 			lblNewLabel.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel.setBounds(406, 638, 133, 47);
+			lblNewLabel.setBounds(445, 643, 80, 47);
 		}
 		return lblNewLabel;
 	}
@@ -941,7 +941,7 @@ public class ProductMain extends JFrame {
 	        lblRemainingTime.setForeground(Color.RED);
 	        lblRemainingTime.setHorizontalAlignment(SwingConstants.LEFT);
 	        lblRemainingTime.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
-	        lblRemainingTime.setBounds(405, 673, 61, 47);
+	        lblRemainingTime.setBounds(444, 678, 61, 47);
 
 	        Thread timerThread = new Thread(() -> {
 	            int seconds = 120;
@@ -968,7 +968,7 @@ public class ProductMain extends JFrame {
 			lblNewLabel_1 = new JLabel("초");
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
-			lblNewLabel_1.setBounds(456, 675, 23, 47);
+			lblNewLabel_1.setBounds(495, 680, 23, 47);
 		}
 		return lblNewLabel_1;
 	}
@@ -1104,7 +1104,7 @@ public class ProductMain extends JFrame {
 		/* 상품명 */
 		vColIndex = 1;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 100;
+		width = 150;
 		col.setPreferredWidth(width);
 		/* + 버튼 */
 		vColIndex = 2;
@@ -1129,6 +1129,7 @@ public class ProductMain extends JFrame {
 		
 		Font font = new Font("Noto Sans KR Medium", Font.BOLD, 12);
 		innerTable.setFont(font);
+		
 	}
 	
 	/* Table Data 중앙 정렬 시키기 */
@@ -1150,7 +1151,7 @@ public class ProductMain extends JFrame {
 	private void queryItemAction() {
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
-		beanList = productDao.selectDrinkList();
+		beanList = productDao.selectItemList();
 		
 		for(int i=0; i<6; i++) {
 				icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
@@ -1325,7 +1326,7 @@ public class ProductMain extends JFrame {
 		
 		for(int i=0; i<cartList.size(); i++) {
 			cartCount++;
-			Object[] data = {cartCount, cartList.get(i).getItemName() ,plusBtn, cartList.get(i).getCartQty(), minusBtn, (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty())};
+			Object[] data = {cartCount, cartList.get(i).getItemName() ,plusBtn, cartList.get(i).getCartQty(), minusBtn, (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty()) + "원"};
 			outerTable.addRow(data);
 			sum += (cartList.get(i).getCartOptionPrice() * cartList.get(i).getCartQty());
 		}

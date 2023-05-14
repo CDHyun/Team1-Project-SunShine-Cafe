@@ -45,7 +45,7 @@ public class ProductDao {
 	
 	
 	/* 01. 전체 상품을 검색하는 메소드 */
-	public ArrayList<ProductDto> selectDrinkList(){
+	public ArrayList<ProductDto> selectItemList(){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		
 		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item where categoryNo <> 6";
@@ -81,7 +81,7 @@ public class ProductDao {
 		return beanList;
 	}
 	
-	/* 02. 선택한 Drink Category 데이터를 검색하는 메소드 */
+	/* 02. 선택한 Category 데이터를 검색하는 메소드 */
 	public ArrayList<ProductDto> conditionItemQuery(int categoryNo){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item where categoryNo = ";
@@ -154,7 +154,7 @@ public class ProductDao {
 //		return beanList;
 //	}
 	
-	/* 04. 선택한 상품의 정보를 보여주는 메소드 */
+	/* 03. 선택한 상품의 정보를 보여주는 메소드 */
 	public ArrayList<ProductDto> itemDetail(int categoryNo, int itemNo){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		String query = "select itemName, itemPrice, itemImageName, itemContent from item where itemNo = ";
