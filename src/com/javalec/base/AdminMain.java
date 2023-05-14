@@ -5,11 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.function.ImageResize;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 /* 기본 키오스크에서 어드민이 로그인 한 뒤 나오는 메인 페이지 */
 public class AdminMain extends JFrame {
@@ -66,7 +70,15 @@ public class AdminMain extends JFrame {
 
 	private JLabel getLblLogoImage() {
 		if (lblLogoImage == null) {
-			lblLogoImage = new JLabel("로고로고");
+			lblLogoImage = new JLabel("");
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/SunShineTeamLogo.png"));
+			int x = 300;
+			int y = 300;
+			ImageResize resize = new ImageResize(icon, x, y); 		// 이미지 리사이즈 메소드 생성자 통해 호출해서 필요한 값 주기  
+			ImageIcon logo = resize.imageResizing();				// 로고에 할당.
+			
+			lblLogoImage.setIcon(logo);
+			
 			lblLogoImage.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogoImage.setBackground(new Color(242, 250, 63));
 			lblLogoImage.setBounds(163, 63, 300, 300);
@@ -98,7 +110,7 @@ public class AdminMain extends JFrame {
 		}
 		return lblHomeImage;
 	}
-	private JButton getLblCafeStart() {
+	private JButton getLblCafeStart() { 				// 영업 시작 버튼 누르면 사용자 안내 화면으로 연결해주기.
 		if (lblCafeStart == null) {
 			lblCafeStart = new JButton("영업 시작");
 			lblCafeStart.setBounds(110, 545, 180, 85);
