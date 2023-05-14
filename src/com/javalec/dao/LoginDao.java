@@ -2,7 +2,9 @@ package com.javalec.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import com.javalec.util.ShareVar;
@@ -18,7 +20,9 @@ public class LoginDao {
 	// 변수명 
 	String userid;
 	String userPassWord;
-	
+	private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 	
 	// Constructor
 	public LoginDao() {
@@ -71,26 +75,22 @@ public class LoginDao {
 	public boolean loginCheck(String userid, String password) {
 		boolean result = false;
 		int count = 0;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-			Statement stmt = con.createStatement();
-			
-			String query = "select count(userPhon) from user where userid = '" + userid + "'" + "and userPassWord + '" + password + "'";
-			
-			ResultSet rs = stmt.executeQuery(query);
-			while(rs.next()) {
-				count = rs.getInt(1);
-			}
-			if(count > 0) {
-				result = true;
-			}
-			con.close();
-		}catch (Exception e) {
-			e.printStackTrace();
+		try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+		         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ? AND userPassWord = ?")) {
+		        stmt.setString(1, userid);
+		        stmt.setString(2, userPassWord);
+		        ResultSet rs = stmt.executeQuery();
+		        if (rs.next()) {
+		            count = rs.getInt(1);
+		        }
+		        if (count > 0) {
+		            result = true;
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return result;
 		}
-		return result;
-	}
 	
 	
 	

@@ -5,11 +5,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.dao.LoginDao;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class StudyUserSing extends JFrame {
 
@@ -23,6 +30,12 @@ public class StudyUserSing extends JFrame {
 	private JButton btnSingIn;
 	private JLabel lblNewLabel_4;
 	private JButton btnSingUp;
+	
+	
+	String message;
+	String userid;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -112,6 +125,11 @@ public class StudyUserSing extends JFrame {
 	private JButton getBtnSingIn() {
 		if (btnSingIn == null) {
 			btnSingIn = new JButton("Login");
+			btnSingIn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					loginAction();
+				}
+			});
 			btnSingIn.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 			btnSingIn.setBounds(746, 355, 117, 79);
 		}
@@ -127,8 +145,118 @@ public class StudyUserSing extends JFrame {
 	private JButton getBtnSingUp() {
 		if (btnSingUp == null) {
 			btnSingUp = new JButton("회원 가입");
+			btnSingUp.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					StudyUserSingUpMain studyUserSingUpMain = new StudyUserSingUpMain();
+					studyUserSingUpMain.setVisible(true); // UserSignUp 페이지를 보여주도록 설정
+	                dispose(); // 현재 로그인 페이지를 닫습니다.
+				}
+			});
 			btnSingUp.setBounds(553, 616, 117, 41);
 		}
 		return btnSingUp;
 	}
-}
+	
+	//--------------- Function
+	
+	
+	// 로그인 버튼 액션 설정 
+	
+		private void loginAction() {
+		    boolean result = true;
+		    
+		    // id, password 체크 
+		    if(result) {
+		        int i_chk = insertFieldCheck();
+		        if(i_chk != 0) {
+		            JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
+		        } else {
+		            boolean loginResult = loginCheck();   // DB에서 유저 id, password가 있는지 확인 
+		            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
+		                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
+		                ProductMain pm = new ProductMain();
+		                dispose();
+		            } else {
+		                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
+		                pfPassword.setText(""); // 비밀번호 입력창 초기화 
+		                tfUserId.requestFocus();
+		            }
+		        }
+		    } else {
+		        JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
+		        tfUserId.requestFocus();
+		    }
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//  id, pw 확인하기 
+		private int insertFieldCheck() {
+			int i = 0;
+			
+			if (new String (pfPassword.getPassword()).trim().length() == 0) {
+				i ++;
+				message = "비밀번호를 ";
+				pfPassword.requestFocus();
+			}
+			if (tfUserId.getText().trim().length() == 0) {
+				i ++;
+				message = "아이디를 ";
+				tfUserId.requestFocus();
+				
+			}
+			return i;
+		}
+		
+		
+		// password 체크
+		
+		private boolean existsUserPassword() {
+			boolean result = false;
+			userid = new String (pfPassword.getPassword());
+			LoginDao loginDao = new LoginDao();
+			int count = loginDao.existsUserID(userid);
+			if(count == 0) {
+				return result = false;
+			}else {
+				return result = true;
+			}
+		}
+		
+		
+		
+		private boolean loginCheck() {
+			String id = tfUserId.getText();
+			char[] pass = pfPassword.getPassword();
+			String password = new String(pass);
+			
+			LoginDao loginDao = new LoginDao(id, password);
+			boolean result = loginDao.loginCheck(id, password);
+			
+			if(result == true) {
+				
+				ProductMain pm = new ProductMain();
+				dispose();
+			}else {
+				if(tfUserId.getText().length() != 0) {
+					
+					tfUserId.setText(""); // 아이디 입력값 초기화
+		            pfPassword.setText(""); // 비밀번호 입력값 초기화
+					tfUserId.requestFocus();
+				}
+			}
+			return result;
+		}
+	
+	
+	
+	
+}// End

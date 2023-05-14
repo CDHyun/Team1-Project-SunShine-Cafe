@@ -230,6 +230,7 @@ public class StudyUserSingUpMain extends JFrame {
 					int i_chk = JoinCheck();
 	                if (i_chk == 0) {
 						registerAction();
+						
 	                }
 				}
 			});
@@ -362,12 +363,6 @@ public class StudyUserSingUpMain extends JFrame {
 	        btnCheckID.setEnabled(false);      // 사용 가능할시 중복확인 버튼 비활성화 
 	    }
 	}		
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -129,7 +129,7 @@ public class LoginMain extends JFrame {
 			btnSingIn = new JButton("LogIn");
 			btnSingIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					loginAcion();
+					loginAction();
 				}
 			});
 			btnSingIn.setFont(new Font("Lucida Grande", Font.BOLD, 25));
@@ -148,6 +148,13 @@ public class LoginMain extends JFrame {
 	private JButton getBtnSingUp() {
 		if (btnSingUp == null) {
 			btnSingUp = new JButton("회원 가입");
+			btnSingUp.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					UserSingUp userSingUp = new UserSingUp();
+					userSingUp.setVisible(true); // UserSignUp 페이지를 보여주도록 설정
+	                dispose(); // 현재 로그인 페이지를 닫습니다.
+				}
+			});
 			btnSingUp.setBounds(257, 672, 117, 54);
 		}
 		return btnSingUp;
@@ -166,22 +173,32 @@ public class LoginMain extends JFrame {
 	
 	// 로그인 버튼 액션 설정 
 	
-	private void loginAcion() {
-		boolean result = true;
-		
-		// id, password 체크 
-		if(result) {
-			int i_chk = insertFieldCheck();
-			if(i_chk != 0) {
-				JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류",JOptionPane.INFORMATION_MESSAGE);
-			}else {
-				loginCheck();   // DB에서 유저 id, password가 있는지 확인 
-			}
-		}else {
-			JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
-			tfUserId.requestFocus();
-		}
+	private void loginAction() {
+	    boolean result = true;
+	    
+	    // id, password 체크 
+	    if(result) {
+	        int i_chk = insertFieldCheck();
+	        if(i_chk != 0) {
+	            JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
+	        } else {
+	            boolean loginResult = loginCheck();   // DB에서 유저 id, password가 있는지 확인 
+	            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
+	                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
+	                ProductMain pm = new ProductMain();
+	                dispose();
+	            } else {
+	                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
+	                pfUserPassWord.setText(""); // 비밀번호 입력창 초기화 
+	                tfUserId.requestFocus();
+	            }
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
+	        tfUserId.requestFocus();
+	    }
 	}
+
 	
 	
 	
@@ -227,7 +244,7 @@ public class LoginMain extends JFrame {
 	
 	
 	
-	private void loginCheck() {
+	private boolean loginCheck() {
 		String id = tfUserId.getText();
 		char[] pass = pfUserPassWord.getPassword();
 		String password = new String(pass);
@@ -236,15 +253,18 @@ public class LoginMain extends JFrame {
 		boolean result = loginDao.loginCheck(id, password);
 		
 		if(result == true) {
-			JOptionPane.showMessageDialog(this, id, " 님, 환영합니다!", JOptionPane.INFORMATION_MESSAGE);
+			
 			ProductMain pm = new ProductMain();
 			dispose();
 		}else {
 			if(tfUserId.getText().length() != 0) {
-				JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패" , JOptionPane.INFORMATION_MESSAGE);
+				
+				tfUserId.setText(""); // 아이디 입력값 초기화
+	            pfUserPassWord.setText(""); // 비밀번호 입력값 초기화
 				tfUserId.requestFocus();
 			}
 		}
+		return result;
 	}
 	
 /*

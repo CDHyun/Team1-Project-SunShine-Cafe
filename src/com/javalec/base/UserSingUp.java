@@ -246,6 +246,7 @@ public class UserSingUp extends JFrame {
 	                if (i_chk == 0) {
 						registerAction();
 						
+						
 	                }
 	            }
 	        });
@@ -504,4 +505,9 @@ public class UserSingUp extends JFrame {
 	            btnJoin.setEnabled(true);
 	        }
 	    }
+		
+		
+		
+		
+		
 }// End
