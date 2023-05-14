@@ -22,6 +22,10 @@ public class CartDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 
+	/* Cart */
+	int cartNo;
+	int cartQty;
+	
 	/* category */
 	int categoryNo;
 	String categoryName;
@@ -51,6 +55,9 @@ public class CartDao {
 		this.userid = userid;
 		this.cartOptionPrice = cartOptionPrice;
 	}
+	
+	
+	
 
 	/* Constructor */
 	public CartDao() {
@@ -119,7 +126,7 @@ public class CartDao {
 	/* 02. 카트 리스트를 불러오는 메소드 */
 	public ArrayList<CartDto> cartList(String userid) {
 		ArrayList<CartDto> beanList = new ArrayList<CartDto>();
-		String query = "select c.cartNo, c.cartQty, c.itemNo, i.itemName, c.cartOptionPrice from cart c, item i where c.itemNo = i.itemNo and c.userid = '" + userid + "'";
+		String query = "select c.cartNo, c.cartQty, c.itemNo, i.itemName, c.cartOptionPrice, i.categoryNo from cart c, item i, category ct where c.itemNo = i.itemNo and i.categoryNo = ct.categoryNo and c.userid = '" + userid + "'";
 
 
 		try {
@@ -134,7 +141,8 @@ public class CartDao {
 				int wkItemNo = rs.getInt(3);
 				String wkItem = rs.getString(4);
 				int wkCartOptionPrice = rs.getInt(5);
-				CartDto cartDto = new CartDto(wkCartNo, wkCartQty, wkCartOptionPrice, wkItemNo, wkItem);
+				int wkCategoryNo = rs.getInt(6);
+				CartDto cartDto = new CartDto(wkCartNo, wkCartQty, wkCartOptionPrice, wkItemNo, wkItem, wkCategoryNo);
 				beanList.add(cartDto);
 			}
 			
@@ -165,7 +173,67 @@ public class CartDao {
 			e.printStackTrace();
 			return false;
 		}
-
 	}
 
+	public boolean updateCartPlusQty(int cartNo, int itemNo, String userid) {
+		String query = "update cart set cartQty = cartQty + 1 where cartNo = ? and itemNo = ? and userid = ?";
+		
+		PreparedStatement ps = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+			Statement stmt = con.createStatement();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, cartNo);
+			ps.setInt(2, itemNo);
+			ps.setString(3, userid);
+			ps.executeUpdate();
+			con.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean updateCartMinusQty(int cartNo, int itemNo, String userid) {
+		String query = "update cart set cartQty = cartQty - 1 where cartNo = ? and itemNo = ? and userid = ?";
+		PreparedStatement ps = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+			Statement stmt = con.createStatement();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, cartNo);
+			ps.setInt(2, itemNo);
+			ps.setString(3, userid);
+			ps.executeUpdate();
+			con.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean deleteCartItem(int cartNo, int itemNo, String userid) {
+		String query = "delete from cart where cartNo = ? and itemNo = ? and userid = ?";
+		PreparedStatement ps = null;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+			Statement stmt = con.createStatement();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, cartNo);
+			ps.setInt(2, itemNo);
+			ps.setString(3, userid);
+			ps.executeUpdate();
+			con.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 } // End Class

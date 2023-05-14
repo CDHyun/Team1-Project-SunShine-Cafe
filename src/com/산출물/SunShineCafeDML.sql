@@ -5,6 +5,12 @@ ALTER TABLE item AUTO_INCREMENT = 1;
 ALTER TABLE drink AUTO_INCREMENT = 1;
 ALTER TABLE dessert AUTO_INCREMENT = 1;
 
+
+-- USER INSERT --------------------------
+select * from user;
+insert into user(userid, userPassword, userPhone) values('donghyun', '1234', '01048194105');
+
+
 -- CATEGORY INSERT ----------------------
 -- 1 : 커피(ICE), 2 : 커피(HOT), 3 : 에이드&주스, 4 : 티(Tea), 5 : 디저트
 select * from category;
@@ -14,6 +20,7 @@ insert into category(categoryName) values('커피(HOT)');
 insert into category(categoryName) values('에이드&주스');
 insert into category(categoryName) values('티(Tea)');
 insert into category(categoryName) values('디저트');
+insert into category(categoryName) values('시간');
 
 
 
@@ -61,3 +68,8 @@ values ('5', '크로크무슈', 4000, 'CroqueMonsieur.png');
 insert into item(categoryNo, itemName, itemPrice, itemImageName)
 values ('5', '한컵 망고놀라', 5000, 'OneCupMango.png');
 
+insert into item(categoryNo, itemName, itemPrice, itemImageName)
+values ('6', '30분 시간 이용권', 3000, '30min.png');
+
+insert into item(categoryNo, itemName, itemPrice, itemImageName)
+values ('6', '60분 시간 이용권', 6000, '60min.png');

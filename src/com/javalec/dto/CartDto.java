@@ -33,13 +33,14 @@ public class CartDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CartDto(int cartNo, int cartQty, int cartOptionPrice, int itemNo, String itemName) {
+	public CartDto(int cartNo, int cartQty, int cartOptionPrice, int itemNo, String itemName, int categoryNo) {
 		super();
 		this.cartNo = cartNo;
 		this.cartQty = cartQty;
 		this.cartOptionPrice = cartOptionPrice;
 		this.itemNo = itemNo;
 		this.itemName = itemName;
+		this.categoryNo = categoryNo;
 	}
 
 	/* 카트 리스트에 정보를 가져올 생성자 */

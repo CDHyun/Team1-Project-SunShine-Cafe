@@ -48,7 +48,7 @@ public class ProductDao {
 	public ArrayList<ProductDto> selectDrinkList(){
 		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
 		
-		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item";
+		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item where categoryNo <> 6";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
