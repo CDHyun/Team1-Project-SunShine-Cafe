@@ -86,18 +86,7 @@ public class AdvertisementMain extends JFrame {
         ImageResize resize = new ImageResize(icon, x, y);
         ImageIcon ad2 = resize.imageResizing();
         lblAD.setIcon(ad2);
-        
-        while (System.currentTimeMillis() - startTime < 5000) {
-        }
-        icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad2.png"));
-        resize = new ImageResize(icon, x, y);
-        ImageIcon ad3 = resize.imageResizing();
-        lblAD.setIcon(ad3);
-        
-        
-        
 	}
-	
 	
 	
 }	// End Class
