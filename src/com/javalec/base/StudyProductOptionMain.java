@@ -20,6 +20,7 @@ import com.javalec.dao.CartDao;
 import com.javalec.dao.ProductDao;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 /* 스터디룸 키오스크에서 상품 옵션을 선택하는 페이지 (핫, 아이스, 연하게 등 ) */
 public class StudyProductOptionMain extends JFrame {
@@ -65,7 +66,7 @@ public class StudyProductOptionMain extends JFrame {
 	private int shotCount = 0;
 	private int syrupCount = 0;
 	private int sugarCount = 0;
-	private String userid = "donghyun";
+	private String userid = ShareVar.userid;
 	private String wkItemName = "";
 	private JLabel lblOne;
 

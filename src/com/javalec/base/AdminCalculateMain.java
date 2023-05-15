@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.swing.ImageIcon;
@@ -428,7 +429,7 @@ public class AdminCalculateMain extends JFrame {
 	private void reprintBill() {
 		try {
 			int i = innerTable.getSelectedRow();
-
+			AdminCalculateDao adminCalculateDao = new AdminCalculateDao();
 			// 관리자가 데이터를 선택하지 않고 영수증재출력 버튼을 눌렀을 때
 			if (i == -1) {
 				JOptionPane.showMessageDialog(this, "재출력 할 구매 내역을 선택해주세요! ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
@@ -437,9 +438,25 @@ public class AdminCalculateMain extends JFrame {
 
 			// 관리자가 데이터를 선택한 후 영수증 재출력 버튼을 눌렀을 때
 			salesNo = Integer.parseInt((String) innerTable.getValueAt(i, 0));
+			Locale locale = new Locale("ko", "KR");
+			String formattedDate = (String)innerTable.getValueAt(i, 1);
+			SimpleDateFormat inputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
+			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
+			Date parsedDate = inputFormat.parse(formattedDate);
+			String date = outputFormat.format(parsedDate);
+			parsedDate = inputFormat.parse(date);
+			
+			
+			System.out.println(date);
+			ArrayList<AdminCalculateDto> beanList = adminCalculateDao.getSelectedPurchaseData(date);
 			int result = JOptionPane.showConfirmDialog(this, "영수증을 재출력 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
-			if (i > 0 && result == JOptionPane.YES_OPTION) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
+			if (result == 0) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
+				
+				adminCalculateDao.printReceipt(beanList);
+				
+//		        System.out.println("---------------------------");
+//		        System.out.println("주문 번호 : " + beanList.get(0).getSalesNo());
 				//printReceipt();// purchaseNo가 선택된 조건으로 SQL 쿼리 작성해서 불러오기 (다오)
 			} else { // No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기
 				JOptionPane.getRootFrame().setVisible(false);

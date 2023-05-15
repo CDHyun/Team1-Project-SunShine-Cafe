@@ -11,6 +11,7 @@ import com.javalec.dao.ProductDao;
 import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -68,7 +69,7 @@ public class ProductOptionMain extends JFrame {
 	private int shotCount = 0;
 	private int syrupCount = 0;
 	private int sugarCount = 0;
-	private String userid = "donghyun";
+	private String userid = ShareVar.userid;
 	private String wkItemName = "";
 	private JLabel lblWon;
 

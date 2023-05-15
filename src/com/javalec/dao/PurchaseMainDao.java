@@ -27,7 +27,7 @@ public class PurchaseMainDao {
 		
 		String query = "select i.itemName, c.cartQty, c.cartOptionPrice " 
 				+ " from cart c, item i"
-				+ " where i.itemNo = c.itemNo and c.userid = 'donghyun'";
+				+ " where i.itemNo = c.itemNo and c.userid = '" + userid + "'";
 		
 		
 		try {

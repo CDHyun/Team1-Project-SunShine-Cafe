@@ -33,7 +33,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class StudyUserSingUpMain extends JFrame {
+public class StudyUserSignUpMain extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblHome;
@@ -74,7 +74,7 @@ public class StudyUserSingUpMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StudyUserSingUpMain frame = new StudyUserSingUpMain();
+					StudyUserSignUpMain frame = new StudyUserSignUpMain();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -87,7 +87,7 @@ public class StudyUserSingUpMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StudyUserSingUpMain() {
+	public StudyUserSignUpMain() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
@@ -512,7 +512,7 @@ public class StudyUserSingUpMain extends JFrame {
 	
 	
 	private void redirectStudyUserSing() {
-		StudyUserSing sing = new StudyUserSing();
+		StudyUserSign sing = new StudyUserSign();
 		sing.setVisible(true);
 		dispose();
 	}

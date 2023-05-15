@@ -33,6 +33,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 /* 기본 키오스크에서 로그인 하는 페이지 */
@@ -107,6 +109,20 @@ public class LoginMain extends JFrame {
 	private JLabel getLblLogo() {
 		if (lblLogo == null) {
 			lblLogo = new JLabel("New label");
+			lblLogo.addMouseListener(new MouseAdapter() {
+				int clickCount;
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					clickCount++;
+					if(clickCount == 5) {
+						AdminLoginMain adminLoginMain = new AdminLoginMain();
+						adminLoginMain.setLocationRelativeTo(null);
+						adminLoginMain.setVisible(true);
+						dispose();
+					}
+					
+				}
+			});
 			lblLogo.setIcon(new ImageIcon(LoginMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
 			lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogo.setBounds(62, 70, 148, 110);
@@ -278,9 +294,9 @@ public class LoginMain extends JFrame {
 		if (result == true) {
 			JOptionPane.showMessageDialog(this, id + " 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE);;
 			ShareVar.userid = id;
-			ProductMain productMain = new ProductMain();
-			productMain.setLocationRelativeTo(null);
-			productMain.setVisible(true);
+			StudyProductMain studyProductMain = new StudyProductMain();
+			studyProductMain.setLocationRelativeTo(null);
+			studyProductMain.setVisible(true);
 			dispose();
 			} else {
 				tfUserId.requestFocus();

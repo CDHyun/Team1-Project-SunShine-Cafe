@@ -155,20 +155,32 @@ public class AdminCalculateDao {
 	
 	
 	// 4. 선택한 구매 데이터 영수증으로 출력 메소드
-	public AdminCalculateDto getSelectedPurchaseData(int salesNo) {
+	public ArrayList<AdminCalculateDto> getSelectedPurchaseData(String insertDate) {
+		ArrayList<AdminCalculateDto> beanList = new ArrayList<AdminCalculateDto>();
         AdminCalculateDto dto = null;
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 
-            String query = "SELECT p.salesNo, p.purchaseInsertDate, i.itemName, p.purchasePrice, u.userName, u.userId "
-                    + "FROM purchase p "
-                    + "INNER JOIN item i ON p.itemNo = i.itemNo "
-                    + "INNER JOIN user u ON p.userId = u.userId "
-                    + "WHERE p.salesNo = ?";
+//            String query = "SELECT p.salesNo, p.purchaseInsertDate, i.itemName, sum(p.purchasePrice), u.userName, u.userId "
+//                    + "FROM purchase p "
+//                    + "INNER JOIN item i ON p.itemNo = i.itemNo "
+//                    + "INNER JOIN user u ON p.userId = u.userId "
+//                    + "WHERE p.salesNo = ? "
+//                    + "GROUP BY p.salesNo, p.purchasePrice, p.purchaseInsertDate, i.itemName, u.userName, u.userId" ;
+            
+            String query = "SELECT p.salesNo, p.purchaseInsertDate, group_concat(i.itemName SEPARATOR ', '), sum(p.purchasePrice), u.userName, u.userId"
+            		+ " FROM purchase p"
+            		+ " INNER JOIN item i ON p.itemNo = i.itemNo"
+            		+ " INNER JOIN user u ON p.userId = u.userId"
+            		+ " WHERE purchaseInsertDate = ?"
+            		+ " GROUP BY p.salesNo, p.purchaseInsertDate, u.userName, u.userId"
+            		+ " ORDER BY p.purchaseInsertDate";
+            
+            
             PreparedStatement ps = conn_mysql.prepareStatement(query);
-            ps.setInt(1, salesNo);
+            ps.setString(1, insertDate);
 
             ResultSet rs = ps.executeQuery();
 
@@ -179,16 +191,15 @@ public class AdminCalculateDao {
                 int purchasePrice = rs.getInt(4);
                 String userName = rs.getString(5);
                 String userId = rs.getString(6);
-
-                dto = new AdminCalculateDto(selectedSalesNo, purchaseInsertDate, itemName, purchasePrice, userName, userId);
+                AdminCalculateDto adminCalculateDto = new AdminCalculateDto(selectedSalesNo, purchaseInsertDate, purchasePrice, itemName, userName, userId);
+                beanList.add(adminCalculateDto);
             }
-
             conn_mysql.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        return dto;
+        return beanList;
     }
 	
 	
@@ -201,14 +212,14 @@ public class AdminCalculateDao {
 	
 	
 	
-    public void printReceipt(AdminCalculateDto dto) {
+    public void printReceipt(ArrayList<AdminCalculateDto> beanList) {
         System.out.println("영수증");
-        System.out.println("판매번호: " + dto.getSalesNo());
-        System.out.println("구매일자: " + dto.getPurchaseInsertDate());
-        System.out.println("상품명: " + dto.getItemName());
-        System.out.println("구매가격: " + dto.getPurchasePrice());
-        System.out.println("구매자명: " + dto.getUserName());
-        System.out.println("구매자ID: " + dto.getUserid());
+        System.out.println("판매번호: " + beanList.get(0).getSalesNo());
+        System.out.println("구매일자: " + beanList.get(0).getPurchaseInsertDate());
+        System.out.println("상품명: " + beanList.get(0).getItemName());
+        System.out.println("구매가격: " + beanList.get(0).getPurchasePrice());
+        System.out.println("구매자명: " + beanList.get(0).getUserName());
+        System.out.println("구매자ID: " + beanList.get(0).getUserid());
         System.out.println("---------------------------");
     }
 	

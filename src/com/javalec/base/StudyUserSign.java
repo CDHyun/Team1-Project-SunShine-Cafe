@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class StudyUserSing extends JFrame {
+public class StudyUserSign extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
@@ -53,7 +53,7 @@ public class StudyUserSing extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StudyUserSing frame = new StudyUserSing();
+					StudyUserSign frame = new StudyUserSign();
 					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -66,7 +66,7 @@ public class StudyUserSing extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public StudyUserSing() {
+	public StudyUserSign() {
 		setTitle("스터디룸 로그인");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 750);
@@ -92,7 +92,7 @@ public class StudyUserSing extends JFrame {
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("New label");
-			lblNewLabel.setIcon(new ImageIcon(StudyUserSing.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
+			lblNewLabel.setIcon(new ImageIcon(StudyUserSign.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
 			lblNewLabel.setBounds(49, 182, 243, 249);
 			
 			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
@@ -188,7 +188,7 @@ public class StudyUserSing extends JFrame {
 			btnSingUp = new JButton("회원 가입");
 			btnSingUp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					StudyUserSingUpMain studyUserSingUpMain = new StudyUserSingUpMain();
+					StudyUserSignUpMain studyUserSingUpMain = new StudyUserSignUpMain();
 					studyUserSingUpMain.setVisible(true); // StudyUserSignUp 페이지를 보여주도록 설정
 					studyUserSingUpMain.setLocationRelativeTo(null);
 	                dispose(); // 현재 로그인 페이지를 닫습니다.
