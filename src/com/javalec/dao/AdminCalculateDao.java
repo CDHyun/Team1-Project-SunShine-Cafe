@@ -126,7 +126,7 @@ public class AdminCalculateDao {
 
 	
 	
-	// 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
+	// 2. 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
 	public int calculateSalesTotal(ArrayList<AdminCalculateDto> purchaseList) {
 		int total = 0;
 		for (AdminCalculateDto dto : purchaseList) {
@@ -136,7 +136,7 @@ public class AdminCalculateDao {
 	}
 
 	
-	// 관리자가 메인에서 주문 삭제 버튼을 눌러 해당 주문 삭제함 
+	// 3. 관리자가 메인에서 주문 삭제 버튼을 눌러 해당 주문 삭제함 
 	public void deletePurchase(int salesNo) {
 	    try {
 	        Class.forName("com.mysql.cj.jdbc.Driver");
@@ -155,6 +155,52 @@ public class AdminCalculateDao {
 	
 	
 	// 4. 선택한 구매 데이터 영수증으로 출력 메소드
+	public AdminCalculateDto getSelectedPurchaseData(int salesNo) {
+        AdminCalculateDto dto = null;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+
+            String query = "SELECT p.salesNo, p.purchaseInsertDate, i.itemName, p.purchasePrice, u.userName, u.userId "
+                    + "FROM purchase p "
+                    + "INNER JOIN item i ON p.itemNo = i.itemNo "
+                    + "INNER JOIN user u ON p.userId = u.userId "
+                    + "WHERE p.salesNo = ?";
+            PreparedStatement ps = conn_mysql.prepareStatement(query);
+            ps.setInt(1, salesNo);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int selectedSalesNo = rs.getInt(1);
+                String purchaseInsertDate = rs.getString(2);
+                String itemName = rs.getString(3);
+                int purchasePrice = rs.getInt(4);
+                String userName = rs.getString(5);
+                String userId = rs.getString(6);
+
+                dto = new AdminCalculateDto(selectedSalesNo, purchaseInsertDate, itemName, purchasePrice, userName, userId);
+            }
+
+            conn_mysql.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return dto;
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     public void printReceipt(AdminCalculateDto dto) {
         System.out.println("영수증");
         System.out.println("판매번호: " + dto.getSalesNo());
