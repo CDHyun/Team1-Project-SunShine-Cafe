@@ -2,10 +2,12 @@ package com.javalec.base;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.javalec.function.ImageResize;
 import com.javalec.util.ShareVar;
 
 import javax.swing.JLabel;
@@ -32,6 +34,7 @@ public class PaymentSuccessMain extends JFrame {
 	private JLabel lblNewLabel_1_1_1_1_1_1_1;
 	private JLabel lblNewLabel_1_1_1_1_1_2;
 	private JLabel lblNewLabel_1_1_1_1_2;
+	private JLabel lblSun;
 
 	/**
 	 * Launch the application.
@@ -74,6 +77,7 @@ public class PaymentSuccessMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -88,6 +92,7 @@ public class PaymentSuccessMain extends JFrame {
 		contentPane.add(getLblNewLabel_1_1_1_1_1_1_1());
 		contentPane.add(getLblNewLabel_1_1_1_1_1_2());
 		contentPane.add(getLblNewLabel_1_1_1_1_2());
+		contentPane.add(getLblSun());
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -108,7 +113,7 @@ public class PaymentSuccessMain extends JFrame {
 	}
 	private JLabel getLblpurchaseNum() {
 		if (lblpurchaseNum == null) {
-			lblpurchaseNum = new JLabel("주문 번호");
+			lblpurchaseNum = new JLabel("");
 			lblpurchaseNum.setForeground(Color.RED);
 			lblpurchaseNum.setHorizontalAlignment(SwingConstants.CENTER);
 			lblpurchaseNum.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
@@ -191,5 +196,21 @@ public class PaymentSuccessMain extends JFrame {
 	
 	
 	
+	private JLabel getLblSun() {
+		if (lblSun == null) {
+			lblSun = new JLabel("");
+			lblSun.setBounds(532, 17, 61, 16);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
+			int x = 80;
+			int y = 80;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblSun.setIcon(backArrow);
+			lblSun.setBounds(531, 6, 88, 79);
+		}
+		return lblSun;
+	}
 }// end
 

@@ -13,7 +13,7 @@ public class PaymentDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 	
-	int salesNo = 1;
+	int salesNo = ShareVar.salesNo;
 	
 	
 	
@@ -45,7 +45,7 @@ public class PaymentDao {
 				ps.setInt(6, rs.getInt(4) * rs.getInt(3));
 				ps.executeUpdate();
 			}
-			salesNo = salesNo +1;
+			salesNo += 1 ;
 			
 			con.close();
 			return true;

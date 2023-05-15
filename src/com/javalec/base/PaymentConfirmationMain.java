@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.PaymentDao;
+import com.javalec.function.ImageResize;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -81,6 +82,7 @@ public class PaymentConfirmationMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 700);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -122,7 +124,16 @@ public class PaymentConfirmationMain extends JFrame {
 	}
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("취소");
+			lblNewLabel_1 = new JLabel("");
+
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/cancle.png"));
+			int x = 180;
+			int y = 100;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_1.setIcon(backArrow);
 			lblNewLabel_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -130,13 +141,22 @@ public class PaymentConfirmationMain extends JFrame {
 				}
 			});
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1.setBounds(30, 590, 86, 46);
+			lblNewLabel_1.setBounds(16, 536, 200, 118);
 		}
 		return lblNewLabel_1;
 	}
 	private JLabel getLblNewLabel_1_1() {
 		if (lblNewLabel_1_1 == null) {
-			lblNewLabel_1_1 = new JLabel("승인요청");
+			lblNewLabel_1_1 = new JLabel("");
+			
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/KakaoTalk_Photo_2023-05-15-14-31-19 001.png"));
+			int x = 300;
+			int y = 160;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_1_1.setIcon(backArrow);
 			lblNewLabel_1_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -144,7 +164,7 @@ public class PaymentConfirmationMain extends JFrame {
 				}
 			});
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1_1.setBounds(360, 590, 108, 46);
+			lblNewLabel_1_1.setBounds(211, 540, 269, 126);
 		}
 		return lblNewLabel_1_1;
 	}

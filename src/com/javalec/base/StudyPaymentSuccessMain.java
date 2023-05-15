@@ -62,7 +62,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						dispose();
+						front();
 					}
 				};
 	            timer.schedule(task, 5000);
@@ -179,5 +179,13 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_2.setBounds(712, 468, 333, 45);
 		}
 		return lblNewLabel_1_1_1_1_2;
+	
 	}
+	
+	private void front() {
+		StudyAdvertisementMain main = new StudyAdvertisementMain();
+		main.setVisible(true);
+		dispose();
+	}
+	
 }
