@@ -67,6 +67,7 @@ public class StudyProductOptionMain extends JFrame {
 	private int sugarCount = 0;
 	private String userid = "donghyun";
 	private String wkItemName = "";
+	private JLabel lblOne;
 
 	
 
@@ -173,7 +174,6 @@ public class StudyProductOptionMain extends JFrame {
 		contentPane.add(getLblCancle());
 		contentPane.add(getLblContent());
 		contentPane.add(getLblPrice());
-		contentPane.add(getLblBack());
 		contentPane.add(getLblAddSyrup());
 		contentPane.add(getLblAddSugar());
 		contentPane.add(getLblAddShot2());
@@ -184,6 +184,8 @@ public class StudyProductOptionMain extends JFrame {
 		contentPane.add(getLblAddShot3());
 		contentPane.add(getLblResetBtn());
 		contentPane.add(getLblOption());
+		contentPane.add(getLblOne());
+		contentPane.add(getLblBack());
 	}
 	private JLabel getLblTitle() {
 		if (lblTitle == null) {
@@ -230,9 +232,8 @@ public class StudyProductOptionMain extends JFrame {
 	private JLabel getLblProductName() {
 		if (lblProductName == null) {
 			lblProductName = new JLabel("");
-			lblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblProductName.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 24));
-			lblProductName.setBounds(145, 120, 352, 56);
+			lblProductName.setBounds(160, 97, 352, 56);
 		}
 		return lblProductName;
 	}
@@ -359,7 +360,7 @@ public class StudyProductOptionMain extends JFrame {
 			lblContent.setForeground(Color.LIGHT_GRAY);
 			lblContent.setVerticalAlignment(SwingConstants.TOP);
 			lblContent.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 14));
-			lblContent.setBounds(160, 141, 352, 56);
+			lblContent.setBounds(160, 153, 677, 56);
 		}
 		return lblContent;
 	}
@@ -367,9 +368,9 @@ public class StudyProductOptionMain extends JFrame {
 		if (lblPrice == null) {
 			lblPrice = new JLabel("");
 			lblPrice.setForeground(Color.RED);
-			lblPrice.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPrice.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblPrice.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
-			lblPrice.setBounds(220, 235, 394, 47);
+			lblPrice.setBounds(455, 239, 394, 47);
 		}
 		return lblPrice;
 	}
@@ -548,4 +549,14 @@ public class StudyProductOptionMain extends JFrame {
 		}
 	}
 
+	private JLabel getLblOne() {
+		if (lblOne == null) {
+			lblOne = new JLabel("원");
+			lblOne.setHorizontalAlignment(SwingConstants.CENTER);
+			lblOne.setForeground(Color.BLACK);
+			lblOne.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 32));
+			lblOne.setBounds(834, 239, 60, 47);
+		}
+		return lblOne;
+	}
 }	// End Class

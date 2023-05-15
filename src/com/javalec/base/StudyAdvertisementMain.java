@@ -97,6 +97,10 @@ public class StudyAdvertisementMain extends JFrame {
 	                resize = new ImageResize(icon, x, y);
 	                ImageIcon ad = resize.imageResizing();
 	                lblAD.setIcon(ad);
+	                icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad3.png"));
+	                resize = new ImageResize(icon, x, y);
+	                ImageIcon ad3 = resize.imageResizing();
+	                lblAD.setIcon(ad3);
 	            } catch (InterruptedException e) {
 	                e.printStackTrace();
 	            }

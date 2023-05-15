@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,6 +32,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
+import javax.swing.JTextArea;
 
 /* 스터디룸 키오스크에서 상품 메뉴들을 보여주는 페이지  */
 public class StudyProductMain extends JFrame {
@@ -240,6 +242,7 @@ public class StudyProductMain extends JFrame {
 		contentPane.add(getLblNewLabel_1());
 		contentPane.add(getLblTime());
 		contentPane.add(getLblBackGround7());
+		contentPane.add(getLblNotice());
 	}
 	
 
@@ -453,6 +456,15 @@ public class StudyProductMain extends JFrame {
 	private JLabel getLblPayBtn() {
 		if (lblPayBtn == null) {
 			lblPayBtn = new JLabel("");
+			lblPayBtn.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					StudyPurchaseMain studyPurchaseMain = new StudyPurchaseMain();
+					studyPurchaseMain.setLocationRelativeTo(null);
+					studyPurchaseMain.setVisible(true);
+					dispose();
+				}
+			});
 			lblPayBtn.setHorizontalAlignment(SwingConstants.CENTER);
 			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/payBtn.png"));
 			int x = 240;
@@ -460,7 +472,7 @@ public class StudyProductMain extends JFrame {
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon payBtn = resize.imageResizing();
 			lblPayBtn.setIcon(payBtn);
-			lblPayBtn.setBounds(681, 602, 182, 103);
+			lblPayBtn.setBounds(655, 610, 182, 103);
 		}
 		return lblPayBtn;
 	}
@@ -469,7 +481,7 @@ public class StudyProductMain extends JFrame {
 			lblTitle_1 = new JLabel("선택한 상품");
 			lblTitle_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTitle_1.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 16));
-			lblTitle_1.setBounds(665, 551, 91, 47);
+			lblTitle_1.setBounds(655, 551, 91, 47);
 		}
 		return lblTitle_1;
 	}
@@ -478,7 +490,7 @@ public class StudyProductMain extends JFrame {
 			lblTitle_1_1 = new JLabel("개");
 			lblTitle_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTitle_1_1.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 16));
-			lblTitle_1_1.setBounds(778, 551, 32, 47);
+			lblTitle_1_1.setBounds(768, 551, 32, 47);
 		}
 		return lblTitle_1_1;
 	}
@@ -488,7 +500,7 @@ public class StudyProductMain extends JFrame {
 			lblQty.setForeground(new Color(255, 41, 0));
 			lblQty.setHorizontalAlignment(SwingConstants.CENTER);
 			lblQty.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
-			lblQty.setBounds(742, 551, 61, 47);
+			lblQty.setBounds(732, 551, 61, 47);
 		}
 		return lblQty;
 	}
@@ -509,7 +521,7 @@ public class StudyProductMain extends JFrame {
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon privousBtn = resize.imageResizing();
 			lblPriviousBtn.setIcon(privousBtn);
-			lblPriviousBtn.setBounds(0, 162, 54, 116);
+			lblPriviousBtn.setBounds(-1, 251, 54, 116);
 		}
 		return lblPriviousBtn;
 	}
@@ -531,7 +543,7 @@ public class StudyProductMain extends JFrame {
 			ImageIcon nextBtn = resize.imageResizing();
 			lblNextBtn.setIcon(nextBtn);
 			lblNextBtn.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblNextBtn.setBounds(591, 162, 54, 116);
+			lblNextBtn.setBounds(574, 251, 54, 116);
 		}
 		return lblNextBtn;
 	}
@@ -972,7 +984,7 @@ public class StudyProductMain extends JFrame {
 			ImageIcon deleteAllBtn = resize.imageResizing();
 			lblDeleteAllBtn.setIcon(deleteAllBtn);
 			lblDeleteAllBtn.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDeleteAllBtn.setBounds(803, 530, 91, 75);
+			lblDeleteAllBtn.setBounds(791, 536, 91, 75);
 		}
 		return lblDeleteAllBtn;
 	}
@@ -982,7 +994,7 @@ public class StudyProductMain extends JFrame {
 			lblNewLabel = new JLabel("남은 시간");
 			lblNewLabel.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNewLabel.setBounds(700, 479, 133, 47);
+			lblNewLabel.setBounds(650, 513, 77, 47);
 		}
 		return lblNewLabel;
 	}
@@ -990,9 +1002,9 @@ public class StudyProductMain extends JFrame {
 	    if (lblRemainingTime == null) {
 	        lblRemainingTime = new JLabel("120");
 	        lblRemainingTime.setForeground(Color.RED);
-	        lblRemainingTime.setHorizontalAlignment(SwingConstants.LEFT);
+	        lblRemainingTime.setHorizontalAlignment(SwingConstants.TRAILING);
 	        lblRemainingTime.setFont(new Font("Comic Sans MS", Font.BOLD, 26));
-	        lblRemainingTime.setBounds(776, 477, 61, 47);
+	        lblRemainingTime.setBounds(713, 510, 61, 47);
 
 	        Thread timerThread = new Thread(() -> {
 	            int seconds = 120;
@@ -1019,7 +1031,7 @@ public class StudyProductMain extends JFrame {
 			lblNewLabel_1 = new JLabel("초");
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 18));
-			lblNewLabel_1.setBounds(828, 479, 23, 47);
+			lblNewLabel_1.setBounds(775, 512, 23, 47);
 		}
 		return lblNewLabel_1;
 	}
@@ -1028,7 +1040,7 @@ public class StudyProductMain extends JFrame {
 			lblOne = new JLabel("원");
 			lblOne.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
 			lblOne.setForeground(Color.WHITE);
-			lblOne.setBounds(822, 622, 23, 35);
+			lblOne.setBounds(796, 630, 23, 35);
 		}
 		return lblOne;
 	}
@@ -1037,7 +1049,7 @@ public class StudyProductMain extends JFrame {
 			lblPay = new JLabel("결제하기");
 			lblPay.setForeground(Color.WHITE);
 			lblPay.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
-			lblPay.setBounds(768, 650, 68, 35);
+			lblPay.setBounds(742, 658, 68, 35);
 		}
 		return lblPay;
 	}
@@ -1046,10 +1058,25 @@ public class StudyProductMain extends JFrame {
 			lblTotalPrice = new JLabel("");
 			lblTotalPrice.setForeground(Color.WHITE);
 			lblTotalPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-			lblTotalPrice.setBounds(768, 622, 56, 35);
+			lblTotalPrice.setBounds(742, 630, 56, 35);
 		}
 		return lblTotalPrice;
 	}
+	
+	private JLabel getLblNotice() {
+		if (lblNotice == null) {
+			lblNotice = new JLabel("");
+			ImageIcon icon = new ImageIcon(StudyProductMain.class.getResource("/com/javalec/image/StudyRoomNotice2.png"));
+			int x = 260;
+			int y = 450;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon notice = resize.imageResizing();
+			lblNotice.setIcon(notice);
+			lblNotice.setBounds(640, 0, 260, 439);
+		}
+		return lblNotice;
+	}
+	
 	
 	/********************** Functions **********************/
 	private ArrayList<JLabel> lblProductImageList = new ArrayList<JLabel>();
@@ -1078,6 +1105,7 @@ public class StudyProductMain extends JFrame {
 	private JLabel lblTotalPrice;
 	private JLabel lblTime;
 	private JLabel lblBackGround7;
+	private JLabel lblNotice;
 
 //	lblProductImages = {lblProductImage1, lblProductImage2, lblProductImage3, lblProductImage4, lblProductImage5, lblProductImage6};
 //	private JLabel[] lblProductNames = {lblProductName1, lblProductName2, lblProductName3, lblProductName4, lblProductName5, lblProductName6};
@@ -1196,6 +1224,8 @@ public class StudyProductMain extends JFrame {
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.selectItemList();
 		
+		Collections.shuffle(beanList);
+		
 		for(int i=0; i<6; i++) {
 			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 100;
@@ -1269,7 +1299,10 @@ public class StudyProductMain extends JFrame {
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.conditionItemQuery(categoryNo);
 
-		for (int i = 0; i < beanList.size(); i++) {
+		int startIndex = currentPage * 6;
+		int endIndex = Math.min(startIndex + 6, beanList.size());
+		
+		for (int i = 0; i < endIndex; i++) {
 			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 100;
 			int y = 120;
@@ -1420,10 +1453,4 @@ public class StudyProductMain extends JFrame {
 		}
 		
 	}
-	
-	
-	
-	
-	
-
 }	// End Class
