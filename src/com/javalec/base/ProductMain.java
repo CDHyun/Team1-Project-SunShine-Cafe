@@ -249,6 +249,7 @@ public class ProductMain extends JFrame {
 		contentPane.add(getLblRemainingTime());
 		contentPane.add(getLblNewLabel_1());
 		contentPane.add(getLblNewLabel_2());
+		contentPane.add(getLblSuffle());
 	}
 	
 
@@ -823,7 +824,7 @@ public class ProductMain extends JFrame {
 		if (lblBackGround3 == null) {
 			lblBackGround3 = new JLabel("");
 			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/backGround.png"));
-			int x = 80;
+			int x = 85;
 			int y = 60;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon backGround = resize.imageResizing();
@@ -1044,6 +1045,7 @@ public class ProductMain extends JFrame {
 	private JLabel lblOne;
 	private JLabel lblPay;
 	private JLabel lblTotalPrice;
+	private JLabel lblSuffle;
 
 //	lblProductImages = {lblProductImage1, lblProductImage2, lblProductImage3, lblProductImage4, lblProductImage5, lblProductImage6};
 //	private JLabel[] lblProductNames = {lblProductName1, lblProductName2, lblProductName3, lblProductName4, lblProductName5, lblProductName6};
@@ -1397,4 +1399,17 @@ public class ProductMain extends JFrame {
 	
 	
 	
+	private JLabel getLblSuffle() {
+		if (lblSuffle == null) {
+			lblSuffle = new JLabel("");
+			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/suffle.png"));
+			int x = 190;
+			int y = 160;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon suffle = resize.imageResizing();
+			lblSuffle.setIcon(suffle);
+			lblSuffle.setBounds(0, 20, 221, 103);
+		}
+		return lblSuffle;
+	}
 }	// End Class

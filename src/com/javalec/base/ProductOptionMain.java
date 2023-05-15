@@ -70,6 +70,7 @@ public class ProductOptionMain extends JFrame {
 	private int sugarCount = 0;
 	private String userid = "donghyun";
 	private String wkItemName = "";
+	private JLabel lblWon;
 
 	
 
@@ -168,6 +169,7 @@ public class ProductOptionMain extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.add(getLblWon());
 		contentPane.add(getLblAddShot());
 		contentPane.add(getLblTitle());
 		contentPane.add(getLblTitle_1());
@@ -238,9 +240,8 @@ public class ProductOptionMain extends JFrame {
 	private JLabel getLblProductName() {
 		if (lblProductName == null) {
 			lblProductName = new JLabel("");
-			lblProductName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblProductName.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 24));
-			lblProductName.setBounds(145, 120, 352, 56);
+			lblProductName.setBounds(160, 119, 352, 56);
 		}
 		return lblProductName;
 	}
@@ -375,9 +376,9 @@ public class ProductOptionMain extends JFrame {
 		if (lblPrice == null) {
 			lblPrice = new JLabel("");
 			lblPrice.setForeground(Color.RED);
-			lblPrice.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPrice.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblPrice.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
-			lblPrice.setBounds(220, 263, 394, 47);
+			lblPrice.setBounds(399, 263, 182, 47);
 		}
 		return lblPrice;
 	}
@@ -504,6 +505,7 @@ public class ProductOptionMain extends JFrame {
 
 		cartOptionPrice = cartOptionPrice + 500;
 		lblPrice.setText(Integer.toString(cartOptionPrice));
+		lblWon.setText("원");
 		JLabel clickedLabel = (JLabel) e.getSource();
 	    if (clickedLabel == lblShot) {
 	    	shotCount++;
@@ -539,6 +541,7 @@ public class ProductOptionMain extends JFrame {
 		lblAddSugar.setText("");
 		lblAddSugar2.setText("");
 		lblAddSugar3.setText("");
+		lblWon.setText("");
 	}
 
 	/* 04. 주문 담기 버튼을 눌렀을 때 실행되는 메소드 */
@@ -563,4 +566,14 @@ public class ProductOptionMain extends JFrame {
 		}
 	}
 
+	private JLabel getLblWon() {
+		if (lblWon == null) {
+			lblWon = new JLabel("");
+			lblWon.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblWon.setForeground(Color.BLACK);
+			lblWon.setFont(new Font("Noto Sans KR Medium", Font.PLAIN, 32));
+			lblWon.setBounds(559, 263, 51, 47);
+		}
+		return lblWon;
+	}
 }	// End Class
