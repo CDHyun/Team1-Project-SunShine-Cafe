@@ -1,5 +1,6 @@
 package com.javalec.base;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,16 +8,22 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.LoginDao;
+import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class StudyUserSing extends JFrame {
 
@@ -34,9 +41,11 @@ public class StudyUserSing extends JFrame {
 	
 	String message;
 	String userid;
+	private JLabel lblCheck;
+	private JLabel lblPassCheck;
 	
-	
-
+	////
+//
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +54,7 @@ public class StudyUserSing extends JFrame {
 			public void run() {
 				try {
 					StudyUserSing frame = new StudyUserSing();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,6 +72,7 @@ public class StudyUserSing extends JFrame {
 		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -74,12 +85,26 @@ public class StudyUserSing extends JFrame {
 		contentPane.add(getBtnSingIn());
 		contentPane.add(getLblNewLabel_4());
 		contentPane.add(getBtnSingUp());
+		contentPane.add(getLblCheck());
+		contentPane.add(getLblPassCheck());
 	}
 
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("New label");
+			lblNewLabel.setIcon(new ImageIcon(StudyUserSing.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
 			lblNewLabel.setBounds(49, 182, 243, 249);
+			
+			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
+			int x = 310;
+			int y = 310;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backPage = resize.imageResizing();
+			
+			lblNewLabel.setIcon(backPage);
+			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel.setBounds(80, 230, 310, 310);
+			
 		}
 		return lblNewLabel;
 	}
@@ -102,6 +127,19 @@ public class StudyUserSing extends JFrame {
 	private JTextField getTfUserId() {
 		if (tfUserId == null) {
 			tfUserId = new JTextField();
+			tfUserId.setHorizontalAlignment(SwingConstants.RIGHT);
+			tfUserId.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (Character.getType(e.getKeyChar()) == Character.OTHER_LETTER) {
+			            lblCheck.setText("영어와 숫자로만 입력할 수 있습니다.");
+			            lblCheck.setForeground(Color.RED);
+			            e.consume(); // 입력한 키 무시
+			        } else {
+			            lblCheck.setText("");
+			        }
+				}
+			});
 			tfUserId.setBounds(521, 313, 185, 41);
 			tfUserId.setColumns(10);
 		}
@@ -118,16 +156,19 @@ public class StudyUserSing extends JFrame {
 	private JPasswordField getPfPassword() {
 		if (pfPassword == null) {
 			pfPassword = new JPasswordField();
+			pfPassword.setHorizontalAlignment(SwingConstants.RIGHT);
 			pfPassword.setBounds(521, 416, 185, 41);
 		}
 		return pfPassword;
 	}
-	private JButton getBtnSingIn() {
+		private JButton getBtnSingIn() {
 		if (btnSingIn == null) {
 			btnSingIn = new JButton("Login");
 			btnSingIn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					loginAction();
+			public void actionPerformed(ActionEvent e) {
+				    userIdCheck();
+					insertFieldCheck();
+					loginCheck();
 				}
 			});
 			btnSingIn.setFont(new Font("Lucida Grande", Font.BOLD, 20));
@@ -148,7 +189,8 @@ public class StudyUserSing extends JFrame {
 			btnSingUp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					StudyUserSingUpMain studyUserSingUpMain = new StudyUserSingUpMain();
-					studyUserSingUpMain.setVisible(true); // UserSignUp 페이지를 보여주도록 설정
+					studyUserSingUpMain.setVisible(true); // StudyUserSignUp 페이지를 보여주도록 설정
+					studyUserSingUpMain.setLocationRelativeTo(null);
 	                dispose(); // 현재 로그인 페이지를 닫습니다.
 				}
 			});
@@ -157,107 +199,86 @@ public class StudyUserSing extends JFrame {
 		return btnSingUp;
 	}
 	
+	private JLabel getLblCheck() {
+		if (lblCheck == null) {
+			lblCheck = new JLabel("");
+			lblCheck.setBounds(531, 355, 175, 29);
+		}
+		return lblCheck;
+	}
+	private JLabel getLblPassCheck() {
+		if (lblPassCheck == null) {
+			lblPassCheck = new JLabel("");
+			lblPassCheck.setBounds(531, 456, 175, 29);
+		}
+		return lblPassCheck;
+	}
+	
+	
+	
 	//--------------- Function
 	
 	
 	// 로그인 버튼 액션 설정 
 	
-		private void loginAction() {
-		    boolean result = true;
-		    
-		    // id, password 체크 
-		    if(result) {
-		        int i_chk = insertFieldCheck();
-		        if(i_chk != 0) {
-		            JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
-		        } else {
-		            boolean loginResult = loginCheck();   // DB에서 유저 id, password가 있는지 확인 
-		            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
-		                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
-		                StudyProductMain studyProductMain = new StudyProductMain();
-		                studyProductMain.setVisible(true);
-		                dispose();
-		            } else {
-		                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
-		                pfPassword.setText(""); // 비밀번호 입력창 초기화 
-		                tfUserId.requestFocus();
-		            }
-		        }
-		    } else {
-		        JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
-		        tfUserId.requestFocus();
-		    }
-		}
+	private void userIdCheck() {
+		LoginDao loginDao = new LoginDao();
+		
+	    String userid = tfUserId.getText();
+	    char[] pass = pfPassword.getPassword();
+	    String password = new String(pass);
+
+	    int userExists = loginDao.existsUserID(userid);
+	    if (userExists == 0) {
+	    	lblCheck.setText("아이디가 존재하지 않습니다.");
+	    } else {
+	    	lblCheck.setText("");
+	    }
+	    
+	}
 
 		
+//  id, pw 확인하기 
+	private int insertFieldCheck() {
+		int i = 0;
+		if (pfPassword.getPassword().length == 0) {
+			i ++;
+			lblPassCheck.setText("비밀번호를 입력해주세요.");
+			pfPassword.requestFocus();
+		}
+		if (tfUserId.getText().trim().length() == 0) {
+			i ++;
+			message = "아이디를 ";
+			lblCheck.setText("아이디를 입력해주세요.");
+			tfUserId.requestFocus();
+		}
+		return i;
+	}
 		
 		
+	private void loginCheck() {
+		String id = tfUserId.getText();
+		char[] pass = pfPassword.getPassword();
+		String password = new String(pass);
 		
+		LoginDao loginDao = new LoginDao(id, password) ;
+		boolean result = loginDao.loginCheck(id, password);
 		
-		
-		
-		
-		
-		
-		//  id, pw 확인하기 
-		private int insertFieldCheck() {
-			int i = 0;
-			
-			if (new String (pfPassword.getPassword()).trim().length() == 0) {
-				i ++;
-				message = "비밀번호를 ";
-				pfPassword.requestFocus();
-			}
-			if (tfUserId.getText().trim().length() == 0) {
-				i ++;
-				message = "아이디를 ";
+		if (result == true) {
+			JOptionPane.showMessageDialog(this, id + " 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE);;
+			ShareVar.userid = id;
+			ProductMain productMain = new ProductMain();
+			productMain.setLocationRelativeTo(null);
+			productMain.setVisible(true);
+			dispose();
+			} else {
 				tfUserId.requestFocus();
-				
-			}
-			return i;
-		}
-		
-		
-		// password 체크
-		
-		private boolean existsUserPassword() {
-			boolean result = false;
-			userid = new String (pfPassword.getPassword());
-			LoginDao loginDao = new LoginDao();
-			int count = loginDao.existsUserID(userid);
-			if(count == 0) {
-				return result = false;
-			}else {
-				return result = true;
 			}
 		}
 		
+	
 		
 		
-		private boolean loginCheck() {
-			String id = tfUserId.getText();
-			char[] pass = pfPassword.getPassword();
-			String password = new String(pass);
-			
-			LoginDao loginDao = new LoginDao(id, password);
-			boolean result = loginDao.loginCheck(id, password);
-			
-			if(result == true) {
-				
-				ProductMain pm = new ProductMain();
-				dispose();
-			}else {
-				if(tfUserId.getText().length() != 0) {
-					
-					tfUserId.setText(""); // 아이디 입력값 초기화
-		            pfPassword.setText(""); // 비밀번호 입력값 초기화
-					tfUserId.requestFocus();
-				}
-			}
-			return result;
-		}
-	
-	
-	
+		
 	
 }// End

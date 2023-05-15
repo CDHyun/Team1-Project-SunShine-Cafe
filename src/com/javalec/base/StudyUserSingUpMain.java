@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.UserSingUpDao;
 import com.javalec.dto.UserSingUpDto;
+import com.javalec.function.ImageResize;
 
 import java.util.*;
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
 import java.lang.String;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
@@ -28,6 +30,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StudyUserSingUpMain extends JFrame {
 
@@ -61,8 +65,8 @@ public class StudyUserSingUpMain extends JFrame {
 	private JPasswordField pfUserPassword1;
 	private JLabel lblNewLabel_1_5;
 	private JTextField tfName;
-
-	
+////
+	//
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +75,7 @@ public class StudyUserSingUpMain extends JFrame {
 			public void run() {
 				try {
 					StudyUserSingUpMain frame = new StudyUserSingUpMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -91,9 +96,10 @@ public class StudyUserSingUpMain extends JFrame {
 		});
 		setTitle("스터디룸 회원가입");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 625);
+		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -120,15 +126,34 @@ public class StudyUserSingUpMain extends JFrame {
 
 	private JLabel getLblHome() {
 		if (lblHome == null) {
-			lblHome = new JLabel("New label");
+			lblHome = new JLabel("");
+			lblHome.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirectStudyUserSing();
+				}
+			});
 			lblHome.setBounds(18, 27, 61, 16);
+			
+			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/back.png"));
+			int x = 50;
+			int y = 50;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backPage = resize.imageResizing();
+			
+			lblHome.setIcon(backPage);
+			lblHome.setHorizontalAlignment(SwingConstants.CENTER);
+			lblHome.setBounds(5, 0, 70, 70);
+			
 		}
 		return lblHome;
 	}
 	private JLabel getLblLogo() {
 		if (lblLogo == null) {
-			lblLogo = new JLabel("New label");
-			lblLogo.setBounds(416, 27, 61, 16);
+			lblLogo = new JLabel("SunShine");
+			lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLogo.setFont(new Font("Comic Sans MS", Font.PLAIN, 55));
+			lblLogo.setBounds(330, 27, 289, 96);
 		}
 		return lblLogo;
 	}
@@ -136,7 +161,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("회원 가입");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 50));
-			lblNewLabel.setBounds(357, 97, 194, 71);
+			lblNewLabel.setBounds(381, 137, 194, 71);
 		}
 		return lblNewLabel;
 	}
@@ -144,7 +169,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1 == null) {
 			lblNewLabel_1 = new JLabel("회원 아이디");
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1.setBounds(311, 207, 91, 16);
+			lblNewLabel_1.setBounds(240, 272, 91, 16);
 		}
 		return lblNewLabel_1;
 	}
@@ -165,7 +190,7 @@ public class StudyUserSingUpMain extends JFrame {
 				}
 			});
 			tfUserId.setHorizontalAlignment(SwingConstants.CENTER);
-			tfUserId.setBounds(452, 202, 255, 38);
+			tfUserId.setBounds(381, 267, 255, 38);
 			tfUserId.setColumns(10);
 		}
 		return tfUserId;
@@ -174,7 +199,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_1 == null) {
 			lblNewLabel_1_1 = new JLabel("비밀번호");
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_1.setBounds(317, 279, 97, 21);
+			lblNewLabel_1_1.setBounds(246, 344, 97, 21);
 		}
 		return lblNewLabel_1_1;
 	}
@@ -182,7 +207,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_2 == null) {
 			lblNewLabel_1_2 = new JLabel("비밀번호 확인");
 			lblNewLabel_1_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_2.setBounds(311, 357, 118, 21);
+			lblNewLabel_1_2.setBounds(240, 422, 118, 21);
 		}
 		return lblNewLabel_1_2;
 	}
@@ -190,7 +215,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_3 == null) {
 			lblNewLabel_1_3 = new JLabel("전화번호(Tel)");
 			lblNewLabel_1_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_3.setBounds(311, 484, 118, 21);
+			lblNewLabel_1_3.setBounds(240, 549, 118, 21);
 		}
 		return lblNewLabel_1_3;
 	}
@@ -209,7 +234,7 @@ public class StudyUserSingUpMain extends JFrame {
 			tfPhone.setEditable(false);
 			tfPhone.setHorizontalAlignment(SwingConstants.CENTER);
 			tfPhone.setColumns(10);
-			tfPhone.setBounds(452, 478, 255, 38);
+			tfPhone.setBounds(381, 543, 255, 38);
 			
 			// 전화번호 TextField까지 입력을 해야 가입버튼 활성화 
 						tfPhone.getDocument().addDocumentListener(new DocumentListener() {
@@ -243,7 +268,7 @@ public class StudyUserSingUpMain extends JFrame {
 	                }
 				}
 			});
-			btnJoin.setBounds(763, 507, 117, 51);
+			btnJoin.setBounds(421, 633, 117, 51);
 			
 			
 		}
@@ -253,7 +278,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_4 == null) {
 			lblNewLabel_1_4 = new JLabel("ID");
 			lblNewLabel_1_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_4.setBounds(348, 224, 26, 16);
+			lblNewLabel_1_4.setBounds(277, 289, 26, 16);
 		}
 		return lblNewLabel_1_4;
 	}
@@ -261,7 +286,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblNewLabel_1_1_1 == null) {
 			lblNewLabel_1_1_1 = new JLabel("Password");
 			lblNewLabel_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_1_1.setBounds(311, 298, 97, 26);
+			lblNewLabel_1_1_1.setBounds(240, 363, 97, 26);
 		}
 		return lblNewLabel_1_1_1;
 	}
@@ -269,7 +294,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblCheck == null) {
 			lblCheck = new JLabel("");
 			lblCheck.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblCheck.setBounds(462, 239, 201, 16);
+			lblCheck.setBounds(391, 304, 201, 16);
 		}
 		return lblCheck;
 	}
@@ -277,7 +302,7 @@ public class StudyUserSingUpMain extends JFrame {
 		if (lblPass == null) {
 			lblPass = new JLabel("");
 			lblPass.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblPass.setBounds(462, 389, 201, 16);
+			lblPass.setBounds(391, 454, 201, 16);
 		}
 		return lblPass;
 	}
@@ -289,10 +314,11 @@ public class StudyUserSingUpMain extends JFrame {
 					checkID();
 					pfUserPassword.setEditable(true);
 					pfUserPassword1.setEditable(true);
+					tfName.setEditable(true);
 					tfPhone.setEditable(true);
 				}
 			});
-			btnCheckID.setBounds(743, 205, 91, 29);
+			btnCheckID.setBounds(672, 270, 91, 29);
 		}
 		return btnCheckID;
 	}
@@ -300,13 +326,15 @@ public class StudyUserSingUpMain extends JFrame {
 	private JPasswordField getPfUserPassword() {
 		if (pfUserPassword == null) {
 			pfUserPassword = new JPasswordField();
-			pfUserPassword.setBounds(452, 279, 255, 38);
+			pfUserPassword.setEditable(false);
+			pfUserPassword.setBounds(381, 344, 255, 38);
 		}
 		return pfUserPassword;
 	}
 	private JPasswordField getPfUserPassword1() {
 		if (pfUserPassword1 == null) {
 			pfUserPassword1 = new JPasswordField();
+			pfUserPassword1.setEditable(false);
 			pfUserPassword1.addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(FocusEvent e) {
@@ -332,21 +360,22 @@ public class StudyUserSingUpMain extends JFrame {
 			        }
 				}
 			});
-			pfUserPassword1.setBounds(452, 351, 255, 38);
+			pfUserPassword1.setBounds(381, 416, 255, 38);
 		}
 		return pfUserPassword1;
 	}
 	private JLabel getLblNewLabel_1_5() {
 		if (lblNewLabel_1_5 == null) {
-			lblNewLabel_1_5 = new JLabel("성함");
+			lblNewLabel_1_5 = new JLabel("이름");
 			lblNewLabel_1_5.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_5.setBounds(340, 420, 46, 26);
+			lblNewLabel_1_5.setBounds(269, 485, 46, 26);
 		}
 		return lblNewLabel_1_5;
 	}
 	private JTextField getTfName() {
 		if (tfName == null) {
 			tfName = new JTextField();
+			tfName.setEditable(false);
 			tfName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -358,7 +387,7 @@ public class StudyUserSingUpMain extends JFrame {
 			});
 			tfName.setHorizontalAlignment(SwingConstants.CENTER);
 			tfName.setColumns(10);
-			tfName.setBounds(452, 417, 255, 38);
+			tfName.setBounds(381, 482, 255, 38);
 		}
 		return tfName;
 	}
@@ -435,7 +464,7 @@ public class StudyUserSingUpMain extends JFrame {
 	    // 아이디가 사용 가능한 경우
 	    else {
 	        lblCheck.setText("사용 가능한 아이디입니다.");
-	        lblCheck.setForeground(Color.GREEN);
+	        lblCheck.setForeground(Color.BLACK);
 	        btnCheckID.setEnabled(false);      // 사용 가능할시 중복확인 버튼 비활성화 
 	    }
 	}		
@@ -482,7 +511,11 @@ public class StudyUserSingUpMain extends JFrame {
 	
 	
 	
-	
+	private void redirectStudyUserSing() {
+		StudyUserSing sing = new StudyUserSing();
+		sing.setVisible(true);
+		dispose();
+	}
 	
 	
 	

@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.UserSingUpDao;
+import com.javalec.function.ImageResize;
+
 import java.util.*;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +29,11 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.AncestorEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -59,7 +66,7 @@ public class UserSingUp extends JFrame {
 	private JTextField tfName;
 	
 	
-	
+	//
 
 	/**
 	 * Launch the application.
@@ -69,6 +76,7 @@ public class UserSingUp extends JFrame {
 			public void run() {
 				try {
 					UserSingUp frame = new UserSingUp();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -92,6 +100,7 @@ public class UserSingUp extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -119,15 +128,35 @@ public class UserSingUp extends JFrame {
 
 	private JLabel getLblLogoImage() {
 		if (lblLogoImage == null) {
-			lblLogoImage = new JLabel("New label");
-			lblLogoImage.setBounds(283, 25, 61, 16);
+			lblLogoImage = new JLabel("SunShine");
+			lblLogoImage.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLogoImage.setFont(new Font("Comic Sans MS", Font.PLAIN, 50));
+			lblLogoImage.setBounds(184, 25, 299, 82);
 		}
 		return lblLogoImage;
 	}
 	private JLabel getLblHome() {
 		if (lblHome == null) {
-			lblHome = new JLabel("New label");
+			lblHome = new JLabel("");
+			lblHome.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirectLoginMain();
+				}
+			});
+			lblHome.setIcon(new ImageIcon(UserSingUp.class.getResource("/com/javalec/image/back.png")));
 			lblHome.setBounds(18, 25, 61, 16);
+			
+			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/back.png"));
+			int x = 50;
+			int y = 50;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backPage = resize.imageResizing();
+			
+			lblHome.setIcon(backPage);
+			lblHome.setHorizontalAlignment(SwingConstants.CENTER);
+			lblHome.setBounds(5, 0, 70, 70);
+			
 		}
 		return lblHome;
 	}
@@ -332,6 +361,7 @@ public class UserSingUp extends JFrame {
 					checkID();
 					pfUserPassword.setEditable(true);
 					pfUserPassword1.setEditable(true);
+					tfName.setEditable(true);
 					tfPhone.setEditable(true);
 					
 				}
@@ -361,6 +391,7 @@ public class UserSingUp extends JFrame {
 	private JTextField getTfName() {
 		if (tfName == null) {
 			tfName = new JTextField();
+			tfName.setEditable(false);
 			tfName.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyTyped(KeyEvent e) {
@@ -447,7 +478,7 @@ public class UserSingUp extends JFrame {
 	    // 아이디가 사용 가능한 경우
 	    else {
 	        lblCheck.setText("사용 가능한 아이디입니다.");
-	        lblCheck.setForeground(Color.GREEN);
+	        lblCheck.setForeground(Color.BLACK);
 	        btnCheckID.setEnabled(false);      // 사용 가능할시 중복확인 버튼 비활성화 
 	    }
 	}		
@@ -485,8 +516,12 @@ public class UserSingUp extends JFrame {
 	        }
 	    }
 		
+		private void redirectLoginMain() {
+			LoginMain loginmain = new LoginMain();
+			loginmain.setVisible(true);
+			dispose();
+		}
 		
-		
-		
-		
+		//
+		//
 }// End

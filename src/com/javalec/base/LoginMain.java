@@ -1,5 +1,6 @@
 package com.javalec.base;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -7,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.LoginDao;
+import com.javalec.function.ImageResize;
 import com.javalec.util.ShareVar;
 import com.mysql.cj.protocol.Message;
 
@@ -30,6 +32,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 
 
 /* 기본 키오스크에서 로그인 하는 페이지 */
@@ -49,10 +52,10 @@ public class LoginMain extends JFrame {
 	
 	String message;
 	String userid;
-	private JLabel lblIdCheck;
+	private JLabel lblCheck;
 	private JLabel lblPassCheck;
 
-	
+	//
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +72,7 @@ public class LoginMain extends JFrame {
 			}
 		});
 	}
-
+//
 	/**
 	 * Create the frame.
 	 */
@@ -85,6 +88,7 @@ public class LoginMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(248, 211, 72));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -97,14 +101,25 @@ public class LoginMain extends JFrame {
 		contentPane.add(getLblNewLabel_3());
 		contentPane.add(getBtnSingUp());
 		contentPane.add(getPfUserPassWord());
-		contentPane.add(getLblIdCheck());
+		contentPane.add(getLblCheck());
 		contentPane.add(getLblPassCheck());
 	}
 	private JLabel getLblLogo() {
 		if (lblLogo == null) {
 			lblLogo = new JLabel("New label");
+			lblLogo.setIcon(new ImageIcon(LoginMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png")));
 			lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLogo.setBounds(169, 57, 284, 223);
+			lblLogo.setBounds(62, 70, 148, 110);
+			
+			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
+			int x = 210;
+			int y = 210;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backPage = resize.imageResizing();
+			
+			lblLogo.setIcon(backPage);
+			lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLogo.setBounds(230, 70, 210, 210);
 		}
 		return lblLogo;
 	}
@@ -128,9 +143,16 @@ public class LoginMain extends JFrame {
 		if (tfUserId == null) {
 			tfUserId = new JTextField();
 			tfUserId.addKeyListener(new KeyAdapter() {
+				
 				@Override
-				public void keyPressed(KeyEvent e) {
-					
+				public void keyTyped(KeyEvent e) {
+					if (Character.getType(e.getKeyChar()) == Character.OTHER_LETTER) {
+			            lblCheck.setText("영어와 숫자로만 입력할 수 있습니다.");
+			            lblCheck.setForeground(Color.RED);
+			            e.consume(); // 입력한 키 무시
+			        } else {
+			            lblCheck.setText("");
+			        }
 				}
 			});
 			tfUserId.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -147,7 +169,7 @@ public class LoginMain extends JFrame {
 		}
 		return lblNewLabel_2_1;
 	}
-	private JButton getBtnSingIn() {
+		private JButton getBtnSingIn() {
 		if (btnSingIn == null) {
 			btnSingIn = new JButton("LogIn");
 			btnSingIn.addActionListener(new ActionListener() {
@@ -199,12 +221,12 @@ public class LoginMain extends JFrame {
 		return pfUserPassWord;
 	}
 	
-	private JLabel getLblIdCheck() {
-		if (lblIdCheck == null) {
-			lblIdCheck = new JLabel("");
-			lblIdCheck.setBounds(148, 462, 223, 31);
+	private JLabel getLblCheck() {
+		if (lblCheck == null) {
+			lblCheck = new JLabel("");
+			lblCheck.setBounds(230, 455, 189, 31);
 		}
-		return lblIdCheck;
+		return lblCheck;
 	}
 	
 	// -------------  Function ----------
@@ -221,9 +243,9 @@ public class LoginMain extends JFrame {
 
 	    int userExists = loginDao.existsUserID(userid);
 	    if (userExists == 0) {
-	    	lblIdCheck.setText("아이디가 존재하지 않습니다.");
+	    	lblCheck.setText("아이디가 존재하지 않습니다.");
 	    } else {
-	    	lblIdCheck.setText("");
+	    	lblCheck.setText("");
 	    }
 	    
 	}
@@ -239,7 +261,7 @@ public class LoginMain extends JFrame {
 		if (tfUserId.getText().trim().length() == 0) {
 			i ++;
 			message = "아이디를 ";
-			lblIdCheck.setText("아이디를 입력해주세요.");
+			lblCheck.setText("아이디를 입력해주세요.");
 			tfUserId.requestFocus();
 		}
 		return i;
@@ -261,18 +283,15 @@ public class LoginMain extends JFrame {
 			productMain.setVisible(true);
 			dispose();
 			} else {
-			if(tfUserId.getText().length() != 0) {
-				JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
-				pfUserPassWord.setText("");
 				tfUserId.requestFocus();
 			}
 		}
-	}
+	
 	private JLabel getLblPassCheck() {
 		if (lblPassCheck == null) {
 			lblPassCheck = new JLabel("");
-			lblPassCheck.setBounds(148, 566, 223, 31);
+			lblPassCheck.setBounds(230, 553, 189, 31);
 		}
 		return lblPassCheck;
 	}
-}// End
+}
