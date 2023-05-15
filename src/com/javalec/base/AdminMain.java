@@ -139,7 +139,7 @@ public class AdminMain extends JFrame {
 			lblCafeStart.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					redirectLoginMain();
+					redirectAdvertisementMain();
 				}
 			});
 			lblCafeStart.setBounds(110, 545, 180, 85);
@@ -153,7 +153,7 @@ public class AdminMain extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					int option = JOptionPane.showConfirmDialog(null, "종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION);
 			        if (option == JOptionPane.YES_OPTION) {
-			            System.exit(0);
+			            dispose();
 			        } else {
 			            redirectAdminMain();
 			        }
@@ -182,7 +182,7 @@ public class AdminMain extends JFrame {
 			btnTableCondition.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					directAdminTableMain();
+				
 				}
 			});
 			btnTableCondition.setBounds(233, 642, 117, 29);
@@ -207,8 +207,8 @@ public class AdminMain extends JFrame {
 	
 	
 	// -------------------FUNCTIONS------------
-	private void redirectLoginMain() {
-		LoginMain main = new LoginMain();
+	private void redirectAdvertisementMain() {
+		AdvertisementMain main = new AdvertisementMain();
 		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
@@ -235,12 +235,7 @@ public class AdminMain extends JFrame {
 		dispose();
 	}
 	
-	private void directAdminTableMain() {
-		AdminTableMain main = new AdminTableMain();
-		main.setLocationRelativeTo(null);
-		main.setVisible(true);
-		dispose();
-	}
+
 	
 	private void directAdminCalculateMain() {
 		AdminCalculateMain main = new AdminCalculateMain();

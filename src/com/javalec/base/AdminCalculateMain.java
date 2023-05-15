@@ -508,6 +508,11 @@ public class AdminCalculateMain extends JFrame {
 			String[] qTxt = {salesNo, purchaseInsertDate, purchasePrice, itemName, userName};
 			outerTable.addRow(qTxt);
 		} 
+		
+		
+		ShareVar.salesNo = 0;
+		
+		
 	}
 	*/
 	

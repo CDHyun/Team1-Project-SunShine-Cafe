@@ -168,7 +168,7 @@ public class AdminLoginMain extends JFrame {
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					loginAction();
-					directAdminMain();
+					
 				}
 			});
 			btnNewButton.setBounds(450, 555, 120, 105);
@@ -251,7 +251,8 @@ public class AdminLoginMain extends JFrame {
 		boolean result = adminLoginDao.loginCheck(adminId, password); 		
 		
 		if (result == true) { 		// DB에 관리자 정보 존재 O
-			JOptionPane.showMessageDialog(this, "관리자 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE); 
+			JOptionPane.showMessageDialog(this, "관리자 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE);
+			directAdminMain();
 		} else { 					// DB에 관리자 정보 존재 X
 			if(((tfAdminId.getText()).length() != 0) || (password.length() != 0)) {
 				JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
