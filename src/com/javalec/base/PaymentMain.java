@@ -383,12 +383,14 @@ public class PaymentMain extends JFrame {
 
 	private void redirecPurchaseMain() {
 		PurchaseMain main = new PurchaseMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}
 	
 	private void redirecPaymentConfirmationMain() {
 		PaymentConfirmationMain main = new PaymentConfirmationMain();
+		main.setLocationRelativeTo(null);
 		main.setSum(sum);
 		main.setVisible(true);
 		dispose();

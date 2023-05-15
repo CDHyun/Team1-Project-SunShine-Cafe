@@ -177,6 +177,7 @@ public class PurchaseMain extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 				
 					PaymentMain main = new PaymentMain();
+					main.setLocationRelativeTo(null);
 					main.setSum(sum);
 					ShareVar.diningNo = 0;
 					main.setVisible(true);
@@ -206,6 +207,7 @@ public class PurchaseMain extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					PaymentMain main = new PaymentMain();
+					main.setLocationRelativeTo(null);
 					main.setSum(sum);
 					ShareVar.diningNo = 1;
 					main.setVisible(true);

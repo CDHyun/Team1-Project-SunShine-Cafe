@@ -189,6 +189,7 @@ public class PaymentSuccessMain extends JFrame {
 	
 	private void front() {
 		AdvertisementMain main = new AdvertisementMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}

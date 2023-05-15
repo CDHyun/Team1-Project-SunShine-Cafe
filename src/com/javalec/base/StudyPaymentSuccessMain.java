@@ -191,6 +191,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 		if(re == 1) {
 			re++;
 			System.out.println(re);
+			main.setLocationRelativeTo(null);
 			main.setVisible(true);
 			dispose();			
 		}else {

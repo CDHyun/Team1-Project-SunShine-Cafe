@@ -174,12 +174,14 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	
 	private void backpaymentMain() {
 		StudyPaymentMain main = new StudyPaymentMain();
+		main.setLocationRelativeTo(null);
 		main.setSum(sum);
 		dispose();
 	}
 	
 	private void nextPaymentSuccessMain() {
 		StudyPaymentSuccessMain main = new StudyPaymentSuccessMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}

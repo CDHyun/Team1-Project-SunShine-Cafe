@@ -206,6 +206,7 @@ public class StudyPurchaseMain extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					StudyPaymentMain main = new StudyPaymentMain();
+					main.setLocationRelativeTo(null);
 					main.setSum(sum);
 					ShareVar.diningNo = 0;
 					main.setVisible(true);
@@ -299,6 +300,7 @@ public class StudyPurchaseMain extends JFrame {
 	
 	private void redirecProductMain() {
 		StudyProductMain main = new StudyProductMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 		

@@ -235,12 +235,14 @@ public class StudyPaymentMain extends JFrame {
 	
 	private void redirecPurchaseMain() {
 		StudyPurchaseMain main = new StudyPurchaseMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}
 	
 	private void redirecPaymentConfirmationMain() {
 		StudyPaymentConfirmationMain main = new StudyPaymentConfirmationMain();
+		main.setLocationRelativeTo(null);
 		main.setSum(sum);
 		main.setVisible(true);
 		dispose();
