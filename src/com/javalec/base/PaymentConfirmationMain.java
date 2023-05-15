@@ -5,7 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.dao.PaymentDao;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
 import java.awt.Font;
@@ -27,9 +31,18 @@ public class PaymentConfirmationMain extends JFrame {
 	private JLabel lblNewLabel_1_1;
 
 	int sum;	// 총 구매내역
+	int num; 
 	private JLabel lblPay_2;
 	
 	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public int getSum() {
 		return sum;
 	}
@@ -127,7 +140,7 @@ public class PaymentConfirmationMain extends JFrame {
 			lblNewLabel_1_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					nextPaymentSuccessMain();
+					purchaseAtcion();
 				}
 			});
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
@@ -142,6 +155,7 @@ public class PaymentConfirmationMain extends JFrame {
 	// 
 	private void backpaymentMain() {
 		PaymentMain main = new PaymentMain();
+		main.setNum(num);
 		main.setSum(sum);
 		dispose();
 	}
@@ -152,12 +166,19 @@ public class PaymentConfirmationMain extends JFrame {
 		dispose();
 	}
 	
-	
-	
-	
-	
-	
-	
+	private void purchaseAtcion() {
+		PaymentDao dao = new PaymentDao();
+		boolean result = dao.addToPurchase(num);
+		
+		if(result) {
+			nextPaymentSuccessMain();
+			dao.deleteCart();
+		}else {
+			JOptionPane.showMessageDialog(this,"승인실패\n" +  "승인 중 문제가 발생했습니다. \n관리자에게 문의하세요!", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
 	private JLabel getLblPay_2() {
 		if (lblPay_2 == null) {
 			lblPay_2 = new JLabel("원");

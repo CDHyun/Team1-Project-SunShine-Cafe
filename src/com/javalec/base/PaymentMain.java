@@ -41,8 +41,17 @@ public class PaymentMain extends JFrame {
 
 	
 	int sum = 0 ;
+	int num = 0;
 	
 	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
 	public int getSum() {
 		return sum;
 	}

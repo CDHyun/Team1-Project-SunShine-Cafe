@@ -41,9 +41,11 @@ public class StudyPurchaseMain extends JFrame {
 	private JLabel lblHere;
 	private JScrollPane scrollPane;
 	private JTable innerTable;
-
-	int count = 0;
-	int sum = 0;
+	
+	int sum = 0;		// 계산 합계
+	int count =0;		// 총 수량
+	int num = 0;		// 포장여부
+	
 	private final DefaultTableModel outerTable = new DefaultTableModel();
 	/**
 	 * Launch the application.
@@ -181,7 +183,12 @@ public class StudyPurchaseMain extends JFrame {
 			lblHere.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					redirecPaymentMain();
+					StudyPaymentMain main = new StudyPaymentMain();
+					main.setSum(sum);
+					num = 0;
+					main.setNum(num);
+					main.setVisible(true);
+					dispose();
 					
 				}
 			});
@@ -267,14 +274,7 @@ public class StudyPurchaseMain extends JFrame {
 			lblPay.setText(Integer.toString(sum));
 		
 	}
-	
-	private void redirecPaymentMain() {
-		StudyPaymentMain main = new StudyPaymentMain();
-		main.setSum(sum);
-		main.setVisible(true);
-		dispose();
-		
-	}
+
 	
 	private void redirecProductMain() {
 		StudyProductMain main = new StudyProductMain();

@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.util.ShareVar;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -21,7 +24,7 @@ public class PaymentSuccessMain extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_1_1;
+	private JLabel lblpurchaseNum;
 	private JLabel lblNewLabel_1_1_1;
 	private JLabel lblNewLabel_1_1_1_1;
 	private JLabel lblNewLabel_1_1_1_1_1;
@@ -53,6 +56,7 @@ public class PaymentSuccessMain extends JFrame {
 	    addWindowListener(new WindowAdapter() {
 	        @Override
 	        public void windowOpened(WindowEvent e) {
+	        	lblpurchaseNum.setText(Integer.toString(ShareVar.salesNo));
 	            Timer timer = new Timer();			// 5초 뒤 종료
 	            TimerTask task = new TimerTask() {
 					
@@ -76,7 +80,7 @@ public class PaymentSuccessMain extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(getLblNewLabel());
 		contentPane.add(getLblNewLabel_1());
-		contentPane.add(getLblNewLabel_1_1());
+		contentPane.add(getLblpurchaseNum());
 		contentPane.add(getLblNewLabel_1_1_1());
 		contentPane.add(getLblNewLabel_1_1_1_1());
 		contentPane.add(getLblNewLabel_1_1_1_1_1());
@@ -102,15 +106,15 @@ public class PaymentSuccessMain extends JFrame {
 		}
 		return lblNewLabel_1;
 	}
-	private JLabel getLblNewLabel_1_1() {
-		if (lblNewLabel_1_1 == null) {
-			lblNewLabel_1_1 = new JLabel("주문 번호");
-			lblNewLabel_1_1.setForeground(Color.RED);
-			lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			lblNewLabel_1_1.setBounds(164, 338, 282, 69);
+	private JLabel getLblpurchaseNum() {
+		if (lblpurchaseNum == null) {
+			lblpurchaseNum = new JLabel("주문 번호");
+			lblpurchaseNum.setForeground(Color.RED);
+			lblpurchaseNum.setHorizontalAlignment(SwingConstants.CENTER);
+			lblpurchaseNum.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+			lblpurchaseNum.setBounds(164, 338, 282, 69);
 		}
-		return lblNewLabel_1_1;
+		return lblpurchaseNum;
 	}
 	private JLabel getLblNewLabel_1_1_1() {
 		if (lblNewLabel_1_1_1 == null) {

@@ -14,5 +14,8 @@ public class ShareVar {
 		public static String userid = "donghyun";
 		
 		public static int tableNo = 1;
+		
+		// 주문 번호
+		public static int salesNo = 1;
 	
 }

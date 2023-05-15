@@ -38,8 +38,9 @@ public class PurchaseMain extends JFrame {
 	private JLabel lblHere;
 	private JLabel lblTakeout;
 
-	int sum = 0;
-	int count =0;
+	int sum = 0;		// 계산 합계
+	int count =0;		// 총 수량
+	int num = 0;		// 포장여부
 	/**
 	 * Launch the application.
 	 */
@@ -151,7 +152,13 @@ public class PurchaseMain extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 				
-					redirecPaymentMain();
+					PaymentMain main = new PaymentMain();
+					main.setSum(sum);
+					num = 0;
+					main.setNum(num);
+					main.setVisible(true);
+					dispose();
+					
 				}
 			});
 			lblHere.setBounds(259, 811, 61, 16);
@@ -164,8 +171,12 @@ public class PurchaseMain extends JFrame {
 			lblTakeout.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-			
-					redirecPaymentMain();
+					PaymentMain main = new PaymentMain();
+					main.setSum(sum);
+					num = 1;
+					main.setNum(num);
+					main.setVisible(true);
+					dispose();
 				}
 			});
 			lblTakeout.setBounds(558, 811, 61, 16);
@@ -235,13 +246,7 @@ public class PurchaseMain extends JFrame {
 		
 	}
 	
-	private void redirecPaymentMain() {
-		PaymentMain main = new PaymentMain();
-		main.setSum(sum);
-		main.setVisible(true);
-		dispose();
-		
-	}
+
 	
 	private void redirecProductMain() {
 		ProductMain main = new ProductMain();
