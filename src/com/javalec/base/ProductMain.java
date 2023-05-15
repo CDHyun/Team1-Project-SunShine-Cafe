@@ -92,7 +92,7 @@ public class ProductMain extends JFrame {
 	private int wkItemNo = 0;
 	private String wkItemName;
 	private JPanel panel;
-	private String userid = "donghyun";
+	private String userid = ShareVar.userid;
 	ArrayList<CartDto> cartList;
 
 	

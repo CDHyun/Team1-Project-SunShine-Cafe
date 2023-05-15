@@ -57,7 +57,7 @@ public class StudyUserDao {
         		
         		String query = "select i.itemName, i.itemImageName, i.itemImage, p.purchasePrice " 
         				+ " from item i, purchase p "
-        				+ " where i.itemNo = p.itemNo and p.userid = 'donghyun'" ;//+ "'" + ShareVar.userid + "'";
+        				+ " where i.itemNo = p.itemNo and p.userid = '" + ShareVar.userid + "'";
    
 
         		try {

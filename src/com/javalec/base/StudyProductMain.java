@@ -27,6 +27,7 @@ import com.javalec.dao.StudyProductDao;
 import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -84,7 +85,7 @@ public class StudyProductMain extends JFrame {
 	private int wkItemNo = 0;
 	private String wkItemName;
 	private JPanel panel;
-	private String userid = "donghyun";
+	private String userid = ShareVar.userid;
 	ArrayList<CartDto> cartList;
 
 	
