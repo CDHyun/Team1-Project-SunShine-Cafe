@@ -1224,6 +1224,7 @@ public class StudyProductMain extends JFrame {
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.selectItemList();
 		
+		
 		Collections.shuffle(beanList);
 		
 		for(int i=0; i<6; i++) {

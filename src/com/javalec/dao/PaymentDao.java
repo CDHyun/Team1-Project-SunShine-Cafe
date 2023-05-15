@@ -35,6 +35,8 @@ public class PaymentDao {
 			String insert1 = " values( ?, ?, ?, ?, ? ,?)";
 			ResultSet rs = stmt.executeQuery(query);
 			ps = con.prepareStatement(insert+insert1);
+
+			ShareVar.salesNo++;
 			
 			while(rs.next()) {
 				ps.setInt(1, rs.getInt(1));
@@ -45,7 +47,6 @@ public class PaymentDao {
 				ps.setInt(6, rs.getInt(4) * rs.getInt(3));
 				ps.executeUpdate();
 			}
-			ShareVar.salesNo++;
 			
 			con.close();
 			return true;
@@ -79,6 +80,7 @@ public class PaymentDao {
 		return true;
 		
 	}
+	
 	
 	
 	

@@ -61,6 +61,7 @@ public class NoticeMain extends JFrame {
 					LoginMain loginMain = new LoginMain();
 					loginMain.setLocationRelativeTo(null);
 					loginMain.setVisible(true);
+					dispose();
 				}
 			});
 			ImageIcon icon = new ImageIcon(NoticeMain.class.getResource("/com/javalec/image/notice.png"));

@@ -283,6 +283,7 @@ public class PurchaseMain extends JFrame {
 	
 	private void redirecProductMain() {
 		ProductMain main = new ProductMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 		
