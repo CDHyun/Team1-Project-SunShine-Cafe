@@ -126,9 +126,6 @@ public class AdminCalculateDao {
 
 	
 	
-	
-	
-	
 	// 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
 	public int calculateSalesTotal(ArrayList<AdminCalculateDto> purchaseList) {
 		int total = 0;

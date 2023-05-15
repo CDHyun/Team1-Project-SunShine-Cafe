@@ -133,7 +133,15 @@ public class AdminMain extends JFrame {
 	}
 	private JButton getLblCafeStart() { 				// 영업 시작 버튼 누르면 사용자 안내 화면으로 연결해주기.
 		if (lblCafeStart == null) {
-			lblCafeStart = new JButton("영업 시작");
+			lblCafeStart = new JButton("");
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업시작.png"));
+			int x = 230;
+			int y = 160;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon startCafe = resize.imageResizing();
+			lblCafeStart.setIcon(startCafe);
+			lblCafeStart.setHorizontalAlignment(SwingConstants.CENTER);
+			
 			lblCafeStart.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -147,6 +155,14 @@ public class AdminMain extends JFrame {
 	private JButton getLblCafeEnd() {
 		if (lblCafeEnd == null) {
 			lblCafeEnd = new JButton("영업 종료");
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업종료.png"));
+			int x = 250;
+			int y = 160;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon endCafe = resize.imageResizing();
+			lblCafeEnd.setIcon(endCafe);
+			lblCafeEnd.setHorizontalAlignment(SwingConstants.CENTER);
+			
 			lblCafeEnd.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int option = JOptionPane.showConfirmDialog(null, "종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION);
@@ -164,6 +180,15 @@ public class AdminMain extends JFrame {
 	private JButton getBtnMenuUpdate() {
 		if (btnMenuUpdate == null) {
 			btnMenuUpdate = new JButton("입력 및 수정");
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/제품관리.png"));
+			int x = 120;
+			int y = 100;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon menuControl = resize.imageResizing();
+			btnMenuUpdate.setIcon(menuControl);
+			btnMenuUpdate.setHorizontalAlignment(SwingConstants.CENTER);
+			
+			btnMenuUpdate.setIcon(new ImageIcon(AdminMain.class.getResource("/com/javalec/image/제품관리.png")));
 			btnMenuUpdate.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -177,6 +202,7 @@ public class AdminMain extends JFrame {
 	private JButton getBtnCloseCafe() {
 		if (btnCloseCafe == null) {
 			btnCloseCafe = new JButton("정산");
+			btnCloseCafe.setIcon(new ImageIcon(AdminMain.class.getResource("/com/javalec/image/정산.png")));
 			btnCloseCafe.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
