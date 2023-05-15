@@ -127,7 +127,7 @@ public class AdminMenuMain extends JFrame {
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setBackground(new Color(248, 211, 72));
+		contentPane.setBackground(Color.ORANGE);
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
