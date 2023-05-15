@@ -16,8 +16,6 @@ public class UserSingUpDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 
-	
-	
 	// Field
 	String userid;
 	String userPassword;
@@ -30,12 +28,7 @@ public class UserSingUpDao {
 	public UserSingUpDao() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
-	
 	// Method
-	
-	
 	
 	// 입력된 ID가 DB에 있는지 확인
 	public int checkID(String insertID) {

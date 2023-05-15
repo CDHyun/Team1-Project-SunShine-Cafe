@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.LoginDao;
+import com.javalec.util.ShareVar;
 import com.mysql.cj.protocol.Message;
 
 import javax.swing.JLabel;
@@ -27,6 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 /* 기본 키오스크에서 로그인 하는 페이지 */
@@ -46,27 +49,9 @@ public class LoginMain extends JFrame {
 	
 	String message;
 	String userid;
+	private JLabel lblIdCheck;
+	private JLabel lblPassCheck;
 
-	
-	
-	private boolean existsUserID(String userid2) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private void loginCheck(String userid2, String password) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private boolean existsUserID() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-	
-	
 	
 	/**
 	 * Launch the application.
@@ -76,6 +61,7 @@ public class LoginMain extends JFrame {
 			public void run() {
 				try {
 					LoginMain frame = new LoginMain();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -111,6 +97,8 @@ public class LoginMain extends JFrame {
 		contentPane.add(getLblNewLabel_3());
 		contentPane.add(getBtnSingUp());
 		contentPane.add(getPfUserPassWord());
+		contentPane.add(getLblIdCheck());
+		contentPane.add(getLblPassCheck());
 	}
 	private JLabel getLblLogo() {
 		if (lblLogo == null) {
@@ -139,6 +127,12 @@ public class LoginMain extends JFrame {
 	private JTextField getTfUserId() {
 		if (tfUserId == null) {
 			tfUserId = new JTextField();
+			tfUserId.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					
+				}
+			});
 			tfUserId.setHorizontalAlignment(SwingConstants.RIGHT);
 			tfUserId.setBounds(221, 421, 205, 33);
 			tfUserId.setColumns(10);
@@ -158,9 +152,9 @@ public class LoginMain extends JFrame {
 			btnSingIn = new JButton("LogIn");
 			btnSingIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					loginAction();
-					loginCheck();
+					userIdCheck();
 					insertFieldCheck();
+					loginCheck();
 				}
 			});//
 			btnSingIn.setFont(new Font("Lucida Grande", Font.BOLD, 25));
@@ -182,6 +176,7 @@ public class LoginMain extends JFrame {
 			btnSingUp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					UserSingUp userSingUp = new UserSingUp();
+					userSingUp.setLocationRelativeTo(null);
 					userSingUp.setVisible(true); // UserSignUp 페이지를 보여주도록 설정
 	                dispose(); // 현재 로그인 페이지를 닫습니다.
 				}
@@ -193,10 +188,23 @@ public class LoginMain extends JFrame {
 	private JPasswordField getPfUserPassWord() {
 		if (pfUserPassWord == null) {
 			pfUserPassWord = new JPasswordField();
+			pfUserPassWord.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+				}
+			});
 			pfUserPassWord.setHorizontalAlignment(SwingConstants.RIGHT);
 			pfUserPassWord.setBounds(221, 522, 205, 31);
 		}
 		return pfUserPassWord;
+	}
+	
+	private JLabel getLblIdCheck() {
+		if (lblIdCheck == null) {
+			lblIdCheck = new JLabel("");
+			lblIdCheck.setBounds(148, 462, 223, 31);
+		}
+		return lblIdCheck;
 	}
 	
 	// -------------  Function ----------
@@ -204,120 +212,67 @@ public class LoginMain extends JFrame {
 	
 	// 로그인 버튼 액션 설정 
 	
-	private void loginAction() {
+	private void userIdCheck() {
+		LoginDao loginDao = new LoginDao();
+		
 	    String userid = tfUserId.getText();
 	    char[] pass = pfUserPassWord.getPassword();
 	    String password = new String(pass);
 
-	    boolean result = existsUserID(userid);
-
-	    if (result) {
-	        int i_chk = insertFieldCheck();
-	        if (i_chk != 0) { // id나 pw가 제대로 입력되지 않은 경우
-	            JOptionPane.showMessageDialog(this, message + "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
-	        } else {
-	            loginCheck(userid, password); // 데이터베이스에서 유저 ID, PW가 있는지 확인 -> Dao 역할
-	        }
+	    int userExists = loginDao.existsUserID(userid);
+	    if (userExists == 0) {
+	    	lblIdCheck.setText("아이디가 존재하지 않습니다.");
 	    } else {
-	        JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
-	        tfUserId.requestFocus();
+	    	lblIdCheck.setText("");
 	    }
+	    
 	}
-
-
-
-	
-
 
 	//  id, pw 확인하기 
 	private int insertFieldCheck() {
 		int i = 0;
-		
-		if (new String (pfUserPassWord.getPassword()).trim().length() == 0) {
+		if (pfUserPassWord.getPassword().length == 0) {
 			i ++;
-			message = "비밀번호를 ";
+			lblPassCheck.setText("비밀번호를 입력해주세요.");
 			pfUserPassWord.requestFocus();
 		}
 		if (tfUserId.getText().trim().length() == 0) {
 			i ++;
 			message = "아이디를 ";
+			lblIdCheck.setText("아이디를 입력해주세요.");
 			tfUserId.requestFocus();
-			
 		}
 		return i;
 	}
 	
-	
-	// password 체크
-	
-	private boolean existsUserPassword() {
-		boolean result = false;
-		userid = new String (pfUserPassWord.getPassword());
-		LoginDao loginDao = new LoginDao();
-		int count = loginDao.existsUserID(userid);
-		if(count == 0) {
-			return result = false;
-		}else {
-			return result = true;
+	private void loginCheck() {
+		String id = tfUserId.getText();
+		char[] pass = pfUserPassWord.getPassword();
+		String password = new String(pass);
+		
+		LoginDao loginDao = new LoginDao(id, password) ;
+		boolean result = loginDao.loginCheck(id, password);
+		
+		if (result == true) {
+			JOptionPane.showMessageDialog(this, id + " 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE);;
+			ShareVar.userid = id;
+			ProductMain productMain = new ProductMain();
+			productMain.setLocationRelativeTo(null);
+			productMain.setVisible(true);
+			dispose();
+			} else {
+			if(tfUserId.getText().length() != 0) {
+				JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
+				pfUserPassWord.setText("");
+				tfUserId.requestFocus();
+			}
 		}
 	}
-	
-	
-	
-	
-	
-	
-	private boolean loginCheck() {
-	    String id = tfUserId.getText();
-	    char[] pass = pfUserPassWord.getPassword();
-	    String password = new String(pass);
-
-	    LoginDao loginDao = new LoginDao(id, password);
-	    boolean existsPassword = existsUserPassword(); // existsUserPassword 메서드 호출하여 비밀번호 확인
-	    boolean result = false;
-
-	    if (existsPassword) {
-	        result = loginDao.loginCheck(id, password);
-
-	        if (result) {
-	            ProductMain pm = new ProductMain();
-	            pm.setVisible(true);
-	            dispose();
-	        } else {
-	            if (tfUserId.getText().length() != 0) {
-	                tfUserId.setText(""); // 아이디 입력값 초기화
-	                pfUserPassWord.setText(""); // 비밀번호 입력값 초기화
-	                tfUserId.requestFocus();
-	            }
-	        }
-	    } else {
-	        JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
-	    }
-
-	    return result;
+	private JLabel getLblPassCheck() {
+		if (lblPassCheck == null) {
+			lblPassCheck = new JLabel("");
+			lblPassCheck.setBounds(148, 566, 223, 31);
+		}
+		return lblPassCheck;
 	}
-
-	
-/*
-	// SQL Injection 방어용 코드 (root, sql문의 변수 이름들)
-	String sql = "SELECT * FROM users WHERE user_id = ? AND password = ?";
-	try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase", "username", "password");
-	    PreparedStatement stmt = conn.prepareStatement(sql)) {
-	    stmt.setString(1, tfUserId.getText());
-	    stmt.setString(2, new String (pfUserPassWord.getPassword()));
-	    ResultSet rs = stmt.executeQuery();
-	    if (rs.next()) {
-	        // 로그인 성공
-	    } else {
-	        // 로그인 실패
-	    }
-	} catch (SQLException ex) {
-	    // 예외 처리
-	}
-}
-*/
-	
-	
-	
-	
 }// End

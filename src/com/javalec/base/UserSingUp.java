@@ -249,7 +249,6 @@ public class UserSingUp extends JFrame {
 	                if (i_chk == 0) {
 						registerAction();
 						
-						
 	                }
 	            }
 	        });
@@ -413,7 +412,6 @@ public class UserSingUp extends JFrame {
 	
 	private void checkID() {
 		String insertID = tfUserId.getText().trim().replaceAll("\\s+", "");
-		
 
 		// 입력된 아이디가 빈 문자열인 경우
 	    if (insertID.isEmpty()) {
@@ -454,16 +452,6 @@ public class UserSingUp extends JFrame {
 	    }
 	}		
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	private String registerAction() {
 		userid = tfUserId.getText();
 		userPhone = tfPhone.getText();
@@ -478,6 +466,7 @@ public class UserSingUp extends JFrame {
 		if(result == true) {
 			JOptionPane.showMessageDialog(this, userid + "님 회원가입을 축하합니다.");
 			LoginMain loginMain = new LoginMain();
+			loginMain.setLocationRelativeTo(null);
 			loginMain.setVisible(true);
 			dispose();
 		}
