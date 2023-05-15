@@ -23,6 +23,7 @@ import javax.swing.table.TableColumnModel;
 
 import com.javalec.dao.CartDao;
 import com.javalec.dao.ProductDao;
+import com.javalec.dao.StudyProductDao;
 import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
@@ -1399,7 +1400,7 @@ public class StudyProductMain extends JFrame {
 	/* 13. Cart List 비우기 */
 	private void deleteAllCart() {
 		CartDao cartDao = new CartDao();
-		boolean result = cartDao.deleteAllCartList();
+		boolean result = cartDao.deleteAllCartList(userid);
 		if(result == false) {
 			cartErrorDialog cartErrorDialog = new cartErrorDialog();
 			cartErrorDialog.setLocationRelativeTo(null);

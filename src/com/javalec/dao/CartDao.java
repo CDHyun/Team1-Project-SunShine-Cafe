@@ -156,7 +156,7 @@ public class CartDao {
 	}
 
 	/* 카트 비우기 메소드 */
-	public boolean deleteAllCartList() {
+	public boolean deleteAllCartList(String userid) {
 		String query = "delete from cart where userid = ?";
 
 		PreparedStatement ps = null;

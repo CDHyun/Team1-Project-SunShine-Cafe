@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.javalec.dto.ProductDto;
+import com.javalec.dto.StudyProductDto;
 import com.javalec.util.ShareVar;
 
 public class StudyProductDao {
@@ -44,8 +45,8 @@ public class StudyProductDao {
 	boolean drinkStatus;
 	
 	/* 01. 전체 상품을 검색하는 메소드 */
-	public ArrayList<ProductDto> selectItemList(){
-		ArrayList<ProductDto> beanList = new ArrayList<ProductDto>();
+	public ArrayList<StudyProductDto> selectItemList(){
+		ArrayList<StudyProductDto> beanList = new ArrayList<StudyProductDto>();
 		
 		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item";
 		
@@ -70,8 +71,8 @@ public class StudyProductDao {
 				while(input.read(buffer) > 0) {
 					output.write(buffer);
 				}
-				ProductDto productDto = new ProductDto(categoryNo, wkItemNo, wkItemName, wkItemPrice, wkImageName);
-				beanList.add(productDto);
+				StudyProductDto studyProductDto = new StudyProductDto(categoryNo, wkItemNo, wkItemName, wkItemPrice, wkImageName);
+				beanList.add(studyProductDto);
 			}
 			con.close();
 		} catch(Exception e) {

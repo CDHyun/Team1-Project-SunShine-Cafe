@@ -1336,7 +1336,7 @@ public class ProductMain extends JFrame {
 	/* 11. Cart List 비우기 */
 	private void deleteAllCart() {
 		CartDao cartDao = new CartDao();
-		boolean result = cartDao.deleteAllCartList();
+		boolean result = cartDao.deleteAllCartList(userid);
 		if(result == false) {
 			cartErrorDialog cartErrorDialog = new cartErrorDialog();
 			cartErrorDialog.setLocationRelativeTo(null);
