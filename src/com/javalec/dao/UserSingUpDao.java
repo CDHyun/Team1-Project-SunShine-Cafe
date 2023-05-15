@@ -65,6 +65,9 @@ public class UserSingUpDao {
 	    }
 	    return 1;
 	}
+	
+	
+	
 
 	// 사용자 등록 처리 
 	

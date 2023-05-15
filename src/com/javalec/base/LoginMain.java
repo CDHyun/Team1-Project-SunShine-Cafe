@@ -25,6 +25,8 @@ import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /* 기본 키오스크에서 로그인 하는 페이지 */
@@ -65,6 +67,12 @@ public class LoginMain extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginMain() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				tfUserId.requestFocus();
+			}
+		});
 		setTitle("유저 로그인");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 625, 900);
@@ -174,10 +182,15 @@ public class LoginMain extends JFrame {
 	// 로그인 버튼 액션 설정 
 	
 	private void loginAction() {
-	    boolean result = true;
+	   String userid = tfUserId.getText();
+	   String password = new String(pfUserPassWord.getPassword());
+	   
+	   
+	   LoginDao loginDao = new LoginDao();
+	   boolean loggedIn = loginDao.loginAction(userid, password);
 	    
 	    // id, password 체크 
-	    if(result) {
+	    if(loggedIn) {
 	        int i_chk = insertFieldCheck();
 	        if(i_chk != 0) {
 	            JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
@@ -186,6 +199,7 @@ public class LoginMain extends JFrame {
 	            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
 	                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
 	                ProductMain pm = new ProductMain();
+	                pm.setVisible(true);
 	                dispose();
 	            } else {
 	                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
@@ -244,28 +258,39 @@ public class LoginMain extends JFrame {
 	
 	
 	
+	
+	
+	
 	private boolean loginCheck() {
-		String id = tfUserId.getText();
-		char[] pass = pfUserPassWord.getPassword();
-		String password = new String(pass);
-		
-		LoginDao loginDao = new LoginDao(id, password);
-		boolean result = loginDao.loginCheck(id, password);
-		
-		if(result == true) {
-			
-			ProductMain pm = new ProductMain();
-			dispose();
-		}else {
-			if(tfUserId.getText().length() != 0) {
-				
-				tfUserId.setText(""); // 아이디 입력값 초기화
-	            pfUserPassWord.setText(""); // 비밀번호 입력값 초기화
-				tfUserId.requestFocus();
-			}
-		}
-		return result;
+	    String id = tfUserId.getText();
+	    char[] pass = pfUserPassWord.getPassword();
+	    String password = new String(pass);
+
+	    LoginDao loginDao = new LoginDao(id, password);
+	    boolean existsPassword = existsUserPassword(); // existsUserPassword 메서드 호출하여 비밀번호 확인
+	    boolean result = false;
+
+	    if (existsPassword) {
+	        result = loginDao.loginCheck(id, password);
+
+	        if (result) {
+	            ProductMain pm = new ProductMain();
+	            pm.setVisible(true);
+	            dispose();
+	        } else {
+	            if (tfUserId.getText().length() != 0) {
+	                tfUserId.setText(""); // 아이디 입력값 초기화
+	                pfUserPassWord.setText(""); // 비밀번호 입력값 초기화
+	                tfUserId.requestFocus();
+	            }
+	        }
+	    } else {
+	        JOptionPane.showMessageDialog(this, "비밀번호가 일치하지 않습니다.", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
+	    }
+
+	    return result;
 	}
+
 	
 /*
 	// SQL Injection 방어용 코드 (root, sql문의 변수 이름들)

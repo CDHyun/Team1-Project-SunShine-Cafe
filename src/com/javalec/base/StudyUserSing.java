@@ -174,7 +174,8 @@ public class StudyUserSing extends JFrame {
 		            boolean loginResult = loginCheck();   // DB에서 유저 id, password가 있는지 확인 
 		            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
 		                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
-		                ProductMain pm = new ProductMain();
+		                StudyProductMain studyProductMain = new StudyProductMain();
+		                studyProductMain.setVisible(true);
 		                dispose();
 		            } else {
 		                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);

@@ -20,9 +20,7 @@ public class LoginDao {
 	// 변수명 
 	String userid;
 	String userPassWord;
-	private Connection conn;
-    private PreparedStatement pstmt;
-    private ResultSet rs;
+	
 	
 	// Constructor
 	public LoginDao() {
@@ -50,49 +48,51 @@ public class LoginDao {
 	}
 	
 	
-	public int existsUserID(String userid) {
-		int count = 0;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-			Statement stmt = con.createStatement();
-			
-			String query = "select count(userid) from user where userid = '" + userid + "'";
-			
-			ResultSet rs = stmt.executeQuery(query);
-			
-			while (rs.next()) {
-				count = rs.getInt(1);
-			}
-		}catch (Exception e) {
-			
-		}
-		return count;
-	}
-	
-	
-	// 로그인 할때 입력한 정보가 DB에 있는지 확인 
-	public boolean loginCheck(String userid, String password) {
-		boolean result = false;
-		int count = 0;
-		try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-		         PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ? AND userPassWord = ?")) {
-		        stmt.setString(1, userid);
-		        stmt.setString(2, userPassWord);
-		        ResultSet rs = stmt.executeQuery();
-		        if (rs.next()) {
-		            count = rs.getInt(1);
-		        }
-		        if (count > 0) {
-		            result = true;
-		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		    return result;
-		}
-	
-	
+	// 로그인 액션 수행
+    public boolean loginAction(String userid, String userPassWord) {
+        boolean loggedIn = false;
+        if (existsUserID(userid)) { // 아이디가 존재하는 경우에만 로그인 체크 수행
+            loggedIn = loginCheck(userid, userPassWord);
+        }
+        return loggedIn;
+    }
+
+    // 아이디가 존재하는지 확인
+    public boolean existsUserID(String userid) {
+        boolean exists = false;
+        try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ?")) {
+            stmt.setString(1, userid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                exists = count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
+
+    // 로그인 체크
+    public boolean loginCheck(String userid, String userPassword) {
+        boolean loggedIn = false;
+        try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ? AND userPassWord = ?")) {
+            stmt.setString(1, userid);
+            stmt.setString(2, userPassword);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                loggedIn = count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loggedIn;
+    }
+
+  
 	
 	
 	

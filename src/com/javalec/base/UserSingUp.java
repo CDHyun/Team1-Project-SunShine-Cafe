@@ -55,10 +55,6 @@ public class UserSingUp extends JFrame {
 	private String userid;
 	private String userPassword;
 	private String userPhone;
-	
-	private JLabel lblid;
-	private JLabel lblpw;
-	private JLabel lblTel;
 	private JLabel lblNewLabel_2_5;
 	private JTextField tfName;
 	
@@ -117,9 +113,6 @@ public class UserSingUp extends JFrame {
 		contentPane.add(getBtnCheckID());
 		contentPane.add(getLblCheck());
 		contentPane.add(getLblCheck());
-		contentPane.add(getLblid());
-		contentPane.add(getLblpw());
-		contentPane.add(getLblTel());
 		contentPane.add(getLblNewLabel_2_5());
 		contentPane.add(getTfName());
 	}
@@ -150,7 +143,7 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("회원 아이디");
 			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2.setBounds(120, 366, 97, 32);
+			lblNewLabel_2.setBounds(123, 320, 97, 32);
 		}
 		return lblNewLabel_2;
 	}
@@ -172,7 +165,7 @@ public class UserSingUp extends JFrame {
 				}
 			});
 			tfUserId.setHorizontalAlignment(SwingConstants.LEFT);
-			tfUserId.setBounds(263, 367, 222, 37);
+			tfUserId.setBounds(266, 321, 222, 37);
 			tfUserId.setColumns(10);
 		}
 		return tfUserId;
@@ -181,7 +174,7 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2_1 == null) {
 			lblNewLabel_2_1 = new JLabel("ID");
 			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_1.setBounds(155, 395, 22, 16);
+			lblNewLabel_2_1.setBounds(158, 349, 22, 16);
 		}
 		return lblNewLabel_2_1;
 	}
@@ -189,7 +182,7 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2_2 == null) {
 			lblNewLabel_2_2 = new JLabel("PassWord");
 			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2.setBounds(120, 489, 92, 32);
+			lblNewLabel_2_2.setBounds(123, 414, 92, 32);
 		}
 		return lblNewLabel_2_2;
 	}
@@ -197,7 +190,7 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2_3 == null) {
 			lblNewLabel_2_3 = new JLabel("비밀번호 확인");
 			lblNewLabel_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_3.setBounds(120, 533, 117, 32);
+			lblNewLabel_2_3.setBounds(123, 458, 117, 32);
 		}
 		return lblNewLabel_2_3;
 	}
@@ -205,17 +198,27 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2_4 == null) {
 			lblNewLabel_2_4 = new JLabel("전화 번호(Tel)");
 			lblNewLabel_2_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_4.setBounds(120, 634, 126, 27);
+			lblNewLabel_2_4.setBounds(123, 588, 126, 27);
 		}
 		return lblNewLabel_2_4;
 	}
 	private JTextField getTfPhone() {
 		if (tfPhone == null) {
 			tfPhone = new JTextField();
+			tfPhone.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+		            if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+		                e.consume(); // 숫자 이외의 문자는 입력되지 않도록 함
+		            }
+					
+				}
+			});
 			tfPhone.setEditable(false);
 			tfPhone.setHorizontalAlignment(SwingConstants.LEFT);
 			tfPhone.setColumns(10);
-			tfPhone.setBounds(263, 632, 217, 37);
+			tfPhone.setBounds(266, 586, 217, 37);
 			
 			// 전화번호 TextField까지 입력을 해야 가입버튼 활성화 
 			tfPhone.getDocument().addDocumentListener(new DocumentListener() {
@@ -269,7 +272,7 @@ public class UserSingUp extends JFrame {
 		if (lblNewLabel_2_2_1 == null) {
 			lblNewLabel_2_2_1 = new JLabel("비밀번호");
 			lblNewLabel_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_1.setBounds(132, 464, 73, 32);
+			lblNewLabel_2_2_1.setBounds(135, 389, 73, 32);
 		}
 		return lblNewLabel_2_2_1;
 	}
@@ -277,7 +280,7 @@ public class UserSingUp extends JFrame {
 		if (lblPass == null) {
 			lblPass = new JLabel("");
 			lblPass.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblPass.setBounds(273, 570, 198, 16);
+			lblPass.setBounds(276, 495, 198, 16);
 		}
 		return lblPass;
 	}
@@ -285,7 +288,7 @@ public class UserSingUp extends JFrame {
 		if (pfUserPassword == null) {
 			pfUserPassword = new JPasswordField();
 			pfUserPassword.setEditable(false);
-			pfUserPassword.setBounds(263, 465, 217, 37);
+			pfUserPassword.setBounds(266, 390, 217, 37);
 		}
 		return pfUserPassword;
 	}
@@ -318,7 +321,7 @@ public class UserSingUp extends JFrame {
 			        }
 				}
 			});
-			pfUserPassword1.setBounds(263, 534, 217, 37);
+			pfUserPassword1.setBounds(266, 459, 217, 37);
 		}
 		return pfUserPassword1;
 	}
@@ -334,7 +337,7 @@ public class UserSingUp extends JFrame {
 					
 				}
 			});
-			btnCheckID.setBounds(504, 372, 92, 29);
+			btnCheckID.setBounds(507, 326, 92, 29);
 		}
 		return btnCheckID;
 	}
@@ -343,47 +346,34 @@ public class UserSingUp extends JFrame {
 		if (lblCheck == null) {
 			lblCheck = new JLabel("");
 			lblCheck.setFont(new Font("Helvetica Neue", Font.PLAIN, 13));
-			lblCheck.setBounds(263, 407, 208, 16);
+			lblCheck.setBounds(266, 361, 208, 16);
 		}
 		return lblCheck;
-	}
-
-	private JLabel getLblid() {
-		if (lblid == null) {
-			lblid = new JLabel("");
-			lblid.setBounds(263, 292, 194, 16);
-		}
-		return lblid;
-	}
-	private JLabel getLblpw() {
-		if (lblpw == null) {
-			lblpw = new JLabel("");
-			lblpw.setBounds(263, 381, 194, 27);
-		}
-		return lblpw;
-	}
-	private JLabel getLblTel() {
-		if (lblTel == null) {
-			lblTel = new JLabel("");
-			lblTel.setBounds(263, 556, 208, 16);
-		}
-		return lblTel;
 	}
 
 	private JLabel getLblNewLabel_2_5() {
 		if (lblNewLabel_2_5 == null) {
 			lblNewLabel_2_5 = new JLabel("성함");
 			lblNewLabel_2_5.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_5.setBounds(148, 278, 57, 32);
+			lblNewLabel_2_5.setBounds(151, 538, 57, 32);
 		}
 		return lblNewLabel_2_5;
 	}
 	private JTextField getTfName() {
 		if (tfName == null) {
 			tfName = new JTextField();
+			tfName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+			        if (Character.isDigit(c)) {
+			            e.consume(); // 입력한 키를 무시함
+			        }
+				}
+			});
 			tfName.setHorizontalAlignment(SwingConstants.LEFT);
 			tfName.setColumns(10);
-			tfName.setBounds(263, 279, 222, 37);
+			tfName.setBounds(266, 539, 222, 37);
 		}
 		return tfName;
 	}
