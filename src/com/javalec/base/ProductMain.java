@@ -29,8 +29,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.ScrollPane;
 import java.util.ArrayList;
-
-
+import java.util.Collections;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -1153,6 +1152,9 @@ public class ProductMain extends JFrame {
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.selectItemList();
 		
+		/* 상품 순서 섞기 */
+		Collections.shuffle(beanList);
+		
 		for(int i=0; i<6; i++) {
 				icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 				int x = 100;
@@ -1225,8 +1227,10 @@ public class ProductMain extends JFrame {
 		beanList = new ArrayList<ProductDto>();
 		ProductDao productDao = new ProductDao();
 		beanList = productDao.conditionItemQuery(categoryNo);
+		int startIndex = currentPage * 6;
+		int endIndex = Math.min(startIndex + 6, beanList.size());
 
-		for (int i = 0; i < beanList.size(); i++) {
+		for (int i = 0; i < endIndex; i++) {
 			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
 			int x = 100;
 			int y = 120;
@@ -1238,27 +1242,6 @@ public class ProductMain extends JFrame {
 		}
 		updateLabelVisibility();
 	}
-	
-//	/* 07. 카테고리 검색 (Dessert) */
-//	private void conditionDessertQueryAciton(int categoryNo) {
-//		currentPage = 0;
-//		lblPriviousBtn.setVisible(false);
-//		beanList = new ArrayList<ProductDto>();
-//		ProductDao productDao = new ProductDao();
-//		beanList = productDao.conditionDessertQuery(categoryNo);
-//
-//		for (int i = 0; i < beanList.size(); i++) {
-//			icon = new ImageIcon("./" + beanList.get(i).getItemImageName());
-//			int x = 100;
-//			int y = 120;
-//			ImageResize resize = new ImageResize(icon, x, y);
-//			ImageIcon productIcon = resize.imageResizing();
-//			lblProductImageList.get(i).setIcon(productIcon);
-//			lblProductNameList.get(i).setText(beanList.get(i).getItemName());
-//			lblProductPriceList.get(i).setText(Integer.toString(beanList.get(i).getItemPrice()));
-//		}
-//		updateLabelVisibility();
-//	}
 	
 	/* 08. 선택한 상품의 번호 가져오기 */
 	private int getItemNo(int index) {
