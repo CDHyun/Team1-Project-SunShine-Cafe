@@ -437,12 +437,24 @@ public class AdminCalculateMain extends JFrame {
 			}
 
 			// 관리자가 데이터를 선택한 후 영수증 재출력 버튼을 눌렀을 때
-			salesNo = Integer.parseInt((String) innerTable.getValueAt(i, 0));
-			Locale locale = new Locale("ko", "KR");
+			//salesNo = Integer.parseInt((String) innerTable.getValueAt(i, 0));
+			//Locale locale = new Locale("ko", "KR");
 			String formattedDate = (String)innerTable.getValueAt(i, 1);
 			SimpleDateFormat inputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
 			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
+
+			// 입력받은 문자열을 원래의 datetime 타입으로 파싱
 			Date parsedDate = inputFormat.parse(formattedDate);
+
+			// 원하는 형태로 포맷 지정하여 출력
+			String formattedOutputDate = outputFormat.format(parsedDate);
+			System.out.println("다시 포맷팅된 날짜: " + formattedOutputDate);
+
+			// 포맷팅된 날짜를 다시 원래 datetime 타입으로 파싱
+			Date originalDate = outputFormat.parse(formattedOutputDate);
+			System.out.println("원래 datetime 타입의 날짜: " + originalDate);
+			
+			//Date parsedDate = inputFormat.parse(formattedDate);
 			String date = outputFormat.format(parsedDate);
 			parsedDate = inputFormat.parse(date);
 			
