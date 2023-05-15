@@ -99,34 +99,7 @@ public class StudyUserDao {
         	}
 
         	//타이머 시간초 추가 데이터
-        	public ArrayList<StudyUserDto> studyItem(){
-        		ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
-        		
-        		String query = "select itemName, itemPrice "
-        					+ "from item"; 
-        		String query1 = " where tableNo ";
-        		
-        		try {
-        			Class.forName("com.mysql.cj.jdbc.Driver");
-        			Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-        			Statement stmt = conn.createStatement();
-        			
-        			ResultSet rs = stmt.executeQuery(query+query1);
- 
-        		while(rs.next()) {
-        			int wkName = rs.getInt(1);
-        			int wkPrice = rs.getInt(2);
-        		
-        			StudyUserDto studyUserDto = new StudyUserDto(wkPrice, query1);
-        			dtoList.add(studyUserDto);   		
-        		}
-        		conn.close();
-        		
-        		}catch (Exception e){
-        			
-        		}
-        		return dtoList;
-        	}
+
 }
 
         		

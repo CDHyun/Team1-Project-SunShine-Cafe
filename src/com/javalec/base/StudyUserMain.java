@@ -61,16 +61,17 @@ public class StudyUserMain extends JFrame {
 	
     int threeNum = 0;
     int sixNum = 0;
+    int a = 0;
 	
 	public void TimerExample() {
 		setTitle("타이머 예졔");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        getContentPane().setLayout(null);
 
         lblStopWatch = new JLabel();
         lblStopWatch.setBounds(50, 50, 200, 50);
-        add(lblStopWatch);
+        getContentPane().add(lblStopWatch);
 
         setVisible(true);
     }
@@ -131,6 +132,8 @@ public class StudyUserMain extends JFrame {
 				}
 					StudyProductMain main = new StudyProductMain();
 					main.setVisible(true);
+				    threeNum = 0;
+				    sixNum = 0;
 			
 			}
 		});
@@ -203,28 +206,31 @@ private void searchAction() {
                  }
                 
                 // 화면에 남은 시간 출력
-                int hour = remainingSeconds / 7200;
-                int minutes = remainingSeconds / 60;
-                int seconds = remainingSeconds % 60;
-            
+                int hour = remainingSeconds / 3600;
+                int minutes = remainingSeconds % 3600 / 60;
+                int seconds = remainingSeconds % 3600 % 60;
                 
                 
                 if(StudyUserDao.tcount != 0 && threeNum == 0) {
                 	threeNum++;
-                	int three = 1800 * StudyUserDao.tcount;
+                	int a = 1;
+                	int three = 1800 * (a - StudyUserDao.tcount);
+                	a = StudyUserDao.tcount;
                 	remainingSeconds += three;                	
                 }
                 if(StudyUserDao.scount != 0 && sixNum == 0) {
-                	sixNum++;
-                	System.out.println(StudyUserDao.scount);
-                	int six = 3600 * StudyUserDao.scount;
+                	sixNum++;            	
+                	int six = 3600 * (StudyUserDao.scount - a);
+                	a = StudyUserDao.scount;
                 	remainingSeconds += six;  
               	
                 }
                 //              System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
                 lblStopWatch.setFont(new Font("Diglog",Font.BOLD, 18));
+                
                 lblStopWatch.setText(String.format("남은 시간: %d시 %d분 %d초\n", hour, minutes, seconds));
-        	}
+                
+                }
         }, 0, 1000);
 }
 		
@@ -315,5 +321,5 @@ private void searchAction() {
 
 
 		
-	
+
 
