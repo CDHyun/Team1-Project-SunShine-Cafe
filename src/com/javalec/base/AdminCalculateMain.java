@@ -369,7 +369,11 @@ public class AdminCalculateMain extends JFrame {
 	private void searchAction() { 		// 테이블에 입력할 데이터 다오에서 받아오기 
 		beanList = new ArrayList<AdminCalculateDto>();
 		AdminCalculateDao dao = new AdminCalculateDao();
-		beanList = dao.getPurchaseList(currentDate);
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String inputDateString = currentDate.format(inputFormatter);
+        System.out.println("입력 포맷: " + inputDateString);
+		
+		beanList = dao.getPurchaseList(inputDateString);
 		
 		int listCount = beanList.size();
 		

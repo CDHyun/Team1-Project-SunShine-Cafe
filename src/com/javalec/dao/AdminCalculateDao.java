@@ -68,7 +68,7 @@ public class AdminCalculateDao {
 	
 	
 	// 1. 정산테이블에 띄워줄 구매내역 리스트 메소드 <<<<<<<SQL 쿼리 작성 안했어!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	public ArrayList<AdminCalculateDto> getPurchaseList(LocalDate currentDate) {
+	public ArrayList<AdminCalculateDto> getPurchaseList(String purchaseDate) {
         ArrayList<AdminCalculateDto> purchaseList = new ArrayList<>();
 
         try {
@@ -82,15 +82,18 @@ public class AdminCalculateDao {
 					+ " INNER JOIN user u ON p.userid = u.userid"
 					+ " WHERE DATE(purchaseInsertDate) = ? "; 		// 불러오고 싶은 데이터들 기반 sql 쿼리 작성 
 			
-			PreparedStatement stmt_mysql = conn_mysql.prepareStatement(query);
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			PreparedStatement ps = null;
+			ps = conn_mysql.prepareStatement(query);
+			
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			//String purchaseDate = dateFormat.format(new Date());
-
-			String purchaseDate = dateFormat.format(currentDate);
+			Statement stmt = conn_mysql.createStatement();
 			
 
-			stmt_mysql.setString(1, purchaseDate);
-			ResultSet rs = stmt_mysql.executeQuery(query);
+			ps.setString(1, purchaseDate);
+			
+			
+			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
 				int wkSaleNo = rs.getInt(1);
