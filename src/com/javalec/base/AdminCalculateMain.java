@@ -64,7 +64,7 @@ public class AdminCalculateMain extends JFrame {
 	// 초기 테이블 요약 정보 받아올 리스트
 	ArrayList<AdminCalculateDto> beanList = null; 		
 	
-	static int purchaseNo; 			// 구매 번호 (주문순서) 	
+	static int salesNo; 			// 구매 번호 (주문순서) 	
 	static Date purchaseDate; 		// 구매 날짜 및 시간 
 	static int purchasePrice;			// 계산 금액 (제품수량(주문내역) * 금액) 
 	static String[] items;			// 주문 내역 
@@ -168,6 +168,8 @@ public class AdminCalculateMain extends JFrame {
 					setDate();
 					currentDate = currentDate.minusDays(1);
 					lblDate.setText(currentDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")));
+					tableInit();
+					searchAction();
 				}
 			});
 			
@@ -193,6 +195,8 @@ public class AdminCalculateMain extends JFrame {
 					setDate();
 					currentDate = currentDate.plusDays(1);
 					lblDate.setText(currentDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")));
+					tableInit();
+					searchAction();
 				}
 			});
 			ImageIcon icon = new ImageIcon(AdminCalculateMain.class.getResource("/com/javalec/image/rightBtn.png"));
@@ -266,7 +270,7 @@ public class AdminCalculateMain extends JFrame {
 			btnCalculate.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					showTodayTotal();
+					//showTodayTotal();
 				}
 			});
 			btnCalculate.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
@@ -371,7 +375,7 @@ public class AdminCalculateMain extends JFrame {
 		AdminCalculateDao dao = new AdminCalculateDao();
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputDateString = currentDate.format(inputFormatter);
-        System.out.println("입력 포맷: " + inputDateString);
+        //System.out.println("입력 포맷: " + inputDateString);
 		
 		beanList = dao.getPurchaseList(inputDateString);
 		
@@ -398,7 +402,7 @@ public class AdminCalculateMain extends JFrame {
 			btnBillReprint.setEnabled(true);
 			btnOrderCancel.setEnabled(true);
 		} catch(Exception e) {
-			e.printStackTrace();
+			
 		}
 	}
 	
@@ -413,7 +417,7 @@ public class AdminCalculateMain extends JFrame {
 			} 
 			
 			// 관리자가 데이터를 선택한 후 영수증 재출력 버튼을 눌렀을 때 
-			purchaseNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+			salesNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
 			int result = JOptionPane.showConfirmDialog(this, "영수증을 재출력 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
 			if (i>0 && result == JOptionPane.YES_OPTION) {		// Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기 
@@ -429,24 +433,25 @@ public class AdminCalculateMain extends JFrame {
 	
 	
 	// 영수증 출력 메소드 
-	public static void printReceipt() {
-	    // 구매일시에서 년월 제외한 일, 시, 분, 초 추출
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd일 HH:mm:ss");
-	
+	private void printReceipt() {
+		int i = innerTable.getSelectedRow();
+	//	int  = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+		
+		beanList = new ArrayList<AdminCalculateDto>();
+		AdminCalculateDao dao = new AdminCalculateDao();
+	  
 	    // 영수증 출력
-	    System.out.println("======== 영 수 증 ========");
-	    System.out.println("구매번호: " + purchaseNo);
-	    System.out.println("구매일시: " + dateFormat.format(purchaseDate));
-	    System.out.println("결제금액: " + purchasePrice + "원");
+	    System.out.println("======== 영 수 증 ========");	    
+	    System.out.println("출력일시 : " + LocalDate.now());
+	    System.out.println("구매번호 : " + beanList.get(1));
+	    System.out.println("구매일시 : " + beanList.get(2));
+	    System.out.println("결제금액 : " + beanList.get(4) + "원");
 
 	    System.out.println("--------------------------");
-	    System.out.println("구매 상품 목록:");
-	    for (int i = 0; i < items.length; i++) {
-	        System.out.println((i + 1) + ". " + items[i]);
-	    }
-
+	    System.out.println("구매 상품 목록 :" + beanList.get(3));
 	    System.out.println("--------------------------");
-	    System.out.println("회원 ID: " + userId);
+	    System.out.println("회원 성명 : " + beanList.get(5));
+	    System.out.println("회원 ID : " + beanList.get(6));
 	    System.out.println("==========================");
 	}
 	
@@ -467,7 +472,7 @@ public class AdminCalculateMain extends JFrame {
 			} 
 			
 			// 관리자가 데이터를 선택한 후 주문 취소 버튼을 눌렀을 때 
-			purchaseNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+			salesNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
 			int result = JOptionPane.showConfirmDialog(this, "구매 내역을 취소 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
 			if (i>0 && result == JOptionPane.YES_OPTION) {		// Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기 
@@ -481,10 +486,30 @@ public class AdminCalculateMain extends JFrame {
 		}
 	}
 	
+	/*
 	// 매장 마감 버튼 : 클릭시 데이터베이스에서 그 날 하루의 총 매출액을 뽑아주고 창을 종료함. 
 	private void showTodayTotal() {
+		beanList = new ArrayList<AdminCalculateDto>();
+		AdminCalculateDao dao = new AdminCalculateDao();
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일");
+        String inputDateString = currentDate.format(inputFormatter);
+        //System.out.println("입력 포맷: " + inputDateString);
 		
+		beanList = dao.getPurchaseList(inputDateString);
+		
+		int listCount = beanList.size();
+		
+		for(int i = 0; i < listCount; i++) {
+			String purchaseInsertDate = beanList.get(i).getPurchaseInsertDate(); 		// 날짜 데이터 타입 -> 문자열 타입으로 바꾸기 
+			String purchasePrice = Integer.toString(beanList.get(i).getPurchasePrice());
+			String itemName = beanList.get(i).getItemName();
+			String userName = beanList.get(i).getUserName();
+			
+			String[] qTxt = {salesNo, purchaseInsertDate, purchasePrice, itemName, userName};
+			outerTable.addRow(qTxt);
+		} 
 	}
+	*/
 	
 	
 	
@@ -498,3 +523,4 @@ public class AdminCalculateMain extends JFrame {
 // END
 	
 }
+

@@ -16,6 +16,7 @@ public class AdminCalculateDto {
 	private int purchasePrice;
 	private String itemName; 		// 사용자가 주문한 상품들을 한번에 보여주기 위한 아이템 리스트
 	private String userName;
+	private String userid;
  	
 	
 	// Constructor
@@ -23,14 +24,14 @@ public class AdminCalculateDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AdminCalculateDto(int salesNo, String wkPurchaseDate, int purchasePrice,
-			String itemName, String userName) {
+	public AdminCalculateDto(int salesNo, String wkPurchaseDate, int purchasePrice, String itemName, String userName, String userid) {
 		super();
 		this.salesNo = salesNo;
 		this.purchaseInsertDate = wkPurchaseDate;
 		this.purchasePrice = purchasePrice;
 		this.itemName = itemName;
 		this.userName = userName;
+		this.userid = userid;
 	}
 
 
@@ -82,6 +83,16 @@ public class AdminCalculateDto {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+	
+	
 	
 	
 	

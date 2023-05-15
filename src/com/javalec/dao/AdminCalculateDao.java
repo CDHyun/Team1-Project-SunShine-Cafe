@@ -67,7 +67,7 @@ public class AdminCalculateDao {
 	//--------Method
 	
 	
-	// 1. 정산테이블에 띄워줄 구매내역 리스트 메소드 <<<<<<<SQL 쿼리 작성 안했어!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	// 1. 정산테이블에 띄워줄 구매내역 리스트 메소드 
 	public ArrayList<AdminCalculateDto> getPurchaseList(String purchaseDate) {
         ArrayList<AdminCalculateDto> purchaseList = new ArrayList<>();
 
@@ -76,36 +76,42 @@ public class AdminCalculateDao {
 			Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
 			
 			// 구매 내역 리스트에 들어갈 데이터 불러오는 쿼리문 
-			String query = "SELECT p.salesNo, p.purchaseInsertDate, p.purchasePrice, i.itemName, u.UserName "
+			String query = "SELECT p.salesNo, p.purchaseInsertDate, GROUP_CONCAT(i.itemName SEPARATOR ', '), SUM(p.purchasePrice), u.userName, u.userid  "
 					+ " FROM purchase p"
-					+ " INNER JOIN item i ON p.itemNo = i.itemNo"
-					+ " INNER JOIN user u ON p.userid = u.userid"
-					+ " WHERE DATE(purchaseInsertDate) = ? "; 		// 불러오고 싶은 데이터들 기반 sql 쿼리 작성 
+					+ " INNER JOIN item i ON p.itemNo = i.itemNo "
+					+ " INNER JOIN user u ON p.userid = u.userid "
+					+ " WHERE DATE(purchaseInsertDate) = ?"
+					+ " GROUP BY p.salesNo, p.purchaseInsertDate, u.userName, u.userid "; 		// 불러오고 싶은 데이터들 기반 sql 쿼리 작성 
 			
 			PreparedStatement ps = null;
 			ps = conn_mysql.prepareStatement(query);
 			
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			//String purchaseDate = dateFormat.format(new Date());
-			Statement stmt = conn_mysql.createStatement();
-			
+			 // 입력된 날짜를 형식에 맞게 변환
+	        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        SimpleDateFormat queryDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	        Date date = inputDateFormat.parse(purchaseDate);
+	        String formattedDate = queryDateFormat.format(date);
 
-			ps.setString(1, purchaseDate);
+	        ps.setString(1, formattedDate);
+
+			//ps.setString(1, purchaseDate);
 			
 			
-			ResultSet rs = stmt.executeQuery(query);
+			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 				int wkSaleNo = rs.getInt(1);
-				String purchaseDay = rs.getString(2); 		// 시간 불러오는 형태 : 일 + 시:분:초 형태로 불러오도록 시키기 
+				Timestamp purchaseTimestamp = rs.getTimestamp(2);	// 시간 불러오는 형태 : 일 + 시:분:초 형태로 불러오도록 시키기 
 				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
-				String wkPurchaseDate = dateForm.format(purchaseDay);
+				String wkPurchaseDate = dateForm.format(purchaseTimestamp);
 				
-				int wkPurchasePrice = rs.getInt(3) ;
-				String wkItemName = rs.getString(4);
+				String wkItemName = rs.getString(3);
+				int wkPurchasePrice = rs.getInt(4) ;
 				String wkUserName = rs.getString(5);
+				String wkUserId = rs.getString(6);
 				
-				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, wkPurchaseDate, wkPurchasePrice, wkItemName, wkUserName);
+				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, wkPurchaseDate, wkPurchasePrice, wkItemName, wkUserName, wkUserId);
+				
 				purchaseList.add(dto);
 				//System.out.println("purchaseList Size : " + purchaseList.size());
 			}
@@ -115,17 +121,10 @@ public class AdminCalculateDao {
 		}
 		return purchaseList;
 	} 
-/*
 
-	// 영수증 출력시 전달해 줄 내용들 
-	// 선택된 구매 내역에 해당하는 데이터 불러오기
 	
-	AdminCalculateDao selectedPurchase = AdminCalculateDao.getPurchase(purchaseNo);
-
-	// 주문한 상품 정보들을 itemLists 리스트에 담기
-	List<ItemDto> itemLists = itemDao.getItemLists(selectedPurchase.getPurchaseId());
-
-*/
+	
+	
 	
 	
 	// 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
