@@ -5,11 +5,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import com.javalec.function.ImageResize;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
+import java.awt.Color;
 
 /* 스터디룸 키오스크에서 결제 수단을 선택하는 페이지 */
 public class StudyPaymentMain extends JFrame {
@@ -17,32 +22,18 @@ public class StudyPaymentMain extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1_1;
-	private JLabel lblNewLabel_2;
-	private JLabel lblNewLabel_2_1;
 	private JLabel lblcard;
 	private JLabel lblNewLabel_1_1_1;
-	private JLabel lblNewLabel_2_2;
 	private JLabel lblkakao;
-	private JLabel lblNewLabel_2_2_1;
 	private JLabel lblpayco;
-	private JLabel lblNewLabel_2_2_2;
 	private JLabel lblnaver;
-	private JLabel lblNewLabel_2_2_3;
 	private JLabel lblzero;
-	private JLabel lblNewLabel_2_2_4;
 	private JLabel lblpaybooc;
 	private JLabel lblNewLabel_1;
 
 	int sum = 0;
-	int num = 0;
-	
-	public int getNum() {
-		return num;
-	}
 
-	public void setNum(int num) {
-		this.num = num;
-	}
+	
 
 	public int getSum() {
 		return sum;
@@ -76,25 +67,19 @@ public class StudyPaymentMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.add(getLblNewLabel());
 		contentPane.add(getLblNewLabel_1_1());
-		contentPane.add(getLblNewLabel_2());
-		contentPane.add(getLblNewLabel_2_1());
 		contentPane.add(getLblcard());
 		contentPane.add(getLblNewLabel_1_1_1());
-		contentPane.add(getLblNewLabel_2_2());
 		contentPane.add(getLblkakao());
-		contentPane.add(getLblNewLabel_2_2_1());
 		contentPane.add(getLblpayco());
-		contentPane.add(getLblNewLabel_2_2_2());
 		contentPane.add(getLblnaver());
-		contentPane.add(getLblNewLabel_2_2_3());
 		contentPane.add(getLblzero());
-		contentPane.add(getLblNewLabel_2_2_4());
 		contentPane.add(getLblpaybooc());
 		contentPane.add(getLblNewLabel_1());
 	}
@@ -115,25 +100,17 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_1_1;
 	}
-	private JLabel getLblNewLabel_2() {
-		if (lblNewLabel_2 == null) {
-			lblNewLabel_2 = new JLabel("카드결제");
-			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2.setBounds(68, 252, 75, 25);
-		}
-		return lblNewLabel_2;
-	}
-	private JLabel getLblNewLabel_2_1() {
-		if (lblNewLabel_2_1 == null) {
-			lblNewLabel_2_1 = new JLabel("삼성페이/LG페이");
-			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 12));
-			lblNewLabel_2_1.setBounds(144, 255, 88, 25);
-		}
-		return lblNewLabel_2_1;
-	}
 	private JLabel getLblcard() {
 		if (lblcard == null) {
 			lblcard = new JLabel("");
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/cardPay.png"));
+			int x = 150;
+			int y = 150;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblcard.setIcon(backArrow);
 			lblcard.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -141,7 +118,7 @@ public class StudyPaymentMain extends JFrame {
 	
 				}
 			});
-			lblcard.setBounds(87, 157, 126, 69);
+			lblcard.setBounds(48, 147, 165, 137);
 		}
 		return lblcard;
 	}
@@ -153,89 +130,95 @@ public class StudyPaymentMain extends JFrame {
 		}
 		return lblNewLabel_1_1_1;
 	}
-	private JLabel getLblNewLabel_2_2() {
-		if (lblNewLabel_2_2 == null) {
-			lblNewLabel_2_2 = new JLabel("카카오페이");
-			lblNewLabel_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2.setBounds(84, 473, 103, 25);
-		}
-		return lblNewLabel_2_2;
-	}
 	private JLabel getLblkakao() {
 		if (lblkakao == null) {
 			lblkakao = new JLabel("");
-			lblkakao.setBounds(87, 392, 126, 69);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/kakaopay.png"));
+			int x = 150;
+			int y = 150;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblkakao.setIcon(backArrow);
+			lblkakao.setBounds(48, 377, 150, 154);
 		}
 		return lblkakao;
-	}
-	private JLabel getLblNewLabel_2_2_1() {
-		if (lblNewLabel_2_2_1 == null) {
-			lblNewLabel_2_2_1 = new JLabel("페이코");
-			lblNewLabel_2_2_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_1.setBounds(330, 473, 103, 25);
-		}
-		return lblNewLabel_2_2_1;
 	}
 	private JLabel getLblpayco() {
 		if (lblpayco == null) {
 			lblpayco = new JLabel("");
-			lblpayco.setBounds(320, 392, 126, 69);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/paycopay.png"));
+			int x = 150;
+			int y = 150;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblpayco.setIcon(backArrow);
+			lblpayco.setBounds(340, 377, 150, 154);
 		}
 		return lblpayco;
-	}
-	private JLabel getLblNewLabel_2_2_2() {
-		if (lblNewLabel_2_2_2 == null) {
-			lblNewLabel_2_2_2 = new JLabel("네이버페이");
-			lblNewLabel_2_2_2.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_2.setBounds(583, 473, 103, 25);
-		}
-		return lblNewLabel_2_2_2;
 	}
 	private JLabel getLblnaver() {
 		if (lblnaver == null) {
 			lblnaver = new JLabel("");
-			lblnaver.setBounds(573, 392, 126, 69);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/naverpay.png"));
+			
+			int x = 150;
+			int y = 150;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblnaver.setIcon(backArrow);
+			lblnaver.setBounds(634, 377, 165, 154);
 		}
 		return lblnaver;
-	}
-	private JLabel getLblNewLabel_2_2_3() {
-		if (lblNewLabel_2_2_3 == null) {
-			lblNewLabel_2_2_3 = new JLabel("제로페이");
-			lblNewLabel_2_2_3.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_3.setBounds(84, 641, 103, 25);
-		}
-		return lblNewLabel_2_2_3;
 	}
 	private JLabel getLblzero() {
 		if (lblzero == null) {
 			lblzero = new JLabel("");
-			lblzero.setBounds(87, 560, 126, 69);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/zeropay.png"));
+			
+			int x = 180;
+			int y = 180;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblzero.setIcon(backArrow);
+			lblzero.setBounds(48, 543, 150, 156);
 		}
 		return lblzero;
-	}
-	private JLabel getLblNewLabel_2_2_4() {
-		if (lblNewLabel_2_2_4 == null) {
-			lblNewLabel_2_2_4 = new JLabel("BC페이북");
-			lblNewLabel_2_2_4.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_2_2_4.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_2_2_4.setBounds(327, 641, 103, 25);
-		}
-		return lblNewLabel_2_2_4;
 	}
 	private JLabel getLblpaybooc() {
 		if (lblpaybooc == null) {
 			lblpaybooc = new JLabel("");
-			lblpaybooc.setBounds(320, 560, 126, 69);
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/payboocpay.png"));
+			
+			int x = 150;
+			int y = 150;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblpaybooc.setIcon(backArrow);
+			lblpaybooc.setBounds(340, 543, 158, 156);
 		}
 		return lblpaybooc;
 	}
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("뒤로 가기");
+			lblNewLabel_1 = new JLabel("");
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/back.png"));
+			int x = 50;
+			int y = 50;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_1.setIcon(backArrow);
 			lblNewLabel_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

@@ -18,5 +18,8 @@ public class ShareVar {
 		
 		// 주문 번호
 		public static int salesNo = 1;
+		
+		// 매장, 포장
+		public static int diningNo = 1;
 	
 }

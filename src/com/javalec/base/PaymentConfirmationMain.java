@@ -32,17 +32,11 @@ public class PaymentConfirmationMain extends JFrame {
 	private JLabel lblNewLabel_1_1;
 
 	int sum;	// 총 구매내역
-	int num; 
+
 	private JLabel lblPay_2;
 	
 	
-	public int getNum() {
-		return num;
-	}
 
-	public void setNum(int num) {
-		this.num = num;
-	}
 
 	public int getSum() {
 		return sum;
@@ -175,7 +169,6 @@ public class PaymentConfirmationMain extends JFrame {
 	// 
 	private void backpaymentMain() {
 		PaymentMain main = new PaymentMain();
-		main.setNum(num);
 		main.setSum(sum);
 		dispose();
 	}
@@ -188,7 +181,7 @@ public class PaymentConfirmationMain extends JFrame {
 	
 	private void purchaseAtcion() {
 		PaymentDao dao = new PaymentDao();
-		boolean result = dao.addToPurchase(num);
+		boolean result = dao.addToPurchase();
 		
 		if(result) {
 			nextPaymentSuccessMain();

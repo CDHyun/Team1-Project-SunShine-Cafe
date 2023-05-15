@@ -32,6 +32,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 	private JLabel lblNewLabel_1_1_1_1_1_2;
 	private JLabel lblNewLabel_1_1_1_1_2;
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -183,10 +184,21 @@ public class StudyPaymentSuccessMain extends JFrame {
 	
 	}
 	
+	private static int re = 1;
 	private void front() {
+	
 		StudyUserMain main = new StudyUserMain();
-		main.setVisible(true);
-		dispose();
+		if(re == 1) {
+			re++;
+			System.out.println(re);
+			main.setVisible(true);
+			dispose();			
+		}else {
+			dispose();
+		}
+		
 	}
+		
+	
 	
 }

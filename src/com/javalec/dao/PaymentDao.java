@@ -13,7 +13,7 @@ public class PaymentDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 	
-	int salesNo = ShareVar.salesNo;
+	
 	
 	
 	
@@ -23,7 +23,7 @@ public class PaymentDao {
 	
 	
 	// purchase 테이블에 구매데이터 넣기
-	public boolean addToPurchase(int num) {
+	public boolean addToPurchase() {
 		PreparedStatement ps = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -39,13 +39,13 @@ public class PaymentDao {
 			while(rs.next()) {
 				ps.setInt(1, rs.getInt(1));
 				ps.setString(2, rs.getString(2));
-				ps.setInt(3, salesNo);
+				ps.setInt(3, ShareVar.salesNo);
 				ps.setInt(4, rs.getInt(3));
-				ps.setInt(5, num);
+				ps.setInt(5, ShareVar.diningNo);
 				ps.setInt(6, rs.getInt(4) * rs.getInt(3));
 				ps.executeUpdate();
 			}
-			salesNo += 1 ;
+			ShareVar.salesNo++;
 			
 			con.close();
 			return true;

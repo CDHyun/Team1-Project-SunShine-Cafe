@@ -10,6 +10,8 @@ import javax.swing.table.TableColumn;
 
 import com.javalec.dao.PurchaseMainDao;
 import com.javalec.dto.PurchaseMainDto;
+import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -24,6 +26,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 
 /* 기본 키오스크에서 주문 세부 내역 확인하고 결제 옵션 페이지로 보내주는 페이지. */
 public class StudyPurchaseMain extends JFrame {
@@ -44,7 +47,7 @@ public class StudyPurchaseMain extends JFrame {
 	
 	int sum = 0;		// 계산 합계
 	int count =0;		// 총 수량
-	int num = 0;		// 포장여부
+
 	
 	private final DefaultTableModel outerTable = new DefaultTableModel();
 	/**
@@ -78,6 +81,7 @@ public class StudyPurchaseMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -116,7 +120,7 @@ public class StudyPurchaseMain extends JFrame {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("총 수량");
 			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2.setBounds(6, 586, 92, 39);
+			lblNewLabel_2.setBounds(204, 586, 92, 39);
 		}
 		return lblNewLabel_2;
 	}
@@ -124,7 +128,7 @@ public class StudyPurchaseMain extends JFrame {
 		if (lblNewLabel_2_1 == null) {
 			lblNewLabel_2_1 = new JLabel("개");
 			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_1.setBounds(243, 586, 42, 39);
+			lblNewLabel_2_1.setBounds(441, 586, 42, 39);
 		}
 		return lblNewLabel_2_1;
 	}
@@ -134,7 +138,7 @@ public class StudyPurchaseMain extends JFrame {
 			lblCount.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblCount.setForeground(Color.RED);
 			lblCount.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblCount.setBounds(200, 586, 42, 39);
+			lblCount.setBounds(398, 586, 42, 39);
 		}
 		return lblCount;
 	}
@@ -142,7 +146,7 @@ public class StudyPurchaseMain extends JFrame {
 		if (lblNewLabel_2_2 == null) {
 			lblNewLabel_2_2 = new JLabel("총 결재금액");
 			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_2.setBounds(358, 586, 148, 39);
+			lblNewLabel_2_2.setBounds(522, 586, 148, 39);
 		}
 		return lblNewLabel_2_2;
 	}
@@ -152,7 +156,7 @@ public class StudyPurchaseMain extends JFrame {
 			lblPay.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblPay.setForeground(Color.RED);
 			lblPay.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblPay.setBounds(536, 586, 148, 39);
+			lblPay.setBounds(700, 586, 148, 39);
 		}
 		return lblPay;
 	}
@@ -160,39 +164,56 @@ public class StudyPurchaseMain extends JFrame {
 		if (lblNewLabel_2_3 == null) {
 			lblNewLabel_2_3 = new JLabel("원");
 			lblNewLabel_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_3.setBounds(688, 586, 42, 39);
+			lblNewLabel_2_3.setBounds(852, 586, 42, 39);
 		}
 		return lblNewLabel_2_3;
 	}
 	private JLabel getLblback() {
 		if (lblback == null) {
-			lblback = new JLabel("돌아가기");
+			lblback = new JLabel("");
+		
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/스크린샷_2023-05-15_오후_12.25.59-removebg-preview 복사본.png"));
+			int x = 150;
+			int y = 65;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblback.setIcon(backArrow);
 			lblback.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					redirecProductMain();
 				}
 			});
-			lblback.setBounds(6, 700, 61, 16);
+			lblback.setBounds(20, 647, 184, 69);
 		}
 		return lblback;
 	}
 	private JLabel getLblHere() {
 		if (lblHere == null) {
-			lblHere = new JLabel("먹고가기");
+			lblHere = new JLabel("");
+
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/KakaoTalk_Photo_2023-05-15-14-46-58.png"));
+			int x = 230;
+			int y = 110;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblHere.setIcon(backArrow);
 			lblHere.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					StudyPaymentMain main = new StudyPaymentMain();
 					main.setSum(sum);
-					num = 0;
-					main.setNum(num);
+					ShareVar.diningNo = 0;
 					main.setVisible(true);
 					dispose();
 					
 				}
 			});
-			lblHere.setBounds(833, 700, 61, 16);
+			lblHere.setBounds(698, 647, 185, 69);
 		}
 		return lblHere;
 	}

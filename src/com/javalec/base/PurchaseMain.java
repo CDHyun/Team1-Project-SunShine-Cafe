@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 import com.javalec.dao.PurchaseMainDao;
 import com.javalec.dto.PurchaseMainDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -42,7 +43,7 @@ public class PurchaseMain extends JFrame {
 
 	int sum = 0;		// 계산 합계
 	int count =0;		// 총 수량
-	int num = 0;		// 포장여부
+
 	/**
 	 * Launch the application.
 	 */
@@ -177,8 +178,7 @@ public class PurchaseMain extends JFrame {
 				
 					PaymentMain main = new PaymentMain();
 					main.setSum(sum);
-					num = 0;
-					main.setNum(num);
+					ShareVar.diningNo = 0;
 					main.setVisible(true);
 					dispose();
 					
@@ -207,8 +207,7 @@ public class PurchaseMain extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					PaymentMain main = new PaymentMain();
 					main.setSum(sum);
-					num = 1;
-					main.setNum(num);
+					ShareVar.diningNo = 1;
 					main.setVisible(true);
 					dispose();
 				}

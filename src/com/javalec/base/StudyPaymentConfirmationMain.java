@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.PaymentDao;
+import com.javalec.function.ImageResize;
 
 /* 스터디룸 키오스크에서 보여줄 결제 정보 확인(승인요청) 페이지 */
 public class StudyPaymentConfirmationMain extends JFrame {
@@ -29,17 +30,11 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	private JLabel lblNewLabel_1_1;
 
 	int sum;	// 총 구매내역
-	int num; 
+
 	private JLabel lblPay_2;
 	
 	
-	public int getNum() {
-		return num;
-	}
 
-	public void setNum(int num) {
-		this.num = num;
-	}
 
 	public int getSum() {
 		return sum;
@@ -71,13 +66,14 @@ public class StudyPaymentConfirmationMain extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				lblPay.setText(Integer.toString(sum));
+				lblPay.setText(String.format("%,3d",sum));
 			}
 		});
 		setTitle("카드결제");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 700);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -103,7 +99,7 @@ public class StudyPaymentConfirmationMain extends JFrame {
 			lblPay.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblPay.setForeground(new Color(255, 0, 0));
 			lblPay.setFont(new Font("Lucida Grande", Font.BOLD, 25));
-			lblPay.setBounds(298, 413, 138, 36);
+			lblPay.setBounds(240, 413, 196, 36);
 		}
 		return lblPay;
 	}
@@ -119,7 +115,17 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	}
 	private JLabel getLblNewLabel_1() {
 		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("취소");
+			lblNewLabel_1 = new JLabel("");
+
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/cancle.png"));
+			int x = 150;
+			int y = 65;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_1.setIcon(backArrow);
+			
 			lblNewLabel_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -127,13 +133,23 @@ public class StudyPaymentConfirmationMain extends JFrame {
 				}
 			});
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1.setBounds(30, 590, 86, 46);
+			lblNewLabel_1.setBounds(30, 571, 150, 65);
 		}
 		return lblNewLabel_1;
 	}
 	private JLabel getLblNewLabel_1_1() {
 		if (lblNewLabel_1_1 == null) {
-			lblNewLabel_1_1 = new JLabel("승인요청");
+			lblNewLabel_1_1 = new JLabel("");
+			
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/KakaoTalk_Photo_2023-05-15-14-31-19 001.png"));
+			int x = 250;
+			int y = 100;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_1_1.setIcon(backArrow);
+			
 			lblNewLabel_1_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -141,7 +157,7 @@ public class StudyPaymentConfirmationMain extends JFrame {
 				}
 			});
 			lblNewLabel_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
-			lblNewLabel_1_1.setBounds(360, 590, 108, 46);
+			lblNewLabel_1_1.setBounds(252, 571, 216, 78);
 		}
 		return lblNewLabel_1_1;
 	}
@@ -159,7 +175,6 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	private void backpaymentMain() {
 		StudyPaymentMain main = new StudyPaymentMain();
 		main.setSum(sum);
-		main.setNum(num);
 		dispose();
 	}
 	
@@ -171,7 +186,7 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	
 	private void purchaseAtcion() {
 		PaymentDao dao = new PaymentDao();
-		boolean result = dao.addToPurchase(num);
+		boolean result = dao.addToPurchase();
 		
 		if(result) {
 			nextPaymentSuccessMain();

@@ -40,7 +40,7 @@ public class PaymentMain extends JFrame {
 	private JLabel lblSun;
 
 	
-	int sum = 0 ;
+	int sum = 0 ;	// 총합
 	int num = 0;
 	
 	
