@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 import com.javalec.dao.StudyUserDao;
 import com.javalec.dto.StudyUserDto;
@@ -79,6 +80,7 @@ public class StudyUserMain extends JFrame {
 			
 			@Override
 			public void windowOpened(WindowEvent e) {
+			tableInit();
 			searchAction();
 			timeCheck();
 			}
@@ -87,7 +89,7 @@ public class StudyUserMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 0));
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -101,18 +103,15 @@ public class StudyUserMain extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		JButton btnaddOrder = new JButton("추가주문");
-		btnaddOrder.setBounds(718, 592, 117, 60);
+		btnaddOrder.setBounds(719, 656, 117, 60);
 		btnaddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int result = JOptionPane.showConfirmDialog(null,"추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_NO_OPTION){
 				}
-				
-				 	int result2 = JOptionPane.showConfirmDialog(null,"취소하시겠습니까?", "확인", JOptionPane.CLOSED_OPTION);
-					if (result2 == JOptionPane.CLOSED_OPTION){		      	
-					
+					StudyProductMain main = new StudyProductMain();
+					main.setVisible(true);
 			
-					}
 			}
 		});
 		btnaddOrder.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -121,10 +120,18 @@ public class StudyUserMain extends JFrame {
 		contentPane.add(getBtnNewButton());
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(-2, 120, 886, 146);
+		scrollPane.setBounds(6, 153, 886, 491);
 		contentPane.add(scrollPane);
 		
-		innerTable = new JTable();
+		innerTable = new JTable(){									// 테이블 데이터 지정
+			public Class getColumnClass(int column) {				// 속성을 바꿔준다.
+				return (column == 0) ? Icon.class : Object.class;	// 0번째 컬럼은 이미지 나머지는 오브젝트로 넣는다
+			}
+			
+		};
+		innerTable.setModel(outerTable);	
+		innerTable.setRowHeight(150);
+		innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(innerTable);
 	}
 
@@ -162,10 +169,15 @@ private void searchAction() {
 	int wkPrice = list.get(i).getPurchasePrice();
 	String wkName = list.get(i).getItemName();
 	String wkImageName = list.get(i).getItemImageName();
-	String wkContent = list.get(i).getItemContent();
+	
+	ImageIcon icon = new ImageIcon("./" + wkImageName);
+	int x = 180;
+	int y = 130;
+	ImageResize resize = new ImageResize(icon, x, y);
+	ImageIcon Image = resize.imageResizing();
 
 	
-	Object[] tempData = {wkPrice,wkName,wkImageName,wkContent};
+	Object[] tempData = {Image, wkName, wkPrice};
 	outerTable.addRow(tempData);
 }
 }
@@ -198,10 +210,51 @@ private void searchAction() {
         }, 0, 1000);
     }
 	
+	
+				private void tableInit() {
+					outerTable.addColumn("상품사진");	// 타이틀 네임
+					outerTable.addColumn("상품명");
+					outerTable.addColumn("가격");		
+					outerTable.setColumnCount(3);		// 타이틀이 몇개냐
+				
+					int i = outerTable.getRowCount();	// 테이블에 데이터가 몇개 있는지
+					
+					for(int j=0; j<i;j++) {
+						outerTable.removeRow(0);		// 지워주기
+					}
+					
+					innerTable.setAutoResizeMode(innerTable.AUTO_RESIZE_OFF); // 사이즈 조절 안한다
+					
+					// 상품이미지 사이즈
+					int vColIndex = 0;					// 데이터 크기 조절 
+					TableColumn col = innerTable.getColumnModel().getColumn(vColIndex);
+					int width = 380;
+					col.setPreferredWidth(width);
+					
+					// 상품명 사이즈
+					vColIndex =1;
+					col = innerTable.getColumnModel().getColumn(vColIndex);
+					width = 350;
+					col.setPreferredWidth(width);
+					
+					// 가격
+					vColIndex = 2;
+					col = innerTable.getColumnModel().getColumn(vColIndex);
+					width = 150;
+					col.setPreferredWidth(width);
+
+				}
+				
+				
+				
+				
+				
+				
 	private JLabel getLblStopWatch() {
 		if (lblStopWatch == null) {
 			lblStopWatch = new JLabel("");
-			lblStopWatch.setBounds(341, 132, 223, 16);
+			lblStopWatch.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+			lblStopWatch.setBounds(274, 82, 363, 29);
 		}
 		return lblStopWatch;
 	}
@@ -212,7 +265,9 @@ private void searchAction() {
 				public void actionPerformed(ActionEvent e) {
 					int result = JOptionPane.showConfirmDialog(null,"종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION){
-				
+							StudyAdvertisementMain main = new StudyAdvertisementMain();
+							main.setVisible(true);
+							dispose();
 					}else if (result == JOptionPane.NO_OPTION){
 					}
 				}

@@ -72,6 +72,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -183,7 +184,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 	}
 	
 	private void front() {
-		StudyAdvertisementMain main = new StudyAdvertisementMain();
+		StudyUserMain main = new StudyUserMain();
 		main.setVisible(true);
 		dispose();
 	}

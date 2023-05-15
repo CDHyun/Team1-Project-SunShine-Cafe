@@ -39,12 +39,11 @@ public class StudyUserDto {
 	
 	
 
-	public StudyUserDto(int purchasePrice, String itemName, String itemImageName, String itemContent) {
+	public StudyUserDto(String itemName, String itemImageName, int purchasePrice ) {
 		super();
 		this.purchasePrice = purchasePrice;
 		this.itemName = itemName;
-		this.itemImageName = itemImageName;
-		this.itemContent = itemContent;
+		this.itemImageName = itemImageName ;
 	}
 
 
@@ -63,15 +62,6 @@ public class StudyUserDto {
 	}
 
 
-
-	public StudyUserDto(int itemNo, int itemPrice, String itemName, int categoryNo, String imageName) {
-		super();
-		this.itemNo = itemNo;
-		this.itemName = itemName;
-		this.itemPrice = itemPrice;
-		this.imageName = imageName;
-		this.categoryNo = categoryNo;
-	}
 	
 
 
@@ -190,15 +180,7 @@ public class StudyUserDto {
 
 
 
-	public String getImageName() {
-		return imageName;
-	}
 
-
-
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
 
 
 
