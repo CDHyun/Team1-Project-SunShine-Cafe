@@ -42,7 +42,7 @@ public class PaymentDao {
 				ps.setInt(3, salesNo);
 				ps.setInt(4, rs.getInt(3));
 				ps.setInt(5, num);
-				ps.setInt(6, rs.getInt(4));
+				ps.setInt(6, rs.getInt(4) * rs.getInt(3));
 				ps.executeUpdate();
 			}
 			salesNo = salesNo +1;

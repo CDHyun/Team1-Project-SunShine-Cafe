@@ -11,6 +11,7 @@ import javax.swing.table.TableColumn;
 
 import com.javalec.dao.PurchaseMainDao;
 import com.javalec.dto.PurchaseMainDto;
+import com.javalec.function.ImageResize;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -25,6 +26,7 @@ import java.awt.Window.Type;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 
 /* 기본 키오스크에서 주문 세부 내역 확인하고 결제 옵션 페이지로 보내주는 페이지. */
 public class PurchaseMain extends JFrame {
@@ -52,6 +54,7 @@ public class PurchaseMain extends JFrame {
 	private JLabel lblNewLabel_2_3;
 	private JLabel lblPay;
 	private JLabel lblCount;
+	private JLabel lblNewLabel_3;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,6 +84,7 @@ public class PurchaseMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -97,6 +101,7 @@ public class PurchaseMain extends JFrame {
 		contentPane.add(getLblNewLabel_2_3());
 		contentPane.add(getLblPay());
 		contentPane.add(getLblCount());
+		contentPane.add(getLblNewLabel_3());
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {
@@ -118,7 +123,7 @@ public class PurchaseMain extends JFrame {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(6, 139, 613, 580);
+			scrollPane.setBounds(6, 139, 613, 516);
 			scrollPane.setViewportView(getInnerTable());
 		}
 		return scrollPane;
@@ -134,14 +139,23 @@ public class PurchaseMain extends JFrame {
 	}
 	private JLabel getLblback() {
 		if (lblback == null) {
-			lblback = new JLabel("돌아가기");
+			lblback = new JLabel("");
+
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/cancle.png"));
+			int x = 150;
+			int y = 50;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblback.setIcon(backArrow);
 			lblback.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					redirecProductMain();
 				}
 			});
-			lblback.setBounds(16, 811, 61, 16);
+			lblback.setBounds(6, 758, 148, 69);
 		}
 		return lblback;
 	}
@@ -264,7 +278,7 @@ public class PurchaseMain extends JFrame {
 		if (lblNewLabel_2 == null) {
 			lblNewLabel_2 = new JLabel("총 수량");
 			lblNewLabel_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2.setBounds(6, 744, 92, 39);
+			lblNewLabel_2.setBounds(6, 661, 92, 39);
 		}
 		return lblNewLabel_2;
 	}
@@ -272,7 +286,7 @@ public class PurchaseMain extends JFrame {
 		if (lblNewLabel_2_1 == null) {
 			lblNewLabel_2_1 = new JLabel("개");
 			lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_1.setBounds(206, 744, 42, 39);
+			lblNewLabel_2_1.setBounds(206, 661, 42, 39);
 		}
 		return lblNewLabel_2_1;
 	}
@@ -280,7 +294,7 @@ public class PurchaseMain extends JFrame {
 		if (lblNewLabel_2_2 == null) {
 			lblNewLabel_2_2 = new JLabel("총 결재금액");
 			lblNewLabel_2_2.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_2.setBounds(277, 744, 148, 39);
+			lblNewLabel_2_2.setBounds(277, 661, 148, 39);
 		}
 		return lblNewLabel_2_2;
 	}
@@ -288,7 +302,7 @@ public class PurchaseMain extends JFrame {
 		if (lblNewLabel_2_3 == null) {
 			lblNewLabel_2_3 = new JLabel("원");
 			lblNewLabel_2_3.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblNewLabel_2_3.setBounds(577, 744, 42, 39);
+			lblNewLabel_2_3.setBounds(577, 661, 42, 39);
 		}
 		return lblNewLabel_2_3;
 	}
@@ -298,7 +312,7 @@ public class PurchaseMain extends JFrame {
 			lblPay.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblPay.setForeground(new Color(255, 0, 0));
 			lblPay.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblPay.setBounds(423, 744, 148, 39);
+			lblPay.setBounds(423, 661, 148, 39);
 		}
 		return lblPay;
 	}
@@ -308,9 +322,25 @@ public class PurchaseMain extends JFrame {
 			lblCount.setForeground(new Color(255, 0, 0));
 			lblCount.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblCount.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-			lblCount.setBounds(162, 744, 42, 39);
+			lblCount.setBounds(162, 661, 42, 39);
 		}
 		return lblCount;
+	}
+	private JLabel getLblNewLabel_3() {
+		if (lblNewLabel_3 == null) {
+			lblNewLabel_3 = new JLabel("");
+	
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
+			int x = 50;
+			int y = 50;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblNewLabel_3.setIcon(backArrow);
+			lblNewLabel_3.setBounds(564, 6, 55, 57);
+		}
+		return lblNewLabel_3;
 	}
 }// end
 

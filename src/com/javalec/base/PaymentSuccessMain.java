@@ -63,7 +63,7 @@ public class PaymentSuccessMain extends JFrame {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						dispose();
+						front();
 					}
 				};
 	            timer.schedule(task, 5000);
@@ -182,6 +182,11 @@ public class PaymentSuccessMain extends JFrame {
 		return lblNewLabel_1_1_1_1_2;
 	}
 	
+	private void front() {
+		AdvertisementMain main = new AdvertisementMain();
+		main.setVisible(true);
+		dispose();
+	}
 	
 	
 	

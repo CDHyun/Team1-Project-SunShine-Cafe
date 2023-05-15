@@ -40,7 +40,7 @@ public class PurchaseMainDao {
 			while(rs.next()) {
 				String wkName = rs.getString(1);
 				int wkCartQty = rs.getInt(2);
-				int wkPrice = rs.getInt(3);
+				int wkPrice = rs.getInt(3) * rs.getInt(2) ;
 
 				
 				PurchaseMainDto dto = new PurchaseMainDto(wkName, wkCartQty, wkPrice);
