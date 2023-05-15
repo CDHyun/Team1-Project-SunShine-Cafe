@@ -126,7 +126,7 @@ public class AdminCalculateDao {
 
 	
 	
-	// 2. 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
+	// 2. 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산
 	public int calculateSalesTotal(ArrayList<AdminCalculateDto> purchaseList) {
 		int total = 0;
 		for (AdminCalculateDto dto : purchaseList) {
@@ -137,21 +137,47 @@ public class AdminCalculateDao {
 
 	
 	// 3. 관리자가 메인에서 주문 삭제 버튼을 눌러 해당 주문 삭제함 
-	public void deletePurchase(int salesNo) {
-	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+	public ArrayList<AdminCalculateDto> getDeletedPurchaseData(String insertDate) {
+		ArrayList<AdminCalculateDto> beanList = new ArrayList<AdminCalculateDto>();
+        AdminCalculateDto dto = null;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+            String query = "DELETE "
+            		+ " FROM purchase p"
+            		+ " INNER JOIN item i ON p.itemNo = i.itemNo"
+            		+ " INNER JOIN user u ON p.userId = u.userId"
+            		+ " WHERE purchaseInsertDate = ?"
+            		+ " GROUP BY p.salesNo, p.purchaseInsertDate, u.userName, u.userId"
+            		+ " ORDER BY p.purchaseInsertDate";
+            
+            
+            PreparedStatement ps = conn_mysql.prepareStatement(query);
+            ps.setString(1, insertDate);
 
-	        String query = "DELETE FROM purchase WHERE salesNo = ?";
-	        PreparedStatement ps = conn_mysql.prepareStatement(query);
-	        ps.setInt(1, salesNo);
-	        ps.executeUpdate();
+            ResultSet rs = ps.executeQuery();
 
-	        conn_mysql.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
+            if (rs.next()) {
+                int selectedSalesNo = rs.getInt(1);
+                String purchaseInsertDate = rs.getString(2);
+                String itemName = rs.getString(3);
+                int purchasePrice = rs.getInt(4);
+                String userName = rs.getString(5);
+                String userId = rs.getString(6);
+                AdminCalculateDto adminCalculateDto = new AdminCalculateDto(selectedSalesNo, purchaseInsertDate, purchasePrice, itemName, userName, userId);
+                beanList.add(adminCalculateDto);
+            }
+            conn_mysql.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return beanList;
+    }
+	
+	
+	
 	
 	
 	// 4. 선택한 구매 데이터 영수증으로 출력 메소드
