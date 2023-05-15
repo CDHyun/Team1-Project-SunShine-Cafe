@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.javalec.dto.AdminCalculateDto;
 import com.javalec.util.ShareVar;
@@ -101,16 +102,17 @@ public class AdminCalculateDao {
 
 			while (rs.next()) {
 				int wkSaleNo = rs.getInt(1);
-				Timestamp purchaseTimestamp = rs.getTimestamp(2);	// 시간 불러오는 형태 : 일 + 시:분:초 형태로 불러오도록 시키기 
-				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
-				String wkPurchaseDate = dateForm.format(purchaseTimestamp);
+				String purchaseTimestamp = rs.getString(2);	// 시간 불러오는 형태 : 일 + 시:분:초 형태로 불러오도록 시키기 
+//				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
+//				dateForm.setTimeZone(TimeZone.getTimeZone("UTC"));
+//				Timestamp wkPurchaseDate = purchaseTimestamp;
 				
 				String wkItemName = rs.getString(3);
 				int wkPurchasePrice = rs.getInt(4) ;
 				String wkUserName = rs.getString(5);
 				String wkUserId = rs.getString(6);
 				
-				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, wkPurchaseDate, wkPurchasePrice, wkItemName, wkUserName, wkUserId);
+				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, purchaseTimestamp, wkPurchasePrice, wkItemName, wkUserName, wkUserId);
 				
 				purchaseList.add(dto);
 				//System.out.println("purchaseList Size : " + purchaseList.size());

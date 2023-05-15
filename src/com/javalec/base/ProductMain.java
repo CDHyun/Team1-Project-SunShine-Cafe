@@ -16,6 +16,7 @@ import com.javalec.dao.ProductDao;
 import com.javalec.dto.CartDto;
 import com.javalec.dto.ProductDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 
 import java.awt.Color;
 import java.awt.Container;
