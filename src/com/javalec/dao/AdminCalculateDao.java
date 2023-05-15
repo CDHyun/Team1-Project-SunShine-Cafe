@@ -115,8 +115,8 @@ public class AdminCalculateDao {
 				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, purchaseTimestamp, wkPurchasePrice, wkItemName, wkUserName, wkUserId);
 				
 				purchaseList.add(dto);
-				//System.out.println("purchaseList Size : " + purchaseList.size());
 			}
+			conn_mysql.close();
 	
         } catch(Exception e) {
 			e.printStackTrace();
@@ -130,16 +130,44 @@ public class AdminCalculateDao {
 	
 	
 	// 관리자가 마감 버튼을 눌러 오늘의 구매 내역 합계 계산 
-	public void calculatePurchase() {
+	public int calculateSalesTotal(ArrayList<AdminCalculateDto> purchaseList) {
 		int total = 0;
-		
-		
-	
-
+		for (AdminCalculateDto dto : purchaseList) {
+	        total += dto.getPurchasePrice();
+	    }
+		return total;
 	}
 
 	
+	// 관리자가 메인에서 주문 삭제 버튼을 눌러 해당 주문 삭제함 
+	public void deletePurchase(int salesNo) {
+	    try {
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+	        Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+
+	        String query = "DELETE FROM purchase WHERE salesNo = ?";
+	        PreparedStatement ps = conn_mysql.prepareStatement(query);
+	        ps.setInt(1, salesNo);
+	        ps.executeUpdate();
+
+	        conn_mysql.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
+	
+	// 4. 선택한 구매 데이터 영수증으로 출력 메소드
+    public void printReceipt(AdminCalculateDto dto) {
+        System.out.println("영수증");
+        System.out.println("판매번호: " + dto.getSalesNo());
+        System.out.println("구매일자: " + dto.getPurchaseInsertDate());
+        System.out.println("상품명: " + dto.getItemName());
+        System.out.println("구매가격: " + dto.getPurchasePrice());
+        System.out.println("구매자명: " + dto.getUserName());
+        System.out.println("구매자ID: " + dto.getUserid());
+        System.out.println("---------------------------");
+    }
 	
 	
 	

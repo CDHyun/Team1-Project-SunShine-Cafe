@@ -31,7 +31,6 @@ public class AdminMain extends JFrame {
 	private JLabel lblHomeImage;
 	private JButton lblCafeStart;
 	private JButton btnMenuUpdate;
-	private JButton btnTableCondition;
 	private JButton btnCloseCafe;
 	private JButton lblCafeEnd;
 
@@ -72,7 +71,6 @@ public class AdminMain extends JFrame {
 		contentPane.add(getLblCafeStart());
 		contentPane.add(getLblCafeEnd());
 		contentPane.add(getBtnMenuUpdate());
-		contentPane.add(getBtnTableCondition());
 		contentPane.add(getBtnCloseCafe());
 	}
 
@@ -172,22 +170,9 @@ public class AdminMain extends JFrame {
 					directAdminMenuMain();
 				}
 			});
-			btnMenuUpdate.setBounds(110, 642, 117, 29);
+			btnMenuUpdate.setBounds(110, 642, 180, 85);
 		}
 		return btnMenuUpdate;
-	}
-	private JButton getBtnTableCondition() {
-		if (btnTableCondition == null) {
-			btnTableCondition = new JButton("테이블 관리");
-			btnTableCondition.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-				
-				}
-			});
-			btnTableCondition.setBounds(233, 642, 117, 29);
-		}
-		return btnTableCondition;
 	}
 	private JButton getBtnCloseCafe() {
 		if (btnCloseCafe == null) {
@@ -198,7 +183,7 @@ public class AdminMain extends JFrame {
 					directAdminCalculateMain();
 				}
 			});
-			btnCloseCafe.setBounds(372, 642, 117, 29);
+			btnCloseCafe.setBounds(310, 642, 180, 85);
 		}
 		return btnCloseCafe;
 	}
