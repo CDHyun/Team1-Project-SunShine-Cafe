@@ -85,7 +85,7 @@ public class PaymentMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 625, 900);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(224, 224, 224));
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -367,7 +367,7 @@ public class PaymentMain extends JFrame {
 	private JLabel getLblSun() {
 		if (lblSun == null) {
 			lblSun = new JLabel("");
-			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/SunShineTeamLogo.png"));
+			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/SunShineTeamLogoWhiteBackGround.png"));
 			int x = 80;
 			int y = 80;
 			
@@ -375,7 +375,7 @@ public class PaymentMain extends JFrame {
 			ImageIcon backArrow = resize.imageResizing();
 			
 			lblSun.setIcon(backArrow);
-			lblSun.setBounds(515, 6, 88, 69);
+			lblSun.setBounds(531, 6, 88, 79);
 		}
 		return lblSun;
 	}

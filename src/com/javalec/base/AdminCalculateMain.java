@@ -34,6 +34,7 @@ import javax.swing.SwingConstants;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.print.PrinterJob;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.awt.event.MouseAdapter;
@@ -97,7 +98,7 @@ public class AdminCalculateMain extends JFrame {
 			public void windowOpened(WindowEvent e) {
 				setDate();
 				tableInit();
-				//searchAction();
+				searchAction();
 			}
 		});
 		setTitle("관리자 페이지 - 매장 마감");
@@ -232,6 +233,7 @@ public class AdminCalculateMain extends JFrame {
 	private JButton getBtnBillReprint() { 		// 영수증 재출력 버튼 
 		if (btnBillReprint == null) {
 			btnBillReprint = new JButton("영수증 재출력");
+			btnBillReprint.setEnabled(false);
 			btnBillReprint.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -246,6 +248,7 @@ public class AdminCalculateMain extends JFrame {
 	private JButton getBtnOrderCancel() { 		// 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행 
 		if (btnOrderCancel == null) {
 			btnOrderCancel = new JButton("주문 취소");
+			btnOrderCancel.setEnabled(false);
 			btnOrderCancel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -297,7 +300,7 @@ public class AdminCalculateMain extends JFrame {
 		
 	}
 	
-	private void tableInit() {		// 매출 내역 테이블 초기화하기 
+	private void tableInit() {				// 매출 내역 테이블 초기화 - 구조 만들기 
 		outerTable.addColumn("No"); 		// 구매 번호
 		outerTable.addColumn("거래 시간");		// 구매 날짜 & 시간 (일 + 시 분 초 형태)
 		outerTable.addColumn("계산금액"); 		// 총 구매 금액 
@@ -363,31 +366,40 @@ public class AdminCalculateMain extends JFrame {
 	}
 	
 	
-	/*
 	private void searchAction() { 		// 테이블에 입력할 데이터 다오에서 받아오기 
 		beanList = new ArrayList<AdminCalculateDto>();
 		AdminCalculateDao dao = new AdminCalculateDao();
-		beanList = dao.selectList();
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String inputDateString = currentDate.format(inputFormatter);
+        System.out.println("입력 포맷: " + inputDateString);
+		
+		beanList = dao.getPurchaseList(inputDateString);
 		
 		int listCount = beanList.size();
 		
 		for(int i = 0; i < listCount; i++) {
-			String productCode = Integer.toString(beanList.get(i).getPurchaseNo());// db에서 데이터 불러오는 순서 (나중의 조건절 검색을 위해 추가함)
-			String purchaseDate = beanList.get(i).getDate();
-			int purchasePrice = beanList.get(i).getPrice();
-			String productName = beanList.get(i).getProductName();
-			String size = Integer.toString(beanList.get(i).getSize());
-			String stock = Integer.toString(beanList.get(i).getProductStock());
+			String salesNo = Integer.toString(beanList.get(i).getSalesNo());// db에서 데이터 불러오는 순서 (나중의 조건절 검색을 위해 추가함)
+			String purchaseInsertDate = beanList.get(i).getPurchaseInsertDate(); 		// 날짜 데이터 타입 -> 문자열 타입으로 바꾸기 
+			String purchasePrice = Integer.toString(beanList.get(i).getPurchasePrice());
+			String itemName = beanList.get(i).getItemName();
+			String userName = beanList.get(i).getUserName();
 			
-			String[] qTxt = {productCode, brandName, productName, size, stock};
+			String[] qTxt = {salesNo, purchaseInsertDate, purchasePrice, itemName, userName};
 			outerTable.addRow(qTxt);
 		} 
-	} 	*/
+	} 	
 	
 	
 	
 	private void tableClick() {
-		
+		try {
+			int i = innerTable.getSelectedRow();
+			int selectNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+			btnBillReprint.setEnabled(true);
+			btnOrderCancel.setEnabled(true);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void reprintBill() {

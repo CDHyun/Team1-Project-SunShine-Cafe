@@ -161,7 +161,16 @@ public class PurchaseMain extends JFrame {
 	}
 	private JLabel getLblHere() {
 		if (lblHere == null) {
-			lblHere = new JLabel("먹고가기");
+			lblHere = new JLabel("");
+			lblHere.setHorizontalAlignment(SwingConstants.CENTER);
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/KakaoTalk_Photo_2023-05-15-14-46-58.png"));
+			int x = 280;
+			int y = 90;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblHere.setIcon(backArrow);
 			lblHere.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -175,13 +184,24 @@ public class PurchaseMain extends JFrame {
 					
 				}
 			});
-			lblHere.setBounds(259, 811, 61, 16);
+			lblHere.setBounds(219, 758, 229, 69);
 		}
 		return lblHere;
 	}
 	private JLabel getLblTakeout() {
 		if (lblTakeout == null) {
-			lblTakeout = new JLabel("포장하기");
+			lblTakeout = new JLabel("");
+			lblTakeout.setHorizontalAlignment(SwingConstants.CENTER);
+
+			ImageIcon icon = new ImageIcon(PurchaseMain.class.getResource("/com/javalec/image/스크린샷_2023-05-15_오후_12.28.03-removebg-preview.png"));
+			int x = 150;
+			int y = 50;
+			
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon backArrow = resize.imageResizing();
+			
+			lblTakeout.setIcon(backArrow);
+			
 			lblTakeout.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -193,7 +213,7 @@ public class PurchaseMain extends JFrame {
 					dispose();
 				}
 			});
-			lblTakeout.setBounds(558, 811, 61, 16);
+			lblTakeout.setBounds(460, 758, 159, 69);
 		}
 		return lblTakeout;
 	}

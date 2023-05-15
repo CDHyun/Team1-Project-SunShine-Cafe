@@ -461,14 +461,23 @@ public class ProductMain extends JFrame {
 	private JLabel getLblPayBtn() {
 		if (lblPayBtn == null) {
 			lblPayBtn = new JLabel("");
+			lblPayBtn.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					PurchaseMain purchaseMain = new PurchaseMain();
+					purchaseMain.setLocationRelativeTo(null);
+					purchaseMain.setVisible(true);
+					dispose();
+				}
+			});
 			lblPayBtn.setHorizontalAlignment(SwingConstants.CENTER);
 			ImageIcon icon = new ImageIcon(ProductMain.class.getResource("/com/javalec/image/payBtn.png"));
-			int x = 240;
+			int x = 280;
 			int y = 240;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon payBtn = resize.imageResizing();
 			lblPayBtn.setIcon(payBtn);
-			lblPayBtn.setBounds(424, 763, 182, 103);
+			lblPayBtn.setBounds(423, 763, 195, 103);
 		}
 		return lblPayBtn;
 	}
@@ -984,7 +993,7 @@ public class ProductMain extends JFrame {
 			lblOne = new JLabel("원");
 			lblOne.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
 			lblOne.setForeground(Color.WHITE);
-			lblOne.setBounds(563, 790, 23, 35);
+			lblOne.setBounds(582, 790, 23, 35);
 		}
 		return lblOne;
 	}
@@ -993,16 +1002,17 @@ public class ProductMain extends JFrame {
 			lblPay = new JLabel("결제하기");
 			lblPay.setForeground(Color.WHITE);
 			lblPay.setFont(new Font("Noto Sans KR Medium", Font.BOLD, 16));
-			lblPay.setBounds(513, 816, 68, 35);
+			lblPay.setBounds(523, 816, 68, 35);
 		}
 		return lblPay;
 	}
 	private JLabel getLblTotalPrice() {
 		if (lblTotalPrice == null) {
 			lblTotalPrice = new JLabel("");
+			lblTotalPrice.setHorizontalAlignment(SwingConstants.TRAILING);
 			lblTotalPrice.setForeground(Color.WHITE);
 			lblTotalPrice.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
-			lblTotalPrice.setBounds(513, 790, 56, 35);
+			lblTotalPrice.setBounds(513, 789, 68, 35);
 		}
 		return lblTotalPrice;
 	}

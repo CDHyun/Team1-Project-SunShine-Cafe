@@ -2,8 +2,14 @@ package com.javalec.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,28 +26,32 @@ public class AdminCalculateDao {
 	
 	
 	
-	// 변수 초기화
-	int purchaseNo; 			// 구매 번호 (주문순서) 	
-	String purchaseDate; 		// 구매 날짜 및 시간 
-	int purchasePrice;			// 계산 금액 (제품수량(주문내역) * 금액) 
-	String itemName;			// 주문 내역 
-	String userid;				// 회원 아이디 
+	// 구매 내역을 불러오기 위한 생성자들 
+	// salesNo, purchaseInsertDate, purchasePrice, itemName, userName
 	
+	// Field 
+	private int salesNo;
+	private Date purchaseInsertDate;
+	private int purchasePrice;
+	private String itemName; 		// 사용자가 주문한 상품들을 한번에 보여주기 위한 아이템 리스트
+	private String userid;
+	private String userName;
 	
 	// Constructor 
 	public AdminCalculateDao() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	// searchAction() 위한 생성자 -> 주문내역 테이블에 띄워주고 영수증으로 출력도 하고 선택후 취소도 할 수 있는데..... 구현을 몬하넹 
+	// searchAction() 위한 생성자  - 주문서 재출력, 정산 등 모두 구매 내역들 보고 할 수 있을거같다. 아마도? 
 	// 정산 화면에서 tableInit() 생성 후 테이블에 들어갈 데이터 생성자 (구매번호, 거래일시, 계산금액, 주문내역, 회원id)
-	public AdminCalculateDao(int purchaseNo, String purchaseDate, int purchasePrice, String itemName, String userid) {
+	public AdminCalculateDao(int salesNo, Date purchaseInsertDate, int purchasePrice,
+			String itemName, String userName) {
 		super();
-		this.purchaseNo = purchaseNo;
-		this.purchaseDate = purchaseDate;
+		this.salesNo = salesNo;
+		this.purchaseInsertDate = purchaseInsertDate;
 		this.purchasePrice = purchasePrice;
 		this.itemName = itemName;
-		this.userid = userid;
+		this.userName = userName;
 	}
 	
 	
@@ -49,63 +59,62 @@ public class AdminCalculateDao {
 	
 	
 	
-	// printReceipt() 위한 생성자 
+
 	
 	
-	
-	
+
 	
 	//--------Method
 	
 	
-	/*
-	// *********** 데이터 타입들 확인한 뒤에 생성자 만들기! + SQL Query 확인하기 
-	// total price는 아이템 가격* 아이템 수량 + 선택한 옵션*옵션당 가격 <<<<< 쿼리문 어떻게 작성할거니. 수량, 옵션 옵션당 가격 따로 불러와서 곱해?
-	public ArrayList<AdminCalculateDto> selectList() {
-		ArrayList<AdminCalculateDao> dtoList = new ArrayList<AdminCalculateDao>();
+	// 1. 정산테이블에 띄워줄 구매내역 리스트 메소드 <<<<<<<SQL 쿼리 작성 안했어!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+	public ArrayList<AdminCalculateDto> getPurchaseList(String purchaseDate) {
+        ArrayList<AdminCalculateDto> purchaseList = new ArrayList<>();
 
-		String query = "SELECT pur.purchaseno, pur.purchasedate, pur.saleprice, p.productname, u.userid" 
-				+ " FROM purchase pur, user u, product p"
-				+ " where p.userid = u.userid and p.productid = pur.productid "
-				+ " group by p.purchaseno DESC";
-		
-		"SELECT pur.purchaseNo, pur.purchaseInsertDate, "
-		+ " FROM purchase pur,"
-		+ " WHERE " 
-		// purchaseNo : 게속 쌓이는 주문 번호, salesNo : 그날 당일마다 초기화되는 주문번호 .
-		
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+        try {
+        	Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-			Statement stmt_mysql = conn_mysql.createStatement();
+			
+			// 구매 내역 리스트에 들어갈 데이터 불러오는 쿼리문 
+			String query = "SELECT p.salesNo, p.purchaseInsertDate, p.purchasePrice, i.itemName, u.UserName "
+					+ " FROM purchase p"
+					+ " INNER JOIN item i ON p.itemNo = i.itemNo"
+					+ " INNER JOIN user u ON p.userid = u.userid"
+					+ " WHERE DATE(purchaseInsertDate) = ? "; 		// 불러오고 싶은 데이터들 기반 sql 쿼리 작성 
+			
+			PreparedStatement ps = null;
+			ps = conn_mysql.prepareStatement(query);
+			
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			//String purchaseDate = dateFormat.format(new Date());
+			Statement stmt = conn_mysql.createStatement();
+			
 
-			ResultSet rs = stmt_mysql.executeQuery(query);
+			ps.setString(1, purchaseDate);
+			
+			
+			ResultSet rs = stmt.executeQuery(query);
 
 			while (rs.next()) {
-				int wkpurchaseno = rs.getInt(1);
-				String wkdate = rs.getString(2); 		// 날짜 데이터 타입 확인!
-				int wkprice = rs.getInt(3);
-				String wkproductName = rs.getString(4);
-				int userid= rs.getInt(5);
-
-				AdminCalculateDto dto = new AdminCalculateDto(purchaseNo, purchaseDate, purchasePrice, itemName, userid);
-				//dtoList.add(dto); 		// 뭐야 왜 에러야 
+				int wkSaleNo = rs.getInt(1);
+				String purchaseDay = rs.getString(2); 		// 시간 불러오는 형태 : 일 + 시:분:초 형태로 불러오도록 시키기 
+				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
+				String wkPurchaseDate = dateForm.format(purchaseDay);
+				
+				int wkPurchasePrice = rs.getInt(3) ;
+				String wkItemName = rs.getString(4);
+				String wkUserName = rs.getString(5);
+				
+				AdminCalculateDto dto = new AdminCalculateDto(wkSaleNo, wkPurchaseDate, wkPurchasePrice, wkItemName, wkUserName);
+				purchaseList.add(dto);
+				//System.out.println("purchaseList Size : " + purchaseList.size());
 			}
-
-			conn_mysql.close();
-
-		} catch (Exception e) {
-//				e.printStackTrace();
+	
+        } catch(Exception e) {
+			e.printStackTrace();
 		}
-
-		return dtoList;
-	}  */
-	
-	
-
-
-
+		return purchaseList;
+	} 
 /*
 
 	// 영수증 출력시 전달해 줄 내용들 
@@ -124,7 +133,11 @@ public class AdminCalculateDao {
 		int total = 0;
 		
 		
+	
+
 	}
+
+	
 	
 	
 	

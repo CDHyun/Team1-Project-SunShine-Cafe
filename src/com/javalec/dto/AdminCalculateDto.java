@@ -1,71 +1,89 @@
 package com.javalec.dto;
 
-public class AdminCalculateDto {
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
-	// Constructor
-	int purchaseNo;
-	String LocalDateTime ; 		// 사용자가 구매한 일시 
-	int price ; 		// 사용자 구매 총 금액
-	String productName;
-	int userId; 
+public class AdminCalculateDto {
 	
+	// 구매 내역을 불러오기 위한 생성자들 
+	// salesNo, purchaseInsertDate, purchasePrice, itemName, userName
+	
+	// Field 
+	private int salesNo;
+	private String purchaseInsertDate;
+	private int purchasePrice;
+	private String itemName; 		// 사용자가 주문한 상품들을 한번에 보여주기 위한 아이템 리스트
+	private String userName;
+ 	
+	
+	// Constructor
 	public AdminCalculateDto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	// Dao에게 초기 tableInit() 정보 전달받아 메인에 주기위한 생성자
-	public AdminCalculateDto(int purchaseNo, String localDateTime, int price, String productName, int userId) {
+	public AdminCalculateDto(int salesNo, String wkPurchaseDate, int purchasePrice,
+			String itemName, String userName) {
 		super();
-		this.purchaseNo = purchaseNo;
-		LocalDateTime = localDateTime;
-		this.price = price;
-		this.productName = productName;
-		this.userId = userId;
+		this.salesNo = salesNo;
+		this.purchaseInsertDate = wkPurchaseDate;
+		this.purchasePrice = purchasePrice;
+		this.itemName = itemName;
+		this.userName = userName;
 	}
 
-	public int getPurchaseNo() {
-		return purchaseNo;
+
+	public int getSalesNo() {
+		return salesNo;
 	}
 
-	public void setPurchaseNo(int purchaseNo) {
-		this.purchaseNo = purchaseNo;
+
+	public void setSalesNo(int salesNo) {
+		this.salesNo = salesNo;
 	}
 
-	public String getLocalDateTime() {
-		return LocalDateTime;
+
+	public String getPurchaseInsertDate() {
+		return purchaseInsertDate;
 	}
 
-	public void setLocalDateTime(String localDateTime) {
-		LocalDateTime = localDateTime;
+
+	public void setPurchaseInsertDate(String purchaseInsertDate) {
+		this.purchaseInsertDate = purchaseInsertDate;
 	}
 
-	public int getPrice() {
-		return price;
+
+	public int getPurchasePrice() {
+		return purchasePrice;
 	}
 
-	public void setPrice(int price) {
-		this.price = price;
+
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
 	}
 
-	public String getProductName() {
-		return productName;
+
+	public String getItemName() {
+		return itemName;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
-	public int getUserId() {
-		return userId;
+
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
 	
-	
-	
-	
+
 }

@@ -47,40 +47,44 @@ public class StudyUserDao {
 //	    } catch (Exception e) {
 //            e.printStackTrace();
 //        } finally {
-	    
-        	public ArrayList<StudyUserDto> selectStudyUserDto(){
-        		ArrayList<StudyUserDto> beanList = new ArrayList<StudyUserDto>();
+	    	
+
+        	
+        	public ArrayList<StudyUserDto> studyList(){
+        		ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
         		
-        		String query = "select itemNo, itemName, itemPrice, itemImageName, itemImage, categoryNo from item";
+        		String query = "select i.itemName, i.itemImageName, i.itemImage, p.purchasePrice " 
+        				+ " from item i, purchase p "
+        				+ " where i.itemNo = p.itemNo ";
 
         		try {
         			Class.forName("com.mysql.cj.jdbc.Driver");
-        			Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-        			Statement stmt = con.createStatement();
-        			ResultSet rs = stmt.executeQuery(query);
+        			Connection conn_mysql = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+        			Statement stmt_mysql = conn_mysql.createStatement();
         			
+        			ResultSet rs = stmt_mysql.executeQuery(query);
+        				
         			while(rs.next()) {
-        				int wkItemNo = rs.getInt(1);
-        				String wkItemName = rs.getString(2);
-        				int wkItemPrice = rs.getInt(3);
-        				String wkImageName = rs.getString(4);
-        				/*** Image 파일 생성 ***/
+        				int wkPrice = rs.getInt(4);
+        				String wkName = rs.getString(1);
+        				String wkImageName = rs.getString(2);
+        				// 이미지 불러올 때 하는 방법
         				File file = new File("./" + wkImageName);
         				FileOutputStream output = new FileOutputStream(file);
-        				InputStream input = rs.getBinaryStream(5);
-        				byte[] buffer = new byte[1024];
-        				int categoryNo = rs.getInt(6);
-        				
-        				while(input.read(buffer) > 0) {
-        					output.write(buffer);
-        				}
-        				StudyUserDto studyUserDto = new StudyUserDto(categoryNo, wkItemNo, wkItemName, wkItemPrice, wkImageName);
-        				beanList.add(studyUserDto);
+            		  	InputStream input = rs.getBinaryStream(3);
+            		  	byte[] buffer = new byte[1024];
+            		  	
+            		  	while(input.read(buffer)>0) {
+            		  		output.write(buffer);
+            		  	}
+            		  	         		  	
+        				StudyUserDto dto = new StudyUserDto(wkName, wkImageName, wkPrice);
+        				dtoList.add(dto);
         			}
-        			con.close();
-        		} catch(Exception e) {
-        			e.printStackTrace();
-        		}
-        		return beanList;
-        	}		
-        }
+        		conn_mysql.close();
+        		}catch(Exception e) {
+        			
+        	}
+        		return dtoList;
+        	}
+}

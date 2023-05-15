@@ -14,7 +14,7 @@ public class PurchaseMainDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 	
-	String userid = "donghyun";
+	String userid = ShareVar.userid;
 
 	
 	public PurchaseMainDao() {

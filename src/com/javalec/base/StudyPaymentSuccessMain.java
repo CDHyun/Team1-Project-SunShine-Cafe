@@ -62,7 +62,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
-						dispose();
+						front();
 					}
 				};
 	            timer.schedule(task, 5000);
@@ -72,6 +72,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 750);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -179,5 +180,13 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_2.setBounds(712, 468, 333, 45);
 		}
 		return lblNewLabel_1_1_1_1_2;
+	
 	}
+	
+	private void front() {
+		StudyUserMain main = new StudyUserMain();
+		main.setVisible(true);
+		dispose();
+	}
+	
 }
