@@ -69,7 +69,7 @@ public class PaymentConfirmationMain extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {
-				lblPay.setText(Integer.toString(sum));
+				lblPay.setText(String.format("%,3d",sum));
 			}
 		});
 		setTitle("카드결제");
