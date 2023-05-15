@@ -623,12 +623,14 @@ public class StudyProductMain extends JFrame {
 					lblJuice.setForeground(Color.BLACK);
 					lblTea.setForeground(Color.BLACK);
 					lblDessert.setForeground(Color.BLACK);
+					lblTime.setForeground(Color.BLACK);
 					lblBackGround1.setVisible(true);
 					lblBackGround2.setVisible(false);
 					lblBackGround3.setVisible(false);
 					lblBackGround4.setVisible(false);
 					lblBackGround5.setVisible(false);
 					lblBackGround6.setVisible(false);
+					lblBackGround7.setVisible(false);
 					lblAll.setForeground(Color.WHITE);
 					queryItemAction();
 				}
@@ -1067,12 +1069,12 @@ public class StudyProductMain extends JFrame {
 		if (lblNotice == null) {
 			lblNotice = new JLabel("");
 			ImageIcon icon = new ImageIcon(StudyProductMain.class.getResource("/com/javalec/image/StudyRoomNotice2.png"));
-			int x = 260;
+			int x = 280;
 			int y = 450;
 			ImageResize resize = new ImageResize(icon, x, y);
 			ImageIcon notice = resize.imageResizing();
 			lblNotice.setIcon(notice);
-			lblNotice.setBounds(640, 0, 260, 439);
+			lblNotice.setBounds(628, 0, 272, 439);
 		}
 		return lblNotice;
 	}
