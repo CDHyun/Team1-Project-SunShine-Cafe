@@ -21,8 +21,10 @@ public class StudyUserDao {
 	private final String id_mysql = ShareVar.DBUser;
 	private final String pw_mysql = ShareVar.DBPass;
 	
-	String userid = "donghyun";
-	
+	String therdcount = "30분 시간 이용권";
+	String sixteencount = "60분 시간 이용권";
+	public static int tcount = 0;
+	public static int scount = 0;
 	public StudyUserDao() {
 		// TODO Auto-generated constructor stub
 	}
@@ -55,7 +57,8 @@ public class StudyUserDao {
         		
         		String query = "select i.itemName, i.itemImageName, i.itemImage, p.purchasePrice " 
         				+ " from item i, purchase p "
-        				+ " where i.itemNo = p.itemNo ";
+        				+ " where i.itemNo = p.itemNo and p.userid = " + "'" + ShareVar.userid + "'";
+   
 
         		try {
         			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -67,6 +70,11 @@ public class StudyUserDao {
         			while(rs.next()) {
         				int wkPrice = rs.getInt(4);
         				String wkName = rs.getString(1);
+        				if(wkName.equals(therdcount)) {
+        					tcount++;
+        				}else if(wkName.equals(sixteencount)) {
+        					scount++;
+        				}
         				String wkImageName = rs.getString(2);
         				// 이미지 불러올 때 하는 방법
         				File file = new File("./" + wkImageName);
@@ -87,4 +95,37 @@ public class StudyUserDao {
         	}
         		return dtoList;
         	}
+
+        	//타이머 시간초 추가 데이터
+        	public ArrayList<StudyUserDto> studyItem(){
+        		ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
+        		
+        		String query = "select itemName, itemPrice "
+        					+ "from item"; 
+        		String query1 = " where tableNo ";
+        		
+        		try {
+        			Class.forName("com.mysql.cj.jdbc.Driver");
+        			Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+        			Statement stmt = conn.createStatement();
+        			
+        			ResultSet rs = stmt.executeQuery(query+query1);
+ 
+        		while(rs.next()) {
+        			int wkName = rs.getInt(1);
+        			int wkPrice = rs.getInt(2);
+        		
+        			StudyUserDto studyUserDto = new StudyUserDto(wkPrice, query1);
+        			dtoList.add(studyUserDto);   		
+        		}
+        		conn.close();
+        		
+        		}catch (Exception e){
+        			
+        		}
+        		return dtoList;
+        	}
 }
+
+        		
+

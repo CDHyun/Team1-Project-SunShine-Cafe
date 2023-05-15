@@ -32,6 +32,7 @@ public class StudyUserDto {
 	String categoryName;
 	int cartQty;
 	
+	
 	public StudyUserDto() {
 		// TODO Auto-generated constructor stub
 	}
@@ -76,11 +77,16 @@ public class StudyUserDto {
 
 
 
-	public StudyUserDto(int itemPrice, String itemImageName) {
+
+
+
+
+	public StudyUserDto(int itemPrice, String itemName) {
 		super();
 		this.itemPrice = itemPrice;
-		this.itemImageName = itemImageName;
+		this.itemName = itemName;
 	}
+
 
 
 

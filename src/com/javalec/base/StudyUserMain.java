@@ -41,9 +41,10 @@ import javax.swing.JTable;
 /* 스터디룸 키오스크에서 남은 시간을 보여줄 유저 메인 페이지 */
 public class StudyUserMain extends JFrame {
 
+	
 	private static final int TICKET_MINUTES = 60; // 이용권 시간(분)
 	private static final int TICKET_SECONDS = TICKET_MINUTES * 60; // 이용권 시간(초)
-	private static LocalDateTime startTime; // 이용 시작 시간
+	private static int LocalDateTime startTime = 120; // 이용 시작 시간
 	private static int remainingSeconds; // 남은 시간(초)
 	private static int timeElapasd = 0;
 	private final DefaultTableModel outerTable = new DefaultTableModel();
@@ -55,7 +56,24 @@ public class StudyUserMain extends JFrame {
 	private JLabel lblStopWatch;
 	private JButton btnNewButton;
 	private JTable innerTable;
+	private JLabel LocalDateTimestartTime;
+	
 
+	
+	public void TimerExample() {
+		setTitle("타이머 예졔");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        lblStopWatch = new JLabel();
+        lblStopWatch.setBounds(50, 50, 200, 50);
+        add(lblStopWatch);
+
+        setVisible(true);
+    }
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -135,21 +153,6 @@ public class StudyUserMain extends JFrame {
 		scrollPane.setViewportView(innerTable);
 	}
 
-//	private JLabel getLblStudyImage() {
-//		if (lblStudyImage == null) {
-//			lblStudyImage = new JLabel("");
-//			lblStudyImage.setBounds(0, 111, 150, 160);
-//			ImageIcon icon = new ImageIcon(StudyUserMain.class.getResource("/com/javalec/image/IceWaterMelon.png"));
-//			int x = 100;
-//			int y = 100;
-//			ImageResize resize = new ImageResize(icon, x, y);
-//			ImageIcon productIcon = resize.imageResizing();
-//			lblStudyImage.setIcon(productIcon);
-//			lblStudyImage.setHorizontalAlignment(SwingConstants.CENTER);
-//			lblStudyImage.setBounds(-2, 84, 150, 220);
-//}
-//		return lblStudyImage;
-//	}
 	private JLabel getLblMainName() {
 		if (lblMainName == null) {
 			lblMainName = new JLabel("Sunshine Cafe");
@@ -183,8 +186,7 @@ private void searchAction() {
 }
 
 				
-				
-				private void timeCheck() {
+		private void timeCheck() {
 		startTime = LocalDateTime.now(); // 이용 시작 시간 설정
         remainingSeconds = TICKET_SECONDS; // 남은 시간 초기화
         // 1초마다 타이머 갱신
@@ -193,22 +195,31 @@ private void searchAction() {
         timer.scheduleAtFixedRate(new TimerTask() {
         	public void run() {
                 remainingSeconds--;
-                
                 // 시간 종료되면 타이머 종료
                 if (remainingSeconds == 0) {
                     timer.cancel();
-                }
+                 }
                 
                 // 화면에 남은 시간 출력
                 int hour = remainingSeconds / 7200;
                 int minutes = remainingSeconds / 60;
-                int seconds = remainingSeconds % 60;
-//              System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
+                int seconds = remainingSeconds % 60;                 
+                //              System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
                 lblStopWatch.setFont(new Font("Diglog",Font.BOLD, 18));
                 lblStopWatch.setText(String.format("남은 시간: %d시 %d분 %d초\n", hour, minutes, seconds));
         	}
         }, 0, 1000);
-    }
+}
+		
+//		private void studyitem() {
+//			ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
+//			StudyUserDto dto = new StudyUserDto();
+//			
+//			dtoList = StudyUserDao.studyItem();
+//			int count = 0;
+//				
+//			}
+//		}
 	
 	
 				private void tableInit() {
@@ -277,6 +288,10 @@ private void searchAction() {
 		}
 		return btnNewButton;
 	}
+
+	
+
+
 }
 
 
