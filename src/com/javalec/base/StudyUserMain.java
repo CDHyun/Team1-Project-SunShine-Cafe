@@ -11,6 +11,7 @@ import javax.swing.table.TableColumn;
 import com.javalec.dao.StudyUserDao;
 import com.javalec.dto.StudyUserDto;
 import com.javalec.function.ImageResize;
+import com.javalec.util.ShareVar;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 
 import javax.swing.JLabel;
@@ -58,7 +59,8 @@ public class StudyUserMain extends JFrame {
 	private JTable innerTable;
 	private JLabel LocalDateTimestartTime;
 	
-
+    int threeNum = 0;
+    int sixNum = 0;
 	
 	public void TimerExample() {
 		setTitle("타이머 예졔");
@@ -190,7 +192,7 @@ private void searchAction() {
 		startTime = LocalDateTime.now(); // 이용 시작 시간 설정
         remainingSeconds = TICKET_SECONDS; // 남은 시간 초기화
         // 1초마다 타이머 갱신
-     
+
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
         	public void run() {
@@ -203,13 +205,29 @@ private void searchAction() {
                 // 화면에 남은 시간 출력
                 int hour = remainingSeconds / 7200;
                 int minutes = remainingSeconds / 60;
-                int seconds = remainingSeconds % 60;                 
+                int seconds = remainingSeconds % 60;
+            
+                
+                
+                if(StudyUserDao.tcount != 0 && threeNum == 0) {
+                	threeNum++;
+                	int three = 1800 * StudyUserDao.tcount;
+                	remainingSeconds += three;                	
+                }
+                if(StudyUserDao.scount != 0 && sixNum == 0) {
+                	sixNum++;
+                	System.out.println(StudyUserDao.scount);
+                	int six = 3600 * StudyUserDao.scount;
+                	remainingSeconds += six;  
+              	
+                }
                 //              System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
                 lblStopWatch.setFont(new Font("Diglog",Font.BOLD, 18));
                 lblStopWatch.setText(String.format("남은 시간: %d시 %d분 %d초\n", hour, minutes, seconds));
         	}
         }, 0, 1000);
 }
+		
 		
 //		private void studyitem() {
 //			ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
@@ -255,6 +273,7 @@ private void searchAction() {
 					col.setPreferredWidth(width);
 
 				}
+				
 				
 				
 				

@@ -57,7 +57,7 @@ public class StudyUserDao {
         		
         		String query = "select i.itemName, i.itemImageName, i.itemImage, p.purchasePrice " 
         				+ " from item i, purchase p "
-        				+ " where i.itemNo = p.itemNo and p.userid = " + "'" + ShareVar.userid + "'";
+        				+ " where i.itemNo = p.itemNo and p.userid = 'donghyun'" ;//+ "'" + ShareVar.userid + "'";
    
 
         		try {
@@ -67,12 +67,14 @@ public class StudyUserDao {
         			
         			ResultSet rs = stmt_mysql.executeQuery(query);
         				
+        			
         			while(rs.next()) {
         				int wkPrice = rs.getInt(4);
         				String wkName = rs.getString(1);
         				if(wkName.equals(therdcount)) {
         					tcount++;
-        				}else if(wkName.equals(sixteencount)) {
+        				}
+        				if(wkName.equals(sixteencount)) {
         					scount++;
         				}
         				String wkImageName = rs.getString(2);
