@@ -44,7 +44,7 @@ public class StudyUserMain extends JFrame {
 	
 	private static final int TICKET_MINUTES = 60; // 이용권 시간(분)
 	private static final int TICKET_SECONDS = TICKET_MINUTES * 60; // 이용권 시간(초)
-	private static int LocalDateTime startTime = 120; // 이용 시작 시간
+	private static LocalDateTime startTime;  // 이용 시작 시간
 	private static int remainingSeconds; // 남은 시간(초)
 	private static int timeElapasd = 0;
 	private final DefaultTableModel outerTable = new DefaultTableModel();
