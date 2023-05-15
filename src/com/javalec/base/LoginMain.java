@@ -47,6 +47,27 @@ public class LoginMain extends JFrame {
 	String message;
 	String userid;
 
+	
+	
+	private boolean existsUserID(String userid2) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private void loginCheck(String userid2, String password) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private boolean existsUserID() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -138,8 +159,10 @@ public class LoginMain extends JFrame {
 			btnSingIn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					loginAction();
+					loginCheck();
+					insertFieldCheck();
 				}
-			});
+			});//
 			btnSingIn.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 			btnSingIn.setBounds(462, 444, 106, 92);
 		}
@@ -182,30 +205,18 @@ public class LoginMain extends JFrame {
 	// 로그인 버튼 액션 설정 
 	
 	private void loginAction() {
-	   String userid = tfUserId.getText();
-	   String password = new String(pfUserPassWord.getPassword());
-	   
-	   
-	   LoginDao loginDao = new LoginDao();
-	   boolean loggedIn = loginDao.loginAction(userid, password);
-	    
-	    // id, password 체크 
-	    if(loggedIn) {
+	    String userid = tfUserId.getText();
+	    char[] pass = pfUserPassWord.getPassword();
+	    String password = new String(pass);
+
+	    boolean result = existsUserID(userid);
+
+	    if (result) {
 	        int i_chk = insertFieldCheck();
-	        if(i_chk != 0) {
-	            JOptionPane.showMessageDialog(this, "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
+	        if (i_chk != 0) { // id나 pw가 제대로 입력되지 않은 경우
+	            JOptionPane.showMessageDialog(this, message + "확인해 주세요", "로그인 오류", JOptionPane.INFORMATION_MESSAGE);
 	        } else {
-	            boolean loginResult = loginCheck();   // DB에서 유저 id, password가 있는지 확인 
-	            if (loginResult) { // 로그인 성공시 ProductMain으로 이동 
-	                JOptionPane.showMessageDialog(this, tfUserId.getText() + "님, 환영합니다!", "로그인 성공", JOptionPane.INFORMATION_MESSAGE);
-	                ProductMain pm = new ProductMain();
-	                pm.setVisible(true);
-	                dispose();
-	            } else {
-	                JOptionPane.showMessageDialog(this, "아이디 혹은 비밀번호를 확인해 주세요", "로그인 실패", JOptionPane.INFORMATION_MESSAGE);
-	                pfUserPassWord.setText(""); // 비밀번호 입력창 초기화 
-	                tfUserId.requestFocus();
-	            }
+	            loginCheck(userid, password); // 데이터베이스에서 유저 ID, PW가 있는지 확인 -> Dao 역할
 	        }
 	    } else {
 	        JOptionPane.showMessageDialog(this, "아이디가 존재하지 않습니다.");
@@ -213,16 +224,11 @@ public class LoginMain extends JFrame {
 	    }
 	}
 
+
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	//  id, pw 확인하기 
 	private int insertFieldCheck() {
 		int i = 0;

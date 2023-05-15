@@ -297,6 +297,73 @@ public class StudyUserSingUpMain extends JFrame {
 		return btnCheckID;
 	}
 	
+	private JPasswordField getPfUserPassword() {
+		if (pfUserPassword == null) {
+			pfUserPassword = new JPasswordField();
+			pfUserPassword.setBounds(452, 279, 255, 38);
+		}
+		return pfUserPassword;
+	}
+	private JPasswordField getPfUserPassword1() {
+		if (pfUserPassword1 == null) {
+			pfUserPassword1 = new JPasswordField();
+			pfUserPassword1.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					String pw = new String(pfUserPassword.getPassword());
+			        String re_pw = new String(pfUserPassword1.getPassword());
+//
+			        
+			     // 비밀번호 중복 체크 하면서 바로 라벨에 나오도록 하는 코드 
+			        if (pw.equals("")) { // 비밀번호 TextField가 빈칸인 경우
+			            lblPass.setForeground(Color.RED);
+			            lblPass.setText("비밀번호를 입력해주세요.");
+			            btnJoin.setEnabled(pfUserPassword.getPassword().equals(pfUserPassword1.getPassword()));
+			        } else if (!pw.equals(re_pw)) {
+			            lblPass.setForeground(Color.RED);
+			            lblPass.setText("비밀번호가 일치하지 않습니다.");
+			            btnJoin.setEnabled(pfUserPassword.getPassword().equals(pfUserPassword1.getPassword()));
+			            pfUserPassword.requestFocus(); // 포커스 이동
+			            pfUserPassword.setText("");    // 비밀번호 필드 값 지우기
+			            pfUserPassword1.setText("");   // 비밀번호 확인 필드 값 지우기 
+			        } else {
+			            lblPass.setForeground(Color.BLACK);
+			            lblPass.setText("비밀번호가 일치합니다.");
+			        }
+				}
+			});
+			pfUserPassword1.setBounds(452, 351, 255, 38);
+		}
+		return pfUserPassword1;
+	}
+	private JLabel getLblNewLabel_1_5() {
+		if (lblNewLabel_1_5 == null) {
+			lblNewLabel_1_5 = new JLabel("성함");
+			lblNewLabel_1_5.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+			lblNewLabel_1_5.setBounds(340, 420, 46, 26);
+		}
+		return lblNewLabel_1_5;
+	}
+	private JTextField getTfName() {
+		if (tfName == null) {
+			tfName = new JTextField();
+			tfName.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+			        if (Character.isDigit(c)) {
+			            e.consume(); // 입력한 키를 무시함
+			        }
+				}
+			});
+			tfName.setHorizontalAlignment(SwingConstants.CENTER);
+			tfName.setColumns(10);
+			tfName.setBounds(452, 417, 255, 38);
+		}
+		return tfName;
+	}
+	
+	
 	//------------- Function ---------
 	
 	
@@ -400,46 +467,7 @@ public class StudyUserSingUpMain extends JFrame {
 	
 	
 
-	private JPasswordField getPfUserPassword() {
-		if (pfUserPassword == null) {
-			pfUserPassword = new JPasswordField();
-			pfUserPassword.setBounds(452, 279, 255, 38);
-		}
-		return pfUserPassword;
-	}
-	private JPasswordField getPfUserPassword1() {
-		if (pfUserPassword1 == null) {
-			pfUserPassword1 = new JPasswordField();
-			pfUserPassword1.setBounds(452, 351, 255, 38);
-		}
-		return pfUserPassword1;
-	}
-	private JLabel getLblNewLabel_1_5() {
-		if (lblNewLabel_1_5 == null) {
-			lblNewLabel_1_5 = new JLabel("성함");
-			lblNewLabel_1_5.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
-			lblNewLabel_1_5.setBounds(340, 420, 46, 26);
-		}
-		return lblNewLabel_1_5;
-	}
-	private JTextField getTfName() {
-		if (tfName == null) {
-			tfName = new JTextField();
-			tfName.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyTyped(KeyEvent e) {
-					char c = e.getKeyChar();
-			        if (Character.isDigit(c)) {
-			            e.consume(); // 입력한 키를 무시함
-			        }
-				}
-			});
-			tfName.setHorizontalAlignment(SwingConstants.CENTER);
-			tfName.setColumns(10);
-			tfName.setBounds(452, 417, 255, 38);
-		}
-		return tfName;
-	}
+	
 	
 	
 	// TextField가 전부 적혀야 버튼 활성화 하는 메소드(전화 번호TestField에 글자 길이10~11자리까지만 적을수있게 변경) 

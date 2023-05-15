@@ -5,78 +5,66 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import com.javalec.util.ShareVar;
 
 public class LoginDao {
+    // Database
+    private final String url_mysql = ShareVar.DBName;
+    private final String id_mysql = ShareVar.DBUser;
+    private final String pw_mysql = ShareVar.DBPass;
 
-	// Database
-	private final String url_mysql = ShareVar.DBName;
-	private final String id_mysql = ShareVar.DBPass;
-	private final String pw_mysql = ShareVar.DBUser;
-			
-	
-	// 변수명 
-	String userid;
-	String userPassWord;
-	
-	
-	// Constructor
-	public LoginDao() {
-		// TODO Auto-generated constructor stub
-	}
+    // 변수명 
+    private String userid;
+    private String userPassWord;
+    private String userName;
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 
+    // Constructor
+    public LoginDao() {}
 
-	
-	
-	// DB에서 id체크 
-	
-	public LoginDao(String userid) {
-		super();
-		this.userid = userid;
-	}
-
-	
-	
-	// id, pw 생정자
-	
-	public LoginDao(String userid, String userPassWord) {
-		super();
-		this.userid = userid;
-		this.userPassWord = userPassWord;
-	}
-	
-	
-	// 로그인 액션 수행
-    public boolean loginAction(String userid, String userPassWord) {
-        boolean loggedIn = false;
-        if (existsUserID(userid)) { // 아이디가 존재하는 경우에만 로그인 체크 수행
-            loggedIn = loginCheck(userid, userPassWord);
-        }
-        return loggedIn;
+    public int countUser(String id, String string) {
+        return 0;
     }
 
-    // 아이디가 존재하는지 확인
-    public boolean existsUserID(String userid) {
-        boolean exists = false;
-        try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
-             PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ?")) {
-            stmt.setString(1, userid);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                exists = count > 0;
+    // DB에서 id 체크 
+    public LoginDao(String userid) {
+        this.userid = userid;
+    }
+
+    // id, pw 생성자
+    public LoginDao(String userid, String userPassWord) {
+        this.userid = userid;
+        this.userPassWord = userPassWord;
+    }
+
+    //--------- Function
+
+    public int existsUserID(String userid) {
+        int count = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            try (Connection con = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
+                 PreparedStatement stmt = con.prepareStatement("SELECT COUNT(userid) FROM user WHERE userid = ?")) {
+                stmt.setString(1, userid);
+                ResultSet rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return exists;
+        return count;
     }
 
-    // 로그인 체크
     public boolean loginCheck(String userid, String userPassword) {
-        boolean loggedIn = false;
+        boolean result = false;
         try (Connection conn = DriverManager.getConnection(url_mysql, id_mysql, pw_mysql);
              PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) FROM user WHERE userid = ? AND userPassWord = ?")) {
             stmt.setString(1, userid);
@@ -84,18 +72,23 @@ public class LoginDao {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 int count = rs.getInt(1);
-                loggedIn = count > 0;
+                if (count > 0) {
+                    result = true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return loggedIn;
+        return result;
     }
-
-  
-	
-	
-	
-	
-	
+    
+    //
+    
+    
+    
+    
+    
+    
+    
+    
 }// End
