@@ -294,9 +294,9 @@ public class LoginMain extends JFrame {
 		if (result == true) {
 			JOptionPane.showMessageDialog(this, id + " 님, 환영합니다!", "로그인 성공!", JOptionPane.INFORMATION_MESSAGE);;
 			ShareVar.userid = id;
-			StudyProductMain studyProductMain = new StudyProductMain();
-			studyProductMain.setLocationRelativeTo(null);
-			studyProductMain.setVisible(true);
+			ProductMain productMain = new ProductMain();
+			productMain.setLocationRelativeTo(null);
+			productMain.setVisible(true);
 			dispose();
 			} else {
 				tfUserId.requestFocus();
