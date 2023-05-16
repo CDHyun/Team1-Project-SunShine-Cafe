@@ -170,6 +170,7 @@ public class PaymentConfirmationMain extends JFrame {
 	private void backpaymentMain() {
 		PaymentMain main = new PaymentMain();
 		main.setLocationRelativeTo(null);
+		main.setVisible(true);
 		main.setSum(sum);
 		dispose();
 	}

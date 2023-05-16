@@ -277,7 +277,7 @@ public class PurchaseMain extends JFrame {
 			outerTable.addRow(tempData);
 		}
 			lblCount.setText(Integer.toString(count));
-			lblPay.setText(Integer.toString(sum));
+			lblPay.setText(String.format("%,3d",sum));
 		
 	}
 	

@@ -133,6 +133,12 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblkakao() {
 		if (lblkakao == null) {
 			lblkakao = new JLabel("");
+			lblkakao.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/kakaopay.png"));
 			int x = 150;
 			int y = 150;
@@ -148,6 +154,12 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblpayco() {
 		if (lblpayco == null) {
 			lblpayco = new JLabel("");
+			lblpayco.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/paycopay.png"));
 			int x = 150;
 			int y = 150;
@@ -163,6 +175,12 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblnaver() {
 		if (lblnaver == null) {
 			lblnaver = new JLabel("");
+			lblnaver.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/naverpay.png"));
 			
 			int x = 150;
@@ -179,6 +197,12 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblzero() {
 		if (lblzero == null) {
 			lblzero = new JLabel("");
+			lblzero.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/zeropay.png"));
 			
 			int x = 180;
@@ -195,6 +219,12 @@ public class StudyPaymentMain extends JFrame {
 	private JLabel getLblpaybooc() {
 		if (lblpaybooc == null) {
 			lblpaybooc = new JLabel("");
+			lblpaybooc.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					redirecPaymentConfirmationMain();
+				}
+			});
 			ImageIcon icon = new ImageIcon(PaymentMain.class.getResource("/com/javalec/image/payboocpay.png"));
 			
 			int x = 150;
