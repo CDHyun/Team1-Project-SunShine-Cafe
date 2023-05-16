@@ -458,19 +458,14 @@ public class AdminCalculateMain extends JFrame {
 //			//Date parsedDate = inputFormat.parse(formattedDate);
 //			String date = outputFormat.format(parsedDate);
 //			parsedDate = inputFormat.parse(date);
-//			
-//			
-//			System.out.println(date);
+
 			ArrayList<AdminCalculateDto> beanList = adminCalculateDao.getSelectedPurchaseData(insertDate);
 			int result = JOptionPane.showConfirmDialog(this, "영수증을 재출력 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
 			if (result == 0) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
 				
 				adminCalculateDao.printReceipt(beanList);
-				
-//		        System.out.println("---------------------------");
-//		        System.out.println("주문 번호 : " + beanList.get(0).getSalesNo());
-				//printReceipt();// purchaseNo가 선택된 조건으로 SQL 쿼리 작성해서 불러오기 (다오)
+
 			} else { // No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기
 				JOptionPane.getRootFrame().setVisible(false);
 			}
@@ -480,23 +475,9 @@ public class AdminCalculateMain extends JFrame {
 		}
 	}
 
-	/*
-	// 영수증 출력 메소드
-	private Void printBill() {
-		AdminCalculateDao dao = new AdminCalculateDao();
-		int selectedRow = innerTable.getSelectedRow();
-        if (selectedRow != -1) {
-            int salesNo = Integer.parseInt((String) innerTable.getValueAt(selectedRow, 0));
+	
 
-            // 선택한 구매 데이터 가져오기
-           // AdminCalculateDto selectedDto = getSelectedPurchaseData(salesNo);
-
-            // 영수증 출력 메소드 호출
-            //dao.printReceipt(selectedDto);
-        }
-	}*/
-
-	// 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행
+	// 4. 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행
 	private void cancelPurchase() {
 		AdminCalculateDao dao = new AdminCalculateDao();		
 		int i = innerTable.getSelectedRow();
@@ -518,12 +499,16 @@ public class AdminCalculateMain extends JFrame {
 			int result = JOptionPane.showConfirmDialog(this, "구매 내역을 취소 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.YES_OPTION) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
-				boolean wkResult = dao.getDeletedPurchaseData(insertDate, userid);
-				if(!wkResult) {
-					JOptionPane.showMessageDialog(this, "상품 삭제에 실패했습니다. ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
-				} else {
-					tableInit();
-					searchAction();
+				int check = JOptionPane.showConfirmDialog(this, "정말 취소하십니까? 이 작업은 되돌릴 수 없습니다.", "WARNING", JOptionPane.YES_NO_OPTION);
+				if (check == JOptionPane.YES_OPTION) {
+					boolean wkResult = dao.getDeletedPurchaseData(insertDate, userid);
+					if(!wkResult) {
+						JOptionPane.showMessageDialog(this, "상품 삭제에 실패했습니다. ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						tableInit();
+						searchAction();
+					}
+					
 				}
 			} else { // No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기
 				JOptionPane.getRootFrame().setVisible(false);
