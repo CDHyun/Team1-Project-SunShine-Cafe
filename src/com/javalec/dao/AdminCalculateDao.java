@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.swing.JOptionPane;
+
 import com.javalec.dto.AdminCalculateDto;
 import com.javalec.util.ShareVar;
 
@@ -217,16 +219,25 @@ public class AdminCalculateDao {
     }
 	
     public void printReceipt(ArrayList<AdminCalculateDto> beanList) {
-        System.out.println("============== 영 수 증 ==============");
-        System.out.println("재출력 일시 : " + LocalDate.now());
-        System.out.println("------------------------------------");
-        System.out.println("판매번호: " + beanList.get(0).getSalesNo());
-        System.out.println("구매일자: " + beanList.get(0).getPurchaseInsertDate());
-        System.out.println("상품명: " + beanList.get(0).getItemName());
-        System.out.println("구매가격: " + beanList.get(0).getPurchasePrice());
-        System.out.println("구매자명: " + beanList.get(0).getUserName());
-        System.out.println("구매자ID: " + beanList.get(0).getUserid());
-        System.out.println("====================================");
+    	int saleNo = beanList.get(0).getSalesNo();
+    	String date = beanList.get(0).getPurchaseInsertDate();
+    	String iName = beanList.get(0).getItemName();
+    	int price = beanList.get(0).getPurchasePrice();
+    	String uName = beanList.get(0).getUserName();
+    	String uId = beanList.get(0).getUserid();
+    	
+    	JOptionPane.showMessageDialog(null,("============== 영 수 증 ==============\n재출력 일시 : " + LocalDate.now().toString() + "\n------------------------------------------\n판매번호 : " + saleNo + "\n구매일자 : " + date + "\n상품명: " + iName + "\n구매가격: " + price + "\n구매자명: " + uName + "\n구매자ID: " + uId + "\n==================================")) ;
+         
+//        System.out.println("============== 영 수 증 ==============");
+//        System.out.println("재출력 일시 : " + LocalDate.now());
+//        System.out.println("------------------------------------");
+//        System.out.println("판매번호: " + beanList.get(0).getSalesNo());
+//        System.out.println("구매일자: " + beanList.get(0).getPurchaseInsertDate());
+//        System.out.println("상품명: " + beanList.get(0).getItemName());
+//        System.out.println("구매가격: " + beanList.get(0).getPurchasePrice());
+//        System.out.println("구매자명: " + beanList.get(0).getUserName());
+//        System.out.println("구매자ID: " + beanList.get(0).getUserid());
+//        System.out.println("====================================");
     }
 	
 	
