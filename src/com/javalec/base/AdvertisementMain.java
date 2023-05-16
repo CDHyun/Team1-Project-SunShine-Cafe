@@ -64,7 +64,7 @@ public class AdvertisementMain extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					NoticeMain noticeMain = new NoticeMain();
-					noticeMain.setLocationRelativeTo(noticeMain);
+					noticeMain.setLocationRelativeTo(null);
 					noticeMain.setVisible(true);
 					dispose();
 				}

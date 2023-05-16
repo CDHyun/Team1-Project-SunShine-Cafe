@@ -518,6 +518,7 @@ public class UserSingUp extends JFrame {
 		
 		private void redirectLoginMain() {
 			LoginMain loginmain = new LoginMain();
+			loginmain.setLocationRelativeTo(null);
 			loginmain.setVisible(true);
 			dispose();
 		}

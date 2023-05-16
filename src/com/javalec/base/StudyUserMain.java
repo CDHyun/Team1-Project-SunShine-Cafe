@@ -119,23 +119,6 @@ public class StudyUserMain extends JFrame {
 		lblNewLabel_1_1.setBounds(173, 62, 154, 60);
 		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 25));
 		contentPane.add(lblNewLabel_1_1);
-
-		JButton btnaddOrder = new JButton("추가주문");
-		btnaddOrder.setBounds(719, 656, 117, 60);
-		btnaddOrder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(null, "추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.YES_NO_OPTION) {
-				}
-				StudyProductMain main = new StudyProductMain();
-				main.setVisible(true);
-				threeNum = 0;
-				sixNum = 0;
-
-			}
-		});
-		btnaddOrder.setFont(new Font("Dialog", Font.PLAIN, 20));
-		contentPane.add(btnaddOrder);
 		contentPane.add(getLblStopWatch());
 		contentPane.add(getBtnNewButton());
 
@@ -289,6 +272,7 @@ public class StudyUserMain extends JFrame {
 					int result = JOptionPane.showConfirmDialog(null, "종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
 						StudyAdvertisementMain main = new StudyAdvertisementMain();
+						main.setLocationRelativeTo(null);
 						main.setVisible(true);
 						dispose();
 					} else if (result == JOptionPane.NO_OPTION) {

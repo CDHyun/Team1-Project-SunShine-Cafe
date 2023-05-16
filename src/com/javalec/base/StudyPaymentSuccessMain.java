@@ -71,7 +71,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 		});
 		setTitle("결제 완료");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1200, 750);
+		setBounds(100, 100, 900, 750);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.ORANGE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -94,7 +94,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 		if (lblNewLabel == null) {
 			lblNewLabel = new JLabel("Sunshine Cafe");
 			lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			lblNewLabel.setBounds(466, 20, 282, 69);
+			lblNewLabel.setBounds(314, 6, 282, 69);
 		}
 		return lblNewLabel;
 	}
@@ -103,7 +103,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1 = new JLabel("주문 완료");
 			lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1.setFont(new Font("Lucida Grande", Font.BOLD, 67));
-			lblNewLabel_1.setBounds(466, 101, 282, 69);
+			lblNewLabel_1.setBounds(324, 159, 282, 69);
 		}
 		return lblNewLabel_1;
 	}
@@ -113,7 +113,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblpurchaseNum.setHorizontalAlignment(SwingConstants.CENTER);
 			lblpurchaseNum.setForeground(Color.RED);
 			lblpurchaseNum.setFont(new Font("Lucida Grande", Font.BOLD, 40));
-			lblpurchaseNum.setBounds(182, 414, 282, 69);
+			lblpurchaseNum.setBounds(314, 481, 282, 69);
 		}
 		return lblpurchaseNum;
 	}
@@ -122,7 +122,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1 = new JLabel("주문 번호");
 			lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
-			lblNewLabel_1_1_1.setBounds(24, 276, 282, 69);
+			lblNewLabel_1_1_1.setBounds(314, 398, 282, 69);
 		}
 		return lblNewLabel_1_1_1;
 	}
@@ -131,7 +131,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1 = new JLabel("결제가 완료되었습니다.");
 			lblNewLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1_1_1_1.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1.setBounds(726, 324, 302, 45);
+			lblNewLabel_1_1_1_1.setBounds(318, 272, 302, 45);
 		}
 		return lblNewLabel_1_1_1_1;
 	}
@@ -140,7 +140,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_1 = new JLabel("카드리더기에서");
 			lblNewLabel_1_1_1_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
 			lblNewLabel_1_1_1_1_1.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1_1.setBounds(651, 356, 206, 45);
+			lblNewLabel_1_1_1_1_1.setBounds(243, 304, 206, 45);
 		}
 		return lblNewLabel_1_1_1_1_1;
 	}
@@ -150,7 +150,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1_1_1_1_1_1.setForeground(Color.RED);
 			lblNewLabel_1_1_1_1_1_1.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1_1_1.setBounds(866, 356, 250, 45);
+			lblNewLabel_1_1_1_1_1_1.setBounds(458, 304, 250, 45);
 		}
 		return lblNewLabel_1_1_1_1_1_1;
 	}
@@ -160,7 +160,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1_1_1_1_1_1_1.setForeground(Color.RED);
 			lblNewLabel_1_1_1_1_1_1_1.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1_1_1_1.setBounds(736, 392, 99, 45);
+			lblNewLabel_1_1_1_1_1_1_1.setBounds(328, 340, 99, 45);
 		}
 		return lblNewLabel_1_1_1_1_1_1_1;
 	}
@@ -169,7 +169,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_1_2 = new JLabel("을 찾아가세요.");
 			lblNewLabel_1_1_1_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
 			lblNewLabel_1_1_1_1_1_2.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1_1_2.setBounds(818, 392, 187, 45);
+			lblNewLabel_1_1_1_1_1_2.setBounds(410, 340, 187, 45);
 		}
 		return lblNewLabel_1_1_1_1_1_2;
 	}
@@ -178,7 +178,7 @@ public class StudyPaymentSuccessMain extends JFrame {
 			lblNewLabel_1_1_1_1_2 = new JLabel("이용해주셔서 감사합니다.");
 			lblNewLabel_1_1_1_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_1_1_1_1_2.setFont(new Font("Lucida Grande", Font.BOLD, 32));
-			lblNewLabel_1_1_1_1_2.setBounds(712, 468, 333, 45);
+			lblNewLabel_1_1_1_1_2.setBounds(321, 617, 333, 45);
 		}
 		return lblNewLabel_1_1_1_1_2;
 	
