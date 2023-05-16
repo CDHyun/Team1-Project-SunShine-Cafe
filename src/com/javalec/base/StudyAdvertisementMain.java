@@ -67,9 +67,10 @@ public class StudyAdvertisementMain extends JFrame {
 					StudyLoginMain studyLoginMain = new StudyLoginMain();
 					studyLoginMain.setLocationRelativeTo(null);
 					studyLoginMain.setVisible(true);
+					dispose();
 				}
 			});
-			ImageIcon icon = new ImageIcon(StudyAdvertisementMain.class.getResource("/com/javalec/image/Ad1.png"));
+			ImageIcon icon = new ImageIcon(StudyAdvertisementMain.class.getResource("/com/javalec/image/Ad3.png"));
 			int x = 900;
 			int y = 750;
 			ImageResize resize = new ImageResize(icon, x, y);
@@ -86,19 +87,19 @@ public class StudyAdvertisementMain extends JFrame {
 	        while (true) {
 	            try {
 	            	Thread.sleep(3000);
-	                ImageIcon icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad2.png"));
+	                ImageIcon icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad4.png"));
 	                int x = 900;
 	                int y = 750;
 	                ImageResize resize = new ImageResize(icon, x, y);
 	                ImageIcon ad2 = resize.imageResizing();
 	                lblAD.setIcon(ad2);
 	                Thread.sleep(3000);
-	                icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad3.png"));
+	                icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad5.png"));
 	                resize = new ImageResize(icon, x, y);
 	                ImageIcon ad3 = resize.imageResizing();
 	                lblAD.setIcon(ad3);
 	                Thread.sleep(3000);
-	                icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad1.png"));
+	                icon = new ImageIcon(AdvertisementMain.class.getResource("/com/javalec/image/Ad3.png"));
 	                resize = new ImageResize(icon, x, y);
 	                ImageIcon ad = resize.imageResizing();
 	                lblAD.setIcon(ad);
