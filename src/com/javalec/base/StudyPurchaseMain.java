@@ -258,18 +258,19 @@ public class StudyPurchaseMain extends JFrame {
 		
 		vColIndex = 1;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 230;
+		width = 400;
 		col.setPreferredWidth(width);
 		
 		vColIndex = 2;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 100;
+		width = 150;
 		col.setPreferredWidth(width);
 		
 		vColIndex = 3;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 225;
+		width = 290;
 		col.setPreferredWidth(width);
+	
 		
 	}
 	
