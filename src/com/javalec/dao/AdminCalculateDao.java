@@ -198,7 +198,7 @@ public class AdminCalculateDao {
 
             ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 int selectedSalesNo = rs.getInt(1);
                 String purchaseInsertDate = rs.getString(2);
                 String itemName = rs.getString(3);
@@ -217,14 +217,16 @@ public class AdminCalculateDao {
     }
 	
     public void printReceipt(ArrayList<AdminCalculateDto> beanList) {
-        System.out.println("영수증");
+        System.out.println("============== 영 수 증 ==============");
+        System.out.println("재출력 일시 : " + LocalDate.now());
+        System.out.println("------------------------------------");
         System.out.println("판매번호: " + beanList.get(0).getSalesNo());
         System.out.println("구매일자: " + beanList.get(0).getPurchaseInsertDate());
         System.out.println("상품명: " + beanList.get(0).getItemName());
         System.out.println("구매가격: " + beanList.get(0).getPurchasePrice());
         System.out.println("구매자명: " + beanList.get(0).getUserName());
         System.out.println("구매자ID: " + beanList.get(0).getUserid());
-        System.out.println("---------------------------");
+        System.out.println("====================================");
     }
 	
 	

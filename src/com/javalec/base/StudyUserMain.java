@@ -128,13 +128,14 @@ public class StudyUserMain extends JFrame {
 		btnaddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int result = JOptionPane.showConfirmDialog(null,"추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.YES_NO_OPTION){
-				}
+				if (result == JOptionPane.YES_OPTION){
 					StudyProductMain main = new StudyProductMain();
 					main.setVisible(true);
-				    threeNum = 0;
-				    sixNum = 0;
-			
+					threeNum = 0;
+					sixNum = 0;				
+				} else {
+					
+				}
 			}
 		});
 		btnaddOrder.setFont(new Font("Dialog", Font.PLAIN, 20));
