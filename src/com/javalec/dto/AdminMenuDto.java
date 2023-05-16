@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 
 public class AdminMenuDto {
 
+	int itemNo;
 	int categoryNo;					// 카테고리 프키
 	int drinkNo;					// 음료 프키
 	int dessertNo;					// 디저트 프키
@@ -34,6 +35,15 @@ public class AdminMenuDto {
 	
 	
 	// 메뉴 화면 데이터
+	public AdminMenuDto(int itemNo, String menuName, int menuPrice, String categoryName, int menuStatus) {
+		super();
+		this.itemNo = itemNo;
+		this.menuName = menuName;
+		this.menuPrice = menuPrice;
+		this.categoryName = categoryName;
+		this.menuStatus = menuStatus;
+	}
+	
 	public AdminMenuDto(String menuName, int menuPrice, String categoryName, int menuStatus) {
 		super();
 		this.menuName = menuName;
@@ -327,6 +337,17 @@ public class AdminMenuDto {
 	public void setDessertImage(FileInputStream dessertImage) {
 		this.dessertImage = dessertImage;
 	}
+
+	public int getItemNo() {
+		return itemNo;
+	}
+
+	public void setItemNo(int itemNo) {
+		this.itemNo = itemNo;
+	}
+	
+	
+	
 	
 	
 }

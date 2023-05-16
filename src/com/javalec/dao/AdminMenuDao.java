@@ -81,8 +81,8 @@ public class AdminMenuDao {
 	public ArrayList<AdminMenuDto> meunList(){
 		ArrayList<AdminMenuDto> dtoList = new ArrayList<AdminMenuDto>();
 		
-		String query = "select i.itemName, i.itemPrice, c.categoryName, i.itemStatus from category c, item i";
-		String query1 = " where c.categoryNo = i.categoryNo";
+		String query = "select i.itemNo, i.itemName, i.itemPrice, c.categoryName, i.itemStatus from category c, item i";
+		String query1 = " where c.categoryNo = i.categoryNo order by i.itemNo asc";
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -92,12 +92,13 @@ public class AdminMenuDao {
 			ResultSet rs = stmt_mysql.executeQuery(query+query1);
 			
 			while(rs.next()) {
-				String wkName = rs.getString(1);
-				int wkdPrice = rs.getInt(2);
-				String wkcategoryName = rs.getString(3);
-				int wkdrinkStatus = rs.getInt(4);
+				int wkItemNo = rs.getInt(1);
+				String wkName = rs.getString(2);
+				int wkdPrice = rs.getInt(3);
+				String wkcategoryName = rs.getString(4);
+				int wkdrinkStatus = rs.getInt(5);
 				
-				AdminMenuDto dto = new AdminMenuDto(wkName, wkdPrice, wkcategoryName, wkdrinkStatus);
+				AdminMenuDto dto = new AdminMenuDto(wkItemNo, wkName, wkdPrice, wkcategoryName, wkdrinkStatus);
 				dtoList.add(dto);
 				
 			}

@@ -296,6 +296,7 @@ public class AdminCalculateMain extends JFrame {
 
 	private void redirectAdminMain() { // 관리자 메인 화면으로 돌려보내주는 메소드
 		AdminMain main = new AdminMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}
@@ -392,12 +393,12 @@ public class AdminCalculateMain extends JFrame {
 		for (int i = 0; i < listCount; i++) {
 			String salesNo = Integer.toString(beanList.get(i).getSalesNo());// db에서 데이터 불러오는 순서 (나중의 조건절 검색을 위해 추가함)
 			try {
-				String date = beanList.get(i).getPurchaseInsertDate();
-				SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				SimpleDateFormat outputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
-				Date parsedDate = inputFormat.parse(date);
-				String formattedDate = outputFormat.format(parsedDate);
-				parsedDate = inputFormat.parse(date);
+				String inserDate = beanList.get(i).getPurchaseInsertDate();
+//				SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//				SimpleDateFormat outputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
+//				Date parsedDate = inputFormat.parse(date);
+//				String formattedDate = outputFormat.format(parsedDate);
+//				parsedDate = inputFormat.parse(date);
 
 				String purchasePrice = Integer.toString(beanList.get(i).getPurchasePrice());
 				String itemName = beanList.get(i).getItemName();
@@ -406,9 +407,9 @@ public class AdminCalculateMain extends JFrame {
 				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
 				dateForm.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
-				String[] qTxt = { salesNo, formattedDate, purchasePrice, itemName, userName };
+				String[] qTxt = { salesNo, inserDate, purchasePrice, itemName, userName };
 				outerTable.addRow(qTxt);
-			} catch (ParseException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -439,28 +440,28 @@ public class AdminCalculateMain extends JFrame {
 			// 관리자가 데이터를 선택한 후 영수증 재출력 버튼을 눌렀을 때
 			//salesNo = Integer.parseInt((String) innerTable.getValueAt(i, 0));
 			//Locale locale = new Locale("ko", "KR");
-			String formattedDate = (String)innerTable.getValueAt(i, 1);
-			SimpleDateFormat inputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
-			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
-
-			// 입력받은 문자열을 원래의 datetime 타입으로 파싱
-			Date parsedDate = inputFormat.parse(formattedDate);
-
-			// 원하는 형태로 포맷 지정하여 출력
-			String formattedOutputDate = outputFormat.format(parsedDate);
-			System.out.println("다시 포맷팅된 날짜: " + formattedOutputDate);
-
-			// 포맷팅된 날짜를 다시 원래 datetime 타입으로 파싱
-			Date originalDate = outputFormat.parse(formattedOutputDate);
-			System.out.println("원래 datetime 타입의 날짜: " + originalDate);
-			
-			//Date parsedDate = inputFormat.parse(formattedDate);
-			String date = outputFormat.format(parsedDate);
-			parsedDate = inputFormat.parse(date);
-			
-			
-			System.out.println(date);
-			ArrayList<AdminCalculateDto> beanList = adminCalculateDao.getSelectedPurchaseData(date);
+			String insertDate = (String)innerTable.getValueAt(i, 1);
+//			SimpleDateFormat inputFormat = new SimpleDateFormat("dd일 HH:mm:ss");
+//			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH:mm:ss");
+//
+//			// 입력받은 문자열을 원래의 datetime 타입으로 파싱
+//			Date parsedDate = inputFormat.parse(formattedDate);
+//
+//			// 원하는 형태로 포맷 지정하여 출력
+//			String formattedOutputDate = outputFormat.format(parsedDate);
+//			System.out.println("다시 포맷팅된 날짜: " + formattedOutputDate);
+//
+//			// 포맷팅된 날짜를 다시 원래 datetime 타입으로 파싱
+//			Date originalDate = outputFormat.parse(formattedOutputDate);
+//			System.out.println("원래 datetime 타입의 날짜: " + originalDate);
+//			
+//			//Date parsedDate = inputFormat.parse(formattedDate);
+//			String date = outputFormat.format(parsedDate);
+//			parsedDate = inputFormat.parse(date);
+//			
+//			
+//			System.out.println(date);
+			ArrayList<AdminCalculateDto> beanList = adminCalculateDao.getSelectedPurchaseData(insertDate);
 			int result = JOptionPane.showConfirmDialog(this, "영수증을 재출력 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
 			if (result == 0) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
@@ -497,10 +498,12 @@ public class AdminCalculateMain extends JFrame {
 
 	// 주문 취소 버튼 : 내부테이블에서 주문 내역 선택후 버튼 클릭시 확인창과 함께 취소 수행
 	private void cancelPurchase() {
-		beanList = new ArrayList<AdminCalculateDto>();
 		AdminCalculateDao dao = new AdminCalculateDao();		
 		int i = innerTable.getSelectedRow();
 		int salesNo = Integer.parseInt((String)innerTable.getValueAt(i, 0));
+		String insertDate =  (String)innerTable.getValueAt(i, 1);
+		String userid = beanList.get(i).getUserid();
+		System.out.println(userid);
 		
 		try {
 
@@ -514,10 +517,14 @@ public class AdminCalculateMain extends JFrame {
 			salesNo = Integer.parseInt((String) innerTable.getValueAt(i, 0));
 			int result = JOptionPane.showConfirmDialog(this, "구매 내역을 취소 할까요?", "확인", JOptionPane.YES_NO_OPTION);
 
-			if (i > 0 && result == JOptionPane.YES_OPTION) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
-				dao.deletePurchase(salesNo);
-				tableInit();
-				searchAction();
+			if (result == JOptionPane.YES_OPTION) { // Yes 버튼을 눌렀을 때 수행할 코드 - ****** 구매 내역들 주르륵 나오게 하기
+				boolean wkResult = dao.getDeletedPurchaseData(insertDate, userid);
+				if(!wkResult) {
+					JOptionPane.showMessageDialog(this, "상품 삭제에 실패했습니다. ", "ERROR", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					tableInit();
+					searchAction();
+				}
 			} else { // No 버튼을 눌렀을 때 수행할 코드 - 팝업 창 닫기
 				JOptionPane.getRootFrame().setVisible(false);
 			}
@@ -530,12 +537,8 @@ public class AdminCalculateMain extends JFrame {
 	
 	// 매장 마감 버튼 : 클릭시 데이터베이스에서 그 날 하루의 총 매출액을 뽑아주고 창을 종료함. 
 	private void showTodayTotal() {
-		beanList = new ArrayList<AdminCalculateDto>();
 		AdminCalculateDao dao = new AdminCalculateDao();
 		
-		// 현재 날짜를 가져옴
-        LocalDate currentDate = LocalDate.now();
-        
         // 날짜를 문자열로 변환
         String dateString = currentDate.toString();
         

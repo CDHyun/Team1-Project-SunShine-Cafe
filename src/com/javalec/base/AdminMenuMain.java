@@ -480,13 +480,13 @@ public class AdminMenuMain extends JFrame {
 			count = menuList.size();
 			tfNumber.setText(Integer.toString(count + 1));
 			for(int i = 0; i < count; i++) {
-				num++;
+				int itemNo = menuList.get(i).getItemNo();
 				String drinkName = menuList.get(i).getMenuName();
 				int drinkPrice =  menuList.get(i).getMenuPrice();
 				String categoryName = menuList.get(i).getCategoryName();
 				int drinkStatus = menuList.get(i).getMenuStatus();
 				
-				Object[] tempData = {num, drinkName, drinkPrice, categoryName , drinkStatus};
+				Object[] tempData = {itemNo, drinkName, drinkPrice, categoryName , drinkStatus};
 				
 				outerTable.addRow(tempData);
 			}
@@ -909,6 +909,7 @@ public class AdminMenuMain extends JFrame {
 	// Main 버튼
 	private void redirecAdminMain() {
 		AdminMain main = new AdminMain();
+		main.setLocationRelativeTo(null);
 		main.setVisible(true);
 		dispose();
 	}

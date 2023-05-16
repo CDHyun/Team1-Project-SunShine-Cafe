@@ -29,10 +29,10 @@ public class AdminMain extends JFrame {
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblHomeImage;
-	private JButton lblCafeStart;
-	private JButton btnMenuUpdate;
-	private JButton btnCloseCafe;
-	private JButton lblCafeEnd;
+	private JLabel lblCafeStart;
+	private JLabel lblCafeEnd;
+	private JLabel btnMenuUpdate;
+	private JLabel btnCloseCafe;
 
 	/**
 	 * Launch the application.
@@ -131,93 +131,94 @@ public class AdminMain extends JFrame {
 		}
 		return lblHomeImage;
 	}
-	private JButton getLblCafeStart() { 				// 영업 시작 버튼 누르면 사용자 안내 화면으로 연결해주기.
+	
+	private JLabel getLblCafeStart() {
 		if (lblCafeStart == null) {
-			lblCafeStart = new JButton("");
-			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업시작.png"));
-			int x = 230;
-			int y = 160;
-			ImageResize resize = new ImageResize(icon, x, y);
-			ImageIcon startCafe = resize.imageResizing();
-			lblCafeStart.setIcon(startCafe);
-			lblCafeStart.setHorizontalAlignment(SwingConstants.CENTER);
-			
+			lblCafeStart = new JLabel("");
 			lblCafeStart.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					redirectAdvertisementMain();
 				}
 			});
-			lblCafeStart.setBounds(110, 545, 180, 85);
+			lblCafeStart.setHorizontalAlignment(SwingConstants.CENTER);
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업시작.png"));
+			int x = 200;
+			int y = 150;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon startBtn = resize.imageResizing();
+			lblCafeStart.setIcon(startBtn);
+			lblCafeStart.setBounds(110, 545, 200, 114);
 		}
 		return lblCafeStart;
 	}
-	private JButton getLblCafeEnd() {
+	private JLabel getLblCafeEnd() {
 		if (lblCafeEnd == null) {
-			lblCafeEnd = new JButton("영업 종료");
-			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업종료.png"));
-			int x = 250;
-			int y = 160;
-			ImageResize resize = new ImageResize(icon, x, y);
-			ImageIcon endCafe = resize.imageResizing();
-			lblCafeEnd.setIcon(endCafe);
-			lblCafeEnd.setHorizontalAlignment(SwingConstants.CENTER);
-			
-			lblCafeEnd.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+			lblCafeEnd = new JLabel("");
+			lblCafeEnd.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
 					int option = JOptionPane.showConfirmDialog(null, "종료하시겠습니까?", "종료 확인", JOptionPane.YES_NO_OPTION);
-			        if (option == JOptionPane.YES_OPTION) {
-			            dispose();
-			        } else {
-			            redirectAdminMain();
-			        }
+					
+					if(option == JOptionPane.YES_OPTION) {
+						dispose();
+					} 
+					
 				}
 			});
-			lblCafeEnd.setBounds(310, 545, 180, 85);
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/영업종료.png"));
+			int x = 200;
+			int y = 150;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon endBtn = resize.imageResizing();
+			lblCafeEnd.setIcon(endBtn);
+			lblCafeEnd.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCafeEnd.setBounds(310, 545, 200, 114);
 		}
 		return lblCafeEnd;
 	}
-	private JButton getBtnMenuUpdate() {
+	private JLabel getBtnMenuUpdate() {
 		if (btnMenuUpdate == null) {
-			btnMenuUpdate = new JButton("입력 및 수정");
-			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/제품관리.png"));
-			int x = 120;
-			int y = 100;
-			ImageResize resize = new ImageResize(icon, x, y);
-			ImageIcon menuControl = resize.imageResizing();
-			btnMenuUpdate.setIcon(menuControl);
-			btnMenuUpdate.setHorizontalAlignment(SwingConstants.CENTER);
-			
-			btnMenuUpdate.setIcon(new ImageIcon(AdminMain.class.getResource("/com/javalec/image/제품관리.png")));
+			btnMenuUpdate = new JLabel("");
 			btnMenuUpdate.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					directAdminMenuMain();
 				}
 			});
-			btnMenuUpdate.setBounds(110, 642, 180, 85);
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/제품관리.png"));
+			int x = 200;
+			int y = 150;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon menuUpdateBtn = resize.imageResizing();
+			btnMenuUpdate.setIcon(menuUpdateBtn);
+			btnMenuUpdate.setHorizontalAlignment(SwingConstants.CENTER);
+			btnMenuUpdate.setBounds(110, 660, 200, 114);
 		}
 		return btnMenuUpdate;
 	}
-	private JButton getBtnCloseCafe() {
+	private JLabel getBtnCloseCafe() {
 		if (btnCloseCafe == null) {
-			btnCloseCafe = new JButton("정산");
-			btnCloseCafe.setIcon(new ImageIcon(AdminMain.class.getResource("/com/javalec/image/정산.png")));
+			btnCloseCafe = new JLabel("");
 			btnCloseCafe.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					directAdminCalculateMain();
 				}
 			});
-			btnCloseCafe.setBounds(310, 642, 180, 85);
+			ImageIcon icon = new ImageIcon(AdminMain.class.getResource("/com/javalec/image/정산.png"));
+			int x = 200;
+			int y = 150;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon CloseCafeBtn = resize.imageResizing();
+			btnCloseCafe.setIcon(CloseCafeBtn);
+			btnCloseCafe.setHorizontalAlignment(SwingConstants.CENTER);
+			btnCloseCafe.setBounds(310, 660, 200, 114);
 		}
 		return btnCloseCafe;
 	}
-
 	
-	
-	
-	// -------------------FUNCTIONS------------
+	/* Functions */
 	private void redirectAdvertisementMain() {
 		AdvertisementMain main = new AdvertisementMain();
 		main.setLocationRelativeTo(null);
@@ -256,17 +257,5 @@ public class AdminMain extends JFrame {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// END
-}
+}	// End Class
 
