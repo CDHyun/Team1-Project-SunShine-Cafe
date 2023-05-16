@@ -219,6 +219,10 @@ public class AdminCalculateDao {
     }
 	
     public void printReceipt(ArrayList<AdminCalculateDto> beanList) {
+    	// 영수증 출력하는 시간 
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = LocalDateTime.now().format(formatter);
+
     	int saleNo = beanList.get(0).getSalesNo();
     	String date = beanList.get(0).getPurchaseInsertDate();
     	String iName = beanList.get(0).getItemName();
@@ -226,7 +230,7 @@ public class AdminCalculateDao {
     	String uName = beanList.get(0).getUserName();
     	String uId = beanList.get(0).getUserid();
     	
-    	JOptionPane.showMessageDialog(null,("============== 영 수 증 ==============\n재출력 일시 : " + LocalDate.now().toString() + "\n------------------------------------------\n판매번호 : " + saleNo + "\n구매일자 : " + date + "\n상품명: " + iName + "\n구매가격: " + price + "\n구매자명: " + uName + "\n구매자ID: " + uId + "\n==================================")) ;
+    	JOptionPane.showMessageDialog(null,("============== 영 수 증 ==============\n재출력 일시 : " + formattedDateTime + "\n------------------------------------------\n주문번호 : " + saleNo + "\n구매일자 : " + date + "\n상품명: " + iName + "\n구매가격: " + price + "\n구매자명: " + uName + "\n구매자ID: " + uId + "\n==================================")) ;
          
 //        System.out.println("============== 영 수 증 ==============");
 //        System.out.println("재출력 일시 : " + LocalDate.now());

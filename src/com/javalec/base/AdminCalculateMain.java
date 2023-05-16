@@ -340,7 +340,7 @@ public class AdminCalculateMain extends JFrame {
 		// 거래 일시
 		vColIndex = 1;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 100;
+		width = 150;
 		col.setPreferredWidth(width); // 두번째 칼럼 폭 크기 정하기. (칼럼 폭은 실행해보면서 자기가 맞춰보는걸로)
 
 		// 계산 (결제) 금액
@@ -352,7 +352,7 @@ public class AdminCalculateMain extends JFrame {
 		// 주문 내역
 		vColIndex = 3;
 		col = innerTable.getColumnModel().getColumn(vColIndex);
-		width = 280;
+		width = 220;
 		col.setPreferredWidth(width);
 
 		// 회원명(회원아이디)
