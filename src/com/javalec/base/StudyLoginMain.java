@@ -202,7 +202,8 @@ public class StudyLoginMain extends JFrame {
 	private JLabel getLblCheck() {
 		if (lblCheck == null) {
 			lblCheck = new JLabel("");
-			lblCheck.setBounds(531, 355, 175, 29);
+			lblCheck.setHorizontalAlignment(SwingConstants.CENTER);
+			lblCheck.setBounds(511, 356, 209, 29);
 		}
 		return lblCheck;
 	}
