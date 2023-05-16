@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.javalec.dao.PaymentDao;
+import com.javalec.dao.RentDao;
 import com.javalec.function.ImageResize;
 
 /* 스터디룸 키오스크에서 보여줄 결제 정보 확인(승인요청) 페이지 */
@@ -190,6 +191,12 @@ public class StudyPaymentConfirmationMain extends JFrame {
 	private void purchaseAtcion() {
 		PaymentDao dao = new PaymentDao();
 		boolean result = dao.addToPurchase();
+		
+		RentDao rentDao = new RentDao();
+		result = rentDao.insertRent();
+		
+		
+		
 		
 		if(result) {
 			nextPaymentSuccessMain();

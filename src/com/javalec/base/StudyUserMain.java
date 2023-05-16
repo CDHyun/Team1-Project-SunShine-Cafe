@@ -42,15 +42,13 @@ import javax.swing.JTable;
 /* 스터디룸 키오스크에서 남은 시간을 보여줄 유저 메인 페이지 */
 public class StudyUserMain extends JFrame {
 
-	
 	private static final int TICKET_MINUTES = 60; // 이용권 시간(분)
 	private static final int TICKET_SECONDS = TICKET_MINUTES * 60; // 이용권 시간(초)
-	private static LocalDateTime startTime;  // 이용 시작 시간
+	private static LocalDateTime startTime; // 이용 시작 시간
 	private static int remainingSeconds; // 남은 시간(초)
 	private static int timeElapasd = 0;
 	private final DefaultTableModel outerTable = new DefaultTableModel();
-	
-	
+
 	private JPanel contentPane;
 	private JLabel lblStudyImage;
 	private JLabel lblMainName;
@@ -58,25 +56,24 @@ public class StudyUserMain extends JFrame {
 	private JButton btnNewButton;
 	private JTable innerTable;
 	private JLabel LocalDateTimestartTime;
-	
-    int threeNum = 0;
-    int sixNum = 0;
-    int a = 0;
-	
+
+	int threeNum = 0;
+	int sixNum = 0;
+	int a = 0;
+
 	public void TimerExample() {
 		setTitle("타이머 예졔");
-        setSize(300, 200);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+		setSize(300, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(null);
 
-        lblStopWatch = new JLabel();
-        lblStopWatch.setBounds(50, 50, 200, 50);
-        getContentPane().add(lblStopWatch);
+		lblStopWatch = new JLabel();
+		lblStopWatch.setBounds(50, 50, 200, 50);
+		getContentPane().add(lblStopWatch);
 
-        setVisible(true);
-    }
+		setVisible(true);
+	}
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -98,12 +95,12 @@ public class StudyUserMain extends JFrame {
 	 */
 	public StudyUserMain() {
 		addWindowListener(new WindowAdapter() {
-			
+
 			@Override
 			public void windowOpened(WindowEvent e) {
-			tableInit();
-			searchAction();
-			timeCheck();
+				tableInit();
+				searchAction();
+				timeCheck();
 			}
 		});
 		setTitle("남은시간 및 주문내역");
@@ -117,43 +114,42 @@ public class StudyUserMain extends JFrame {
 		contentPane.setLayout(null);
 //		contentPane.add(getLblStudyImage());
 		contentPane.add(getLblMainName());
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("남은시간");
 		lblNewLabel_1_1.setBounds(173, 62, 154, 60);
 		lblNewLabel_1_1.setFont(new Font("Dialog", Font.BOLD, 25));
 		contentPane.add(lblNewLabel_1_1);
-		
+
 		JButton btnaddOrder = new JButton("추가주문");
 		btnaddOrder.setBounds(719, 656, 117, 60);
 		btnaddOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(null,"추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.YES_OPTION){
-					StudyProductMain main = new StudyProductMain();
-					main.setVisible(true);
-					threeNum = 0;
-					sixNum = 0;				
-				} else {
-					
+				int result = JOptionPane.showConfirmDialog(null, "추가주문하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_NO_OPTION) {
 				}
+				StudyProductMain main = new StudyProductMain();
+				main.setVisible(true);
+				threeNum = 0;
+				sixNum = 0;
+
 			}
 		});
 		btnaddOrder.setFont(new Font("Dialog", Font.PLAIN, 20));
 		contentPane.add(btnaddOrder);
 		contentPane.add(getLblStopWatch());
 		contentPane.add(getBtnNewButton());
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(6, 153, 886, 491);
 		contentPane.add(scrollPane);
-		
-		innerTable = new JTable(){									// 테이블 데이터 지정
-			public Class getColumnClass(int column) {				// 속성을 바꿔준다.
-				return (column == 0) ? Icon.class : Object.class;	// 0번째 컬럼은 이미지 나머지는 오브젝트로 넣는다
+
+		innerTable = new JTable() { // 테이블 데이터 지정
+			public Class getColumnClass(int column) { // 속성을 바꿔준다.
+				return (column == 0) ? Icon.class : Object.class; // 0번째 컬럼은 이미지 나머지는 오브젝트로 넣는다
 			}
-			
+
 		};
-		innerTable.setModel(outerTable);	
+		innerTable.setModel(outerTable);
 		innerTable.setRowHeight(150);
 		innerTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(innerTable);
@@ -168,74 +164,70 @@ public class StudyUserMain extends JFrame {
 		return lblMainName;
 	}
 
-private void searchAction() {
-	ArrayList<StudyUserDto> list = new ArrayList<StudyUserDto>();
-	StudyUserDao dao = new StudyUserDao();
-	list = dao.studyList();
-	int count = list.size();
+	private void searchAction() {
+		ArrayList<StudyUserDto> list = new ArrayList<StudyUserDto>();
+		StudyUserDao dao = new StudyUserDao();
+		list = dao.studyList();
+		int count = list.size();
 
-	for(int i = 0; i < count; i++) {	
-	int wkPrice = list.get(i).getPurchasePrice();
-	String wkName = list.get(i).getItemName();
-	String wkImageName = list.get(i).getItemImageName();
-	
-	ImageIcon icon = new ImageIcon("./" + wkImageName);
-	int x = 180;
-	int y = 130;
-	ImageResize resize = new ImageResize(icon, x, y);
-	ImageIcon Image = resize.imageResizing();
+		for (int i = 0; i < count; i++) {
+			int wkPrice = list.get(i).getPurchasePrice();
+			String wkName = list.get(i).getItemName();
+			String wkImageName = list.get(i).getItemImageName();
 
-	
-	Object[] tempData = {Image, wkName, wkPrice};
-	outerTable.addRow(tempData);
-}
-}
+			ImageIcon icon = new ImageIcon("./" + wkImageName);
+			int x = 180;
+			int y = 130;
+			ImageResize resize = new ImageResize(icon, x, y);
+			ImageIcon Image = resize.imageResizing();
 
-				
-		private void timeCheck() {
+			Object[] tempData = { Image, wkName, wkPrice };
+			outerTable.addRow(tempData);
+		}
+	}
+
+	private void timeCheck() {
 		startTime = LocalDateTime.now(); // 이용 시작 시간 설정
-        remainingSeconds = TICKET_SECONDS; // 남은 시간 초기화
-        // 1초마다 타이머 갱신
+		remainingSeconds = TICKET_SECONDS; // 남은 시간 초기화
+		// 1초마다 타이머 갱신
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-        	public void run() {
-                remainingSeconds--;
-                // 시간 종료되면 타이머 종료
-                if (remainingSeconds == 0) {
-                    timer.cancel();
-                 }
-                
-                // 화면에 남은 시간 출력
-                int hour = remainingSeconds / 3600;
-                int minutes = remainingSeconds % 3600 / 60;
-                int seconds = remainingSeconds % 3600 % 60;
-                
-                
-                if(StudyUserDao.tcount != 0 && threeNum == 0) {
-                	threeNum++;
-                	int a = 1;
-                	int three = 1800 * (a - StudyUserDao.tcount);
-                	a = StudyUserDao.tcount;
-                	remainingSeconds += three;                	
-                }
-                if(StudyUserDao.scount != 0 && sixNum == 0) {
-                	sixNum++;            	
-                	int six = 3600 * (StudyUserDao.scount - a);
-                	a = StudyUserDao.scount;
-                	remainingSeconds += six;  
-              	
-                }
-                //              System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
-                lblStopWatch.setFont(new Font("Diglog",Font.BOLD, 18));
-                
-                lblStopWatch.setText(String.format("남은 시간: %d시 %d분 %d초\n", hour, minutes, seconds));
-                
-                }
-        }, 0, 1000);
-}
-		
-		
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				remainingSeconds--;
+				// 시간 종료되면 타이머 종료
+				if (remainingSeconds == 0) {
+					timer.cancel();
+				}
+
+				// 화면에 남은 시간 출력
+				int hour = remainingSeconds / 3600;
+				int minutes = remainingSeconds % 3600 / 60;
+				int seconds = remainingSeconds % 3600 % 60;
+
+				if (StudyUserDao.tcount != 0 && threeNum == 0) {
+					threeNum++;
+					int a = 1;
+					int three = 1800 * (a - StudyUserDao.tcount);
+					a = StudyUserDao.tcount;
+					remainingSeconds += three;
+				}
+				if (StudyUserDao.scount != 0 && sixNum == 0) {
+					sixNum++;
+					int six = 3600 * (StudyUserDao.scount - a);
+					a = StudyUserDao.scount;
+					remainingSeconds += six;
+
+				}
+				// System.out.printf("남은 시간: %d분 %d초\n", minutes, seconds);
+				lblStopWatch.setFont(new Font("Diglog", Font.BOLD, 18));
+
+				lblStopWatch.setText(String.format("남은 시간: %d시 %d분 %d초\n", hour, minutes, seconds));
+
+			}
+		}, 0, 1000);
+	}
+
 //		private void studyitem() {
 //			ArrayList<StudyUserDto> dtoList = new ArrayList<StudyUserDto>();
 //			StudyUserDto dto = new StudyUserDto();
@@ -245,48 +237,41 @@ private void searchAction() {
 //				
 //			}
 //		}
-	
-	
-				private void tableInit() {
-					outerTable.addColumn("상품사진");	// 타이틀 네임
-					outerTable.addColumn("상품명");
-					outerTable.addColumn("가격");		
-					outerTable.setColumnCount(3);		// 타이틀이 몇개냐
-				
-					int i = outerTable.getRowCount();	// 테이블에 데이터가 몇개 있는지
-					
-					for(int j=0; j<i;j++) {
-						outerTable.removeRow(0);		// 지워주기
-					}
-					
-					innerTable.setAutoResizeMode(innerTable.AUTO_RESIZE_OFF); // 사이즈 조절 안한다
-					
-					// 상품이미지 사이즈
-					int vColIndex = 0;					// 데이터 크기 조절 
-					TableColumn col = innerTable.getColumnModel().getColumn(vColIndex);
-					int width = 380;
-					col.setPreferredWidth(width);
-					
-					// 상품명 사이즈
-					vColIndex =1;
-					col = innerTable.getColumnModel().getColumn(vColIndex);
-					width = 350;
-					col.setPreferredWidth(width);
-					
-					// 가격
-					vColIndex = 2;
-					col = innerTable.getColumnModel().getColumn(vColIndex);
-					width = 150;
-					col.setPreferredWidth(width);
 
-				}
-				
-				
-				
-				
-				
-				
-				
+	private void tableInit() {
+		outerTable.addColumn("상품사진"); // 타이틀 네임
+		outerTable.addColumn("상품명");
+		outerTable.addColumn("가격");
+		outerTable.setColumnCount(3); // 타이틀이 몇개냐
+
+		int i = outerTable.getRowCount(); // 테이블에 데이터가 몇개 있는지
+
+		for (int j = 0; j < i; j++) {
+			outerTable.removeRow(0); // 지워주기
+		}
+
+		innerTable.setAutoResizeMode(innerTable.AUTO_RESIZE_OFF); // 사이즈 조절 안한다
+
+		// 상품이미지 사이즈
+		int vColIndex = 0; // 데이터 크기 조절
+		TableColumn col = innerTable.getColumnModel().getColumn(vColIndex);
+		int width = 380;
+		col.setPreferredWidth(width);
+
+		// 상품명 사이즈
+		vColIndex = 1;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 350;
+		col.setPreferredWidth(width);
+
+		// 가격
+		vColIndex = 2;
+		col = innerTable.getColumnModel().getColumn(vColIndex);
+		width = 150;
+		col.setPreferredWidth(width);
+
+	}
+
 	private JLabel getLblStopWatch() {
 		if (lblStopWatch == null) {
 			lblStopWatch = new JLabel("");
@@ -295,17 +280,18 @@ private void searchAction() {
 		}
 		return lblStopWatch;
 	}
+
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("종료하기");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					int result = JOptionPane.showConfirmDialog(null,"종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-					if (result == JOptionPane.YES_OPTION){
-							StudyAdvertisementMain main = new StudyAdvertisementMain();
-							main.setVisible(true);
-							dispose();
-					}else if (result == JOptionPane.NO_OPTION){
+					int result = JOptionPane.showConfirmDialog(null, "종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+					if (result == JOptionPane.YES_OPTION) {
+						StudyAdvertisementMain main = new StudyAdvertisementMain();
+						main.setVisible(true);
+						dispose();
+					} else if (result == JOptionPane.NO_OPTION) {
 					}
 				}
 			});
@@ -315,12 +301,4 @@ private void searchAction() {
 		return btnNewButton;
 	}
 
-	
-
-
 }
-
-
-		
-
-

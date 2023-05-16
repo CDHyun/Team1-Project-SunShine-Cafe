@@ -12,7 +12,7 @@ public class ShareVar {
 		public static final String DBPass = "qwer1234";
 		
 		/* Login User */
-		public static String userid;
+		public static String userid = "1234";
 		
 		public static int tableNo = 1;
 		
