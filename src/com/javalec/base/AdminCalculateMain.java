@@ -390,7 +390,11 @@ public class AdminCalculateMain extends JFrame {
 
 		int listCount = beanList.size();
 
+		int seqno=0 ; // 테이블에 불러올 순서 
 		for (int i = 0; i < listCount; i++) {
+			
+			seqno ++;
+			String seq = Integer.toString(seqno);
 			String salesNo = Integer.toString(beanList.get(i).getSalesNo());// db에서 데이터 불러오는 순서 (나중의 조건절 검색을 위해 추가함)
 			try {
 				String inserDate = beanList.get(i).getPurchaseInsertDate();
@@ -407,7 +411,7 @@ public class AdminCalculateMain extends JFrame {
 				SimpleDateFormat dateForm = new SimpleDateFormat("dd일 HH:mm:ss");
 				dateForm.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
-				String[] qTxt = { salesNo, inserDate, purchasePrice, itemName, userName };
+				String[] qTxt = { seq, inserDate, purchasePrice, itemName, userName };
 				outerTable.addRow(qTxt);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
